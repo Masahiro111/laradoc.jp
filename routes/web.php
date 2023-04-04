@@ -22,12 +22,14 @@ Route::redirect('/deleting-chirps', '/inertia/deleting-chirps');
 Route::redirect('/notifications-and-events', '/inertia/notifications-and-events');
 
 Route::get('/{page?}', function (string $page = 'introduction') {
+
     if (View::exists($page)) {
         return view('docs', ['page' => $page]);
     }
 
     $fallback = preg_replace('/^(inertia|blade)\//', '', $page);
+
     abort_unless(View::exists($fallback), 404);
 
     return view('docs', ['page' => $fallback]);
-})->where('page', '[a-z-\/]+');
+})->where('page', '[a-z0-9-_\/]+');
