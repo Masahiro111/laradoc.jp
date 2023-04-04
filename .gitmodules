@@ -1,0 +1,3 @@
+[submodule "resources/docs/laravel_docs_origin"]
+	path = resources/docs/laravel_docs_origin
+	url = https://github.com/laravel/docs.git
