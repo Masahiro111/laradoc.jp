@@ -1,84 +1,83 @@
-# Release Notes
+# リリースノート
 
-- [Versioning Scheme](#versioning-scheme)
-- [Support Policy](#support-policy)
+- [バージョニング規約](#versioning-scheme)
+- [サポートポリシー](#support-policy)
 - [Laravel 10](#laravel-10)
 
 <a name="versioning-scheme"></a>
-## Versioning Scheme
+## バージョニング規約
 
-Laravel and its other first-party packages follow [Semantic Versioning](https://semver.org). Major framework releases are released every year (~Q1), while minor and patch releases may be released as often as every week. Minor and patch releases should **never** contain breaking changes.
+Laravel 及びその他のファーストパーティパッケージは、[セマンティック バージョニング](https://semver.org) に従います。メジャーリリースは毎年（ Q1  頃 ）リリースされますが、マイナーおよびパッチリリースは毎週リリースされる場合があります。マイナーおよびパッチリリースには、**決して** 互換性のない変更は含まれません。
 
-When referencing the Laravel framework or its components from your application or package, you should always use a version constraint such as `^10.0`, since major releases of Laravel do include breaking changes. However, we strive to always ensure you may update to a new major release in one day or less.
+アプリケーションまたはパッケージから Laravel フレームワークまたはそのコンポーネントを参照する場合、Laravel のメジャーリリースには重大な変更が含まれているため、常に `^10.0` などのバージョン制約を使用する必要があります。 ただし、1 日以内に新しいメジャーリリースに更新できるよう常に努めています。
 
 <a name="named-arguments"></a>
-#### Named Arguments
+#### 名前付き引数
 
-[Named arguments](https://www.php.net/manual/en/functions.arguments.php#functions.named-arguments) are not covered by Laravel's backwards compatibility guidelines. We may choose to rename function arguments when necessary in order to improve the Laravel codebase. Therefore, using named arguments when calling Laravel methods should be done cautiously and with the understanding that the parameter names may change in the future.
+[名前付き引数](https://www.php.net/manual/en/functions.arguments.php#functions.named-arguments) は、Laravel の後方互換性ガイドラインには含まれていません。 Laravel のコードベースを改善するために、必要に応じて関数の引数の名前を変更することがあります。 そのため、Laravel のメソッドを呼び出すときに名前付き引数を使用する場合は、将来的にパラメーター名が変更される可能性があることを理解しておく必要があります。
 
 <a name="support-policy"></a>
-## Support Policy
+## サポートポリシー
 
-For all Laravel releases, bug fixes are provided for 18 months and security fixes are provided for 2 years. For all additional libraries, including Lumen, only the latest major release receives bug fixes. In addition, please review the database versions [supported by Laravel](/docs/{{version}}/database#introduction).
-
+Laravel のすべてのリリースについて、バグ修正は 18 ヶ月間提供され、セキュリティ修正は 2 年間提供されます。Lumen を含むすべての追加ライブラリについては、最新のメジャーリリースのみがバグ修正を受けます。また、[Laravelがサポートするデータベースバージョン](/laravel10_ja/database#introduction) についても確認してください。
 
 <div class="overflow-auto">
 
-| Version | PHP (*) | Release | Bug Fixes Until | Security Fixes Until |
+| Version | PHP (*) | リリース日 | バグ修正のサポート終了日 | セキュリティ修正のサポート終了日 |
 | --- | --- | --- | --- | --- |
-| 8 | 7.3 - 8.1 | September 8th, 2020 | July 26th, 2022 | January 24th, 2023 |
-| 9 | 8.0 - 8.2 | February 8th, 2022 | August 8th, 2023 | February 6th, 2024 |
-| 10 | 8.1 - 8.2 | February 14th, 2023 | August 6th, 2024 | February 4th, 2025 |
-| 11 | 8.2 | Q1 2024 | August 5th, 2025 | February 3rd, 2026 |
+| 8 | 7.3 - 8.1 | 2020年9月8日 | 2022年7月26日 | 2023年1月24日 |
+| 9 | 8.0 - 8.2 | 2022年2月8日 | 2023年8月8日 | 2024年2月6日 |
+| 10 | 8.1 - 8.2 | 2023年2月14日 | 2024年8月6日 | 2025年2月4日 |
+| 11 | 8.2 | 2024年第1四半期 | 2025年8月5日 | 2026年2月3日 |
 
 </div>
 
-<div class="version-colors">
-    <div class="end-of-life">
-        <div class="color-box"></div>
-        <div>End of life</div>
-    </div>
-    <div class="security-fixes">
-        <div class="color-box"></div>
-        <div>Security fixes only</div>
-    </div>
-</div>
+<!-- <div class="version-colors">
+     <div class="エンドオブライフ">
+         <div class="color-box"></div>
+         <div>生産終了</div>
+     </div>
+     <div class="security-fixes">
+         <div class="color-box"></div>
+         <div>セキュリティ修正のみ</div>
+     </div>
+</div> -->
 
-(*) Supported PHP versions
+(*) 対応している PHP のバージョン
 
 <a name="laravel-10"></a>
 ## Laravel 10
 
-As you may know, Laravel transitioned to yearly releases with the release of Laravel 8. Previously, major versions were released every 6 months. This transition is intended to ease the maintenance burden on the community and challenge our development team to ship amazing, powerful new features without introducing breaking changes. Therefore, we have shipped a variety of robust features to Laravel 9 without breaking backwards compatibility.
+ご存知かもしれませんが、Laravel 8 のリリースをもって Laravel は年次リリースに移行しました。以前は、メジャーバージョンが 6 ヶ月ごとにリリースされていました。この移行は、コミュニティのメンテナンス負担を軽減し、開発チームが破壊的変更を導入せずに素晴らしい新機能を提供することに挑戦するためのものです。そのため、Laravel 9 には後方互換性を損なわないさまざまな堅牢な機能が提供されています。
 
-Therefore, this commitment to ship great new features during the current release will likely lead to future "major" releases being primarily used for "maintenance" tasks such as upgrading upstream dependencies, which can be seen in these release notes.
+したがって、現行リリースで素晴らしい新機能を提供するというこのコミットメントは、将来の「メジャー」リリースが、アップストリームの依存関係のアップグレードなどの「メンテナンス」タスクに主に使用されることにつながる可能性があります。これはリリースノートでも確認できます。
 
-Laravel 10 continues the improvements made in Laravel 9.x by introducing argument and return types to all application skeleton methods, as well as all stub files used to generate classes throughout the framework. In addition, a new, developer-friendly abstraction layer has been introduced for starting and interacting with external processes. Further, Laravel Pennant has been introduced to provide a wonderful approach to managing your application's "feature flags".
+Laravel 10 は、Laravel 9.x での改善を続けて、すべてのアプリケーションスケルトンメソッドと、フレームワーク全体でクラスを生成するために使用されるすべてのスタブファイルに引数と戻り値の型を導入しています。さらに、外部プロセスの開始および操作のための新しい、開発者に優しい抽象化レイヤーが導入されました。さらに、Laravel Pennant が導入され、アプリケーションの「機能フラグ」を管理するための素晴らしいアプローチが提供されています。
 
 <a name="php-8"></a>
 ### PHP 8.1
 
-Laravel 10.x requires a minimum PHP version of 8.1.
+Laravel 10.x には、最低でも PHP バージョン 8.1 が必要です。
 
 <a name="types"></a>
-### Types
+### 型
 
-_Application skeleton and stub type-hints were contributed by [Nuno Maduro](https://github.com/nunomaduro)_.
+_アプリケーションスケルトンとスタブの型ヒントは、[Nuno Maduro](https://github.com/nunomaduro)_ によって寄稿されました。
 
-On its initial release, Laravel utilized all of the type-hinting features available in PHP at the time. However, many new features have been added to PHP in the subsequent years, including additional primitive type-hints, return types, and union types.
+Laravel は当初、当時利用可能だった PHP のすべての型ヒント機能を使用していました。しかし、その後の年に PHP にはさらに多くの新機能が追加されました。これには、追加のプリミティブ型ヒント、戻り値の型、およびユニオン型が含まれます。
 
-Laravel 10.x thoroughly updates the application skeleton and all stubs utilized by the framework to introduce argument and return types to all method signatures. In addition, extraneous "doc block" type-hint information has been deleted.
+Laravel 10.x では、アプリケーションスケルトンとフレームワークで使用されるすべてのスタブが徹底的に更新され、すべてのメソッドシグネチャに引数と戻り値の型が導入されます。さらに、余分な「ドックブロック」型ヒント情報が削除されました。
 
-This change is entirely backwards compatible with existing applications. Therefore, existing applications that do not have these type-hints will continue to function normally.
+この変更は、既存のアプリケーションと完全に後方互換性があります。したがって、これらの型ヒントがない既存のアプリケーションは引き続き正常に機能します。
 
 <a name="laravel-pennant"></a>
 ### Laravel Pennant
 
-_Laravel Pennant was developed by [Tim MacDonald](https://github.com/timacdonald)_.
+_Laravel Pennant は [Tim MacDonald](https://github.com/timacdonald)_ によって開発されました。
 
-A new first-party package, Laravel Pennant, has been released. Laravel Pennant offers a light-weight, streamlined approach to managing your application's feature flags. Out of the box, Pennant includes an in-memory `array` driver and a `database` driver for persistent feature storage.
+新しいファーストパーティパッケージである Laravel Pennant がリリースされました。Laravel Pennant は、アプリケーションの機能フラグを管理するための軽量で効率的なアプローチを提供します。Pennant には、メモリ内の `array` ドライバと永続的な機能ストレージ用の `database` ドライバが標準で含まれています。
 
-Features can be easily defined via the `Feature::define` method:
+機能は、`Feature::define` メソッドを使用して簡単に定義できます：
 
 ```php
 use Laravel\Pennant\Feature;
@@ -89,7 +88,7 @@ Feature::define('new-onboarding-flow', function () {
 });
 ```
 
-Once a feature has been defined, you may easily determine if the current user has access to the given feature:
+機能が定義されると、現在のユーザーが指定された機能にアクセスできるかどうかを簡単に判断できます。
 
 ```php
 if (Feature::active('new-onboarding-flow')) {
@@ -97,7 +96,7 @@ if (Feature::active('new-onboarding-flow')) {
 }
 ```
 
-Of course, for convenience, Blade directives are also available:
+もちろん、便宜上、Blade ディレクティブも利用できます。
 
 ```blade
 @feature('new-onboarding-flow')
@@ -107,14 +106,14 @@ Of course, for convenience, Blade directives are also available:
 @endfeature
 ```
 
-Pennant offers a variety of more advanced features and APIs. For more information, please consult the [comprehensive Pennant documentation](/docs/{{version}}/pennant).
+Pennant は、より高度なさまざまな機能と API を提供します。 詳細については、[包括的なペナントのドキュメント](/laravel10_ja/pennant) を参照してください。
 
 <a name="process"></a>
-### Process Interaction
+### プロセスのやり取り
 
-_The process abstraction layer was contributed by [Nuno Maduro](https://github.com/nunomaduro) and [Taylor Otwell](https://github.com/taylorotwell)_.
+_プロセス抽象化レイヤーは、[Nuno Maduro](https://github.com/nunomaduro) と [Taylor Otwell](https://github.com/taylorotwell)_ によって寄稿されました。
 
-Laravel 10.x introduces a beautiful abstraction layer for starting and interacting with external processes via a new `Process` facade:
+Laravel 10.x では、新しい `Process` ファサードを介して外部プロセスの開始とやり取りを行う美しい抽象化レイヤーが導入されています。
 
 ```php
 use Illuminate\Support\Facades\Process;
@@ -124,7 +123,7 @@ $result = Process::run('ls -la');
 return $result->output();
 ```
 
-Processes may even be started in pools, allowing for the convenient execution and management of concurrent processes:
+プロセスはプールで開始することもできるため、並行プロセスの実行と管理が容易になります。
 
 ```php
 use Illuminate\Process\Pool;
@@ -139,7 +138,7 @@ use Illuminate\Support\Facades\Process;
 return $first->output();
 ```
 
-In addition, processes may be faked for convenient testing:
+さらに、簡単なテストのためにプロセスを偽造することもできます。
 
 ```php
 Process::fake();
@@ -149,48 +148,48 @@ Process::fake();
 Process::assertRan('ls -la');
 ```
 
-For more information on interacting with processes, please consult the [comprehensive process documentation](/docs/{{version}}/processes).
+プロセスとのやり取りの詳細については、[包括的なプロセス ドキュメント](/laravel10_ja/processes) を参照してください。
 
 <a name="test-profiling"></a>
-### Test Profiling
+### テストプロファイリング
 
-_Test profiling was contributed by [Nuno Maduro](https://github.com/nunomaduro)_.
+_テスト プロファイリングは [Nuno Maduro](https://github.com/nunomaduro)_ によって提供されました。
 
-The Artisan `test` command has received a new `--profile` option that allows you to easily identify the slowest tests in your application:
+Artisan `test` コマンドに新しい `--profile` オプションが追加されました。これにより、アプリケーションの最も遅いテストを簡単に特定できます。
 
 ```shell
 php artisan test --profile
 ```
 
-For convenience, the slowest tests will be displayed directly within the CLI output:
+便宜上、最も遅いテストは CLI 出力内に直接表示されます。
 
 <p align="center">
-    <img width="100%" src="https://user-images.githubusercontent.com/5457236/217328439-d8d983ec-d0fc-4cde-93d9-ae5bccf5df14.png"/>
+     <img width="100%" src="https://user-images.githubusercontent.com/5457236/217328439-d8d983ec-d0fc-4cde-93d9-ae5bccf5df14.png"/>
 </p>
 
 <a name="pest-scaffolding"></a>
-### Pest Scaffolding
+### Pest スキャフォールディング
 
-New Laravel projects may now be created with Pest test scaffolding by default. To opt-in to this feature, provide the `--pest` flag when creating a new application via the Laravel installer:
+新しい Laravel プロジェクトは、デフォルトで Pest テストスキャフォールディングを使用して作成することができます。この機能を利用するには、Laravel インストーラーで新しいアプリケーションを作成する際に `--pest` フラグを指定してください。
 
 ```shell
 laravel new example-application --pest
 ```
 
 <a name="generator-cli-prompts"></a>
-### Generator CLI Prompts
+### ジェネレーター CLI プロンプト
 
-_Generator CLI prompts were contributed by [Jess Archer](https://github.com/jessarcher)_.
+_ジェネレーター CLI プロンプトは [Jess Archer](https://github.com/jessarcher) によって寄稿されました。_
 
-To improve the framework's developer experience, all of Laravel's built-in `make` commands no longer require any input. If the commands are invoked without input, you will be prompted for the required arguments:
+フレームワークの開発者エクスペリエンスを向上させるために、Laravel の組み込みの `make` コマンドはすべて入力を必要としなくなりました。 コマンドが入力なしで呼び出された場合、必要な引数を求めるプロンプトが表示されます。
 
 ```shell
 php artisan make:controller
 ```
 
 <a name="horizon-telescope-facelift"></a>
-### Horizon / Telescope Facelift
+### Horizon / Telescope の改善
 
-[Horizon](/docs/{{version}}/horizon) and [Telescope](/docs/{{version}}/telescope) have been updated with a fresh, modern look including improved typography, spacing, and design:
+[Horizon](/laravel10_ja/horizon) と [Telescope](/laravel10_ja/telescope) は、改善されたタイポグラフィ、間隔、およびデザインを含む新鮮でモダンな外観で更新されました。
 
 <img src="https://laravel.com/img/docs/horizon-example.png">
