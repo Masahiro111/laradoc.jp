@@ -21,7 +21,7 @@ Route::redirect('/editing-chirps', '/inertia/editing-chirps');
 Route::redirect('/deleting-chirps', '/inertia/deleting-chirps');
 Route::redirect('/notifications-and-events', '/inertia/notifications-and-events');
 
-Route::get('/{page?}', function (string $page = 'introduction') {
+Route::get('/{page?}', function (string $page = 'installation') {
 
     if (View::exists($page)) {
         return view('docs', ['page' => $page]);

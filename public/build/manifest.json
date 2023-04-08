@@ -1,0 +1,24 @@
+{
+  "resources/images/icons/document.svg": {
+    "file": "assets/document.f58c557d.svg",
+    "src": "resources/images/icons/document.svg"
+  },
+  "resources/images/icons/react.svg": {
+    "file": "assets/react.f2cadfd0.svg",
+    "src": "resources/images/icons/react.svg"
+  },
+  "resources/images/icons/vue.svg": {
+    "file": "assets/vue.606c4449.svg",
+    "src": "resources/images/icons/vue.svg"
+  },
+  "resources/js/app.js": {
+    "file": "assets/app.283046a2.js",
+    "src": "resources/js/app.js",
+    "isEntry": true
+  },
+  "resources/css/app.css": {
+    "file": "assets/app.07e4d33e.css",
+    "src": "resources/css/app.css",
+    "isEntry": true
+  }
+}
