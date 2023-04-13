@@ -1,70 +1,70 @@
-# Configuration
+# 構成
 
-- [Introduction](#introduction)
-- [Environment Configuration](#environment-configuration)
-    - [Environment Variable Types](#environment-variable-types)
-    - [Retrieving Environment Configuration](#retrieving-environment-configuration)
-    - [Determining The Current Environment](#determining-the-current-environment)
-    - [Encrypting Environment Files](#encrypting-environment-files)
-- [Accessing Configuration Values](#accessing-configuration-values)
-- [Configuration Caching](#configuration-caching)
-- [Debug Mode](#debug-mode)
-- [Maintenance Mode](#maintenance-mode)
+- [はじめに](#introduction)
+- [環境設定](#environment-configuration)
+     - [環境変数の種類](#environment-variable-types)
+     - [環境設定の取得](#環境設定の取得)
+     - [現在の環境の決定](#現在の環境の決定)
+     - [暗号化環境ファイル](#encrypting-environment-files)
+- [構成値へのアクセス](#accessing-configuration-values)
+- [構成キャッシング](#configuration-caching)
+- [デバッグモード](#debug-mode)
+- [メンテナンスモード](#メンテナンスモード)
 
 <a name="introduction"></a>
-## Introduction
+## はじめに
 
-All of the configuration files for the Laravel framework are stored in the `config` directory. Each option is documented, so feel free to look through the files and get familiar with the options available to you.
+Laravel フレームワークの設定ファイルはすべて `config` ディレクトリに保存されています。 各オプションは文書化されているので、ファイルに目を通して、使用可能なオプションをよく理解してください。
 
-These configuration files allow you to configure things like your database connection information, your mail server information, as well as various other core configuration values such as your application timezone and encryption key.
+これらの構成ファイルを使用すると、データベース接続情報、メールサーバー情報、およびアプリケーションのタイムゾーンや暗号化キーなどのその他のさまざまなコア構成値などを構成できます。
 
 <a name="application-overview"></a>
-#### Application Overview
+#### アプリケーションの概要
 
-In a hurry? You can get a quick overview of your application's configuration, drivers, and environment via the `about` Artisan command:
+お急ぎですか？ 「about」アーティザン コマンドを使用して、アプリケーションの構成、ドライバー、および環境の概要をすばやく取得できます。
 
-```shell
-php artisan about
+シェル
+php職人について
 ```
 
-If you're only interested in a particular section of the application overview output, you may filter for that section using the `--only` option:
+アプリケーションの概要出力の特定のセクションのみに関心がある場合は、`--only` オプションを使用してそのセクションをフィルタリングできます。
 
-```shell
+シェル
 php artisan about --only=environment
 ```
 
 <a name="environment-configuration"></a>
-## Environment Configuration
+## 環境設定
 
-It is often helpful to have different configuration values based on the environment where the application is running. For example, you may wish to use a different cache driver locally than you do on your production server.
+アプリケーションが実行されている環境に基づいて、異なる構成値を使用すると役立つことがよくあります。 たとえば、運用サーバーとは異なるキャッシュ ドライバーをローカルで使用したい場合があります。
 
-To make this a cinch, Laravel utilizes the [DotEnv](https://github.com/vlucas/phpdotenv) PHP library. In a fresh Laravel installation, the root directory of your application will contain a `.env.example` file that defines many common environment variables. During the Laravel installation process, this file will automatically be copied to `.env`.
+これを簡単にするために、Laravel は [DotEnv](https://github.com/vlucas/phpdotenv) PHP ライブラリを利用します。 新規の Laravel インストールでは、アプリケーションのルート ディレクトリには、多くの一般的な環境変数を定義する `.env.example` ファイルが含まれます。 Laravel のインストール プロセス中に、このファイルは自動的に `.env` にコピーされます。
 
-Laravel's default `.env` file contains some common configuration values that may differ based on whether your application is running locally or on a production web server. These values are then retrieved from various Laravel configuration files within the `config` directory using Laravel's `env` function.
+Laravel のデフォルトの `.env` ファイルには、アプリケーションがローカルで実行されているか、実動 Web サーバーで実行されているかによって異なる可能性がある、いくつかの一般的な構成値が含まれています。 これらの値は、Laravel の「env」関数を使用して、「config」ディレクトリ内のさまざまな Laravel 構成ファイルから取得されます。
 
-If you are developing with a team, you may wish to continue including a `.env.example` file with your application. By putting placeholder values in the example configuration file, other developers on your team can clearly see which environment variables are needed to run your application.
+チームで開発している場合は、引き続き `.env.example` ファイルをアプリケーションに含めることをお勧めします。 サンプル構成ファイルにプレースホルダー値を入れることで、チームの他の開発者は、アプリケーションの実行に必要な環境変数を明確に確認できます。
 
-> **Note**  
-> Any variable in your `.env` file can be overridden by external environment variables such as server-level or system-level environment variables.
+> **注**
+> `.env` ファイル内の任意の変数は、サーバー レベルまたはシステム レベルの環境変数などの外部環境変数によって上書きできます。
 
 <a name="environment-file-security"></a>
-#### Environment File Security
+#### 環境ファイルのセキュリティ
 
-Your `.env` file should not be committed to your application's source control, since each developer / server using your application could require a different environment configuration. Furthermore, this would be a security risk in the event an intruder gains access to your source control repository, since any sensitive credentials would get exposed.
+アプリケーションを使用する各開発者/サーバーは異なる環境構成を必要とする可能性があるため、`.env` ファイルはアプリケーションのソース管理にコミットしないでください。 さらに、侵入者がソース管理リポジトリへのアクセスを取得した場合、機密性の高い資格情報が公開されるため、これはセキュリティ リスクになります。
 
-However, it is possible to encrypt your environment file using Laravel's built-in [environment encryption](#encrypting-environment-files). Encrypted environment files may be placed in source control safely.
+ただし、Laravel の組み込みの [環境暗号化](#encrypting-environment-files) を使用して環境ファイルを暗号化することは可能です。 暗号化された環境ファイルは、ソース管理に安全に配置できます。
 
-<a name="additional-environment-files"></a>
-#### Additional Environment Files
+<a name="追加環境ファイル"></a>
+#### 追加の環境ファイル
 
-Before loading your application's environment variables, Laravel determines if an `APP_ENV` environment variable has been externally provided or if the `--env` CLI argument has been specified. If so, Laravel will attempt to load an `.env.[APP_ENV]` file if it exists. If it does not exist, the default `.env` file will be loaded.
+アプリケーションの環境変数をロードする前に、Laravel は `APP_ENV` 環境変数が外部から提供されているかどうか、または `--env` CLI 引数が指定されているかどうかを判断します。 その場合、Laravel は `.env.[APP_ENV]` ファイルが存在する場合はそれをロードしようとします。 存在しない場合は、デフォルトの `.env` ファイルがロードされます。
 
 <a name="environment-variable-types"></a>
-### Environment Variable Types
+### 環境変数の種類
 
-All variables in your `.env` files are typically parsed as strings, so some reserved values have been created to allow you to return a wider range of types from the `env()` function:
+`.env` ファイル内のすべての変数は、通常、文字列として解析されるため、`env()` 関数からより広い範囲の型を返すことができるように、いくつかの予約値が作成されています。
 
-| `.env` Value | `env()` Value |
+| `.env` 値 | `env()` 値 |
 |--------------|---------------|
 | true         | (bool) true   |
 | (true)       | (bool) true   |
@@ -75,7 +75,7 @@ All variables in your `.env` files are typically parsed as strings, so some rese
 | null         | (null) null   |
 | (null)       | (null) null   |
 
-If you need to define an environment variable with a value that contains spaces, you may do so by enclosing the value in double quotes:
+スペースを含む値で環境変数を定義する必要がある場合は、値を二重引用符で囲んでください。
 
 ```ini
 APP_NAME="My Application"
