@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>{{ isset($title) ? $title . ' - ' : null }}Laravel Bootcamp</title>
+        <title>{{ isset($title) ? $title . ' - ' : null }}Laradoc.jp</title>
 
         <!-- Primary Meta Tags -->
         <meta name="title" content="Laravel Bootcamp - Learn the PHP Framework for Web Artisans">
@@ -38,14 +39,17 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="https://use.typekit.net/ins2wgm.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
 
         <!-- Scripts & Styles -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
         @production
-            <!-- Fathom - beautiful, simple website analytics -->
-            <script src="https://cdn.usefathom.com/script.js" data-site="KRRQTWHM" defer></script>
-            <!-- / Fathom -->
+        <!-- Fathom - beautiful, simple website analytics -->
+        <script src="https://cdn.usefathom.com/script.js" data-site="KRRQTWHM" defer></script>
+        <!-- / Fathom -->
         @endproduction
 
         <script>
@@ -89,10 +93,11 @@
             updateTheme();
         </script>
     </head>
+
     <body
-        x-data="{ navIsOpen: false }"
-        class="font-sans text-gray-900 antialiased"
-    >
+          x-data="{ navIsOpen: false }"
+          class="font-sans antialiased text-gray-900">
         @yield('content')
     </body>
+
 </html>

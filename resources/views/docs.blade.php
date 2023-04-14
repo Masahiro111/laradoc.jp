@@ -7,14 +7,14 @@
     <div class="relative lg:flex lg:items-start">
         <aside
                id="sidebar"
-               class="fixed top-0 bottom-0 left-0 z-20 hidden w-16 h-full min-h-screen overflow-hidden transition-all duration-300 bg-gradient-to-b from-gray-100 to-white lg:sticky lg:w-80 lg:shrink-0 lg:flex lg:flex-col lg:justify-end lg:items-end 2xl:max-w-lg 2xl:w-full dark:from-dark-800 dark:to-dark-700">
+               class="z-20 hidden w-16 h-full min-h-screen overflow-hidden transition-all duration-300 bg-gradient-to-b from-gray-100 to-white lg:sticky lg:w-80 lg:shrink-0 lg:flex lg:flex-col lg:justify-end lg:items-end 2xl:max-w-lg 2xl:w-full dark:from-dark-800 dark:to-dark-700">
             <div class="relative flex flex-col flex-1 min-h-0 xl:w-80">
                 <a href="/" class="flex items-center px-4 py-8 lg:px-8 xl:px-16">
                     <span class="hidden text-3xl font-medium text-red-500 lg:block">Laradoc.jp</span>
                 </a>
                 <div class="px-4 overflow-x-hidden overflow-y-auto lg:overflow-hidden lg:px-8 xl:px-16">
                     <nav id="indexed-nav" class="hidden lg:block lg:mt-4">
-                        <div class="docs_sidebar">
+                        <div class="docs_sidebar" style="font-family: 'Noto Sans JP', sans-serif;">
                             @include('documentation')
                         </div>
                     </nav>
@@ -199,7 +199,10 @@
                 </a>
             </div>
             <div class="mt-6 sm:mt-12">
-                <p class="max-w-sm text-xs text-gray-700 sm:text-sm dark:text-gray-500">Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in most web projects.</p>
+                <p class="max-w-sm text-xs text-gray-700 sm:text-sm dark:text-gray-500">
+                    {{-- Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in most web projects. --}}
+                    Laravel は、表現力豊かで洗練された構文を備えた Web アプリケーション フレームワークです。 開発が真に充実したものになるためには、楽しく創造的な経験でなければならないと考えています。 Laravel は、ほとんどの Web プロジェクトで使用される一般的なタスクを緩和することで、開発の苦痛を取り除こうとします。
+                </p>
                 <ul class="flex items-center mt-6 space-x-3">
                     <li>
                         <a href="https://twitter.com/laravelphp">
