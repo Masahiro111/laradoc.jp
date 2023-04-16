@@ -1,178 +1,178 @@
-# Directory Structure
+# ディレクトリ構造
 
-- [Introduction](#introduction)
-- [The Root Directory](#the-root-directory)
-    - [The `app` Directory](#the-root-app-directory)
-    - [The `bootstrap` Directory](#the-bootstrap-directory)
-    - [The `config` Directory](#the-config-directory)
-    - [The `database` Directory](#the-database-directory)
-    - [The `public` Directory](#the-public-directory)
-    - [The `resources` Directory](#the-resources-directory)
-    - [The `routes` Directory](#the-routes-directory)
-    - [The `storage` Directory](#the-storage-directory)
-    - [The `tests` Directory](#the-tests-directory)
-    - [The `vendor` Directory](#the-vendor-directory)
-- [The App Directory](#the-app-directory)
-    - [The `Broadcasting` Directory](#the-broadcasting-directory)
-    - [The `Console` Directory](#the-console-directory)
-    - [The `Events` Directory](#the-events-directory)
-    - [The `Exceptions` Directory](#the-exceptions-directory)
-    - [The `Http` Directory](#the-http-directory)
-    - [The `Jobs` Directory](#the-jobs-directory)
-    - [The `Listeners` Directory](#the-listeners-directory)
-    - [The `Mail` Directory](#the-mail-directory)
-    - [The `Models` Directory](#the-models-directory)
-    - [The `Notifications` Directory](#the-notifications-directory)
-    - [The `Policies` Directory](#the-policies-directory)
-    - [The `Providers` Directory](#the-providers-directory)
-    - [The `Rules` Directory](#the-rules-directory)
+- [はじめに](#introduction)
+- [プロジェクトルートディレクトリ](#the-root-directory)
+     - [`app` ディレクトリ](#the-root-app-directory)
+     - [`bootstrap` ディレクトリ](#the-bootstrap-directory)
+     - [`config` ディレクトリ](#the-config-directory)
+     - [`database` ディレクトリ](#the-database-directory)
+     - [`public` ディレクトリ](#the-public-directory)
+     - [`resources` ディレクトリ](#the-resources-directory)
+     - [`routes` ディレクトリ](#the-routes-directory)
+     - [`storage` ディレクトリ](#the-storage-directory)
+     - [`tests` ディレクトリ](#the-tests-directory)
+     - [`vendor` ディレクトリ](#the-vendor-directory)
+- [App ディレクトリ](#the-app-directory)
+     - [`Broadcasting` ディレクトリ](#the-broadcasting-directory)
+     - [`Console` ディレクトリ](#the-console-directory)
+     - [`Events` ディレクトリ](#the-events-directory)
+     - [`Exceptions` ディレクトリ](#the-exceptions-directory)
+     - [`Http` ディレクトリ](#the-http-directory)
+     - [`Jobs` ディレクトリ](#the-jobs-directory)
+     - [`Listeners` ディレクトリ](#the-listeners-directory)
+     - [`Mail` ディレクトリ](#the-mail-directory)
+     - [`Models` ディレクトリ](#the-models-directory)
+     - [`Notifications` ディレクトリ](#the-notifications-directory)
+     - [`Policies` ディレクトリ](#the-policies-directory)
+     - [`Providers` ディレクトリ](#the-providers-directory)
+     - [`Rules` ディレクトリ](#the-rules-directory)
 
 <a name="introduction"></a>
-## Introduction
+＃＃ はじめに
 
-The default Laravel application structure is intended to provide a great starting point for both large and small applications. But you are free to organize your application however you like. Laravel imposes almost no restrictions on where any given class is located - as long as Composer can autoload the class.
+デフォルトの Laravel アプリケーション構造は、大規模・小規模なアプリケーションのどちらにも適した優れた出発点を提供することを目的としています。しかし、アプリケーションの構成は自由に変更して構いません。Laravel は、Composer がクラスを自動読み込みできる限り、特定のクラスがどこにあるかにほとんど制限を設けていません。
 
 > **Note**
-> New to Laravel? Check out the [Laravel Bootcamp](https://bootcamp.laravel.com) for a hands-on tour of the framework while we walk you through building your first Laravel application.
+> Laravel は初めてですか？[Laravel Bootcamp](https://bootcamp.laravel.com) でフレームワークを実際に使いながら最初の Laravel アプリケーションを作成するプロセスを学びましょう
 
 <a name="the-root-directory"></a>
-## The Root Directory
+## プロジェクトルートディレクトリ
 
 <a name="the-root-app-directory"></a>
-#### The App Directory
+#### app ディレクトリ
 
-The `app` directory contains the core code of your application. We'll explore this directory in more detail soon; however, almost all of the classes in your application will be in this directory.
+`app` ディレクトリには、アプリケーションのコアコードが含まれています。このディレクトリは後ほど詳しく説明しますが、アプリケーションのほぼすべてのクラスがこのディレクトリに存在します。
 
 <a name="the-bootstrap-directory"></a>
-#### The Bootstrap Directory
+#### bootstrap ディレクトリ
 
-The `bootstrap` directory contains the `app.php` file which bootstraps the framework. This directory also houses a `cache` directory which contains framework generated files for performance optimization such as the route and services cache files. You should not typically need to modify any files within this directory.
+`bootstrap` ディレクトリには、フレームワークをブートストラップする `app.php` ファイルが含まれています。このディレクトリには、ルートキャッシュやサービスキャッシュファイルなどのパフォーマンス最適化のためのフレームワーク生成ファイルを格納する `cache` ディレクトリも含まれています。通常、このディレクトリ内のファイルを変更する必要はありません。
 
 <a name="the-config-directory"></a>
-#### The Config Directory
+#### config ディレクトリ
 
-The `config` directory, as the name implies, contains all of your application's configuration files. It's a great idea to read through all of these files and familiarize yourself with all of the options available to you.
+「config」ディレクトリには、その名前が示すようにアプリケーションの構成ファイルがすべて含まれています。これらのファイルをすべて読み込んで、利用可能なオプションを把握することが良いでしょう。
 
 <a name="the-database-directory"></a>
-#### The Database Directory
+#### database ディレクトリ
 
-The `database` directory contains your database migrations, model factories, and seeds. If you wish, you may also use this directory to hold an SQLite database.
+`database` データベースのマイグレーション、モデルファクトリ、およびシードが含まれています。必要に応じて、このディレクトリに `SQLite` データベースを格納することもできます。
 
 <a name="the-public-directory"></a>
-#### The Public Directory
+#### public ディレクトリ
 
-The `public` directory contains the `index.php` file, which is the entry point for all requests entering your application and configures autoloading. This directory also houses your assets such as images, JavaScript, and CSS.
+`public` ディレクトリには `index.php` ファイルが含まれており、アプリケーションに入るすべてのリクエストのエントリーポイントであり、オートロードを設定します。このディレクトリには、画像、JavaScript、CSSなどのアセットも格納されています。
 
 <a name="the-resources-directory"></a>
-#### The Resources Directory
+#### resources ディレクトリ
 
-The `resources` directory contains your [views](/docs/{{version}}/views) as well as your raw, un-compiled assets such as CSS or JavaScript.
+`resources` ディレクトリには、[views](/laravel10_ja/views) と、CSS や JavaScript などの未コンパイルのアセットが含まれています。
 
 <a name="the-routes-directory"></a>
-#### The Routes Directory
+#### routes ディレクトリ
 
-The `routes` directory contains all of the route definitions for your application. By default, several route files are included with Laravel: `web.php`, `api.php`, `console.php`, and `channels.php`.
+`routes` ディレクトリには、アプリケーションのすべてのルート定義が含まれています。 デフォルトで複数のルートファイルが含まれています。（`web.php`、`api.php`、`console.php`、`channels.php`）
 
-The `web.php` file contains routes that the `RouteServiceProvider` places in the `web` middleware group, which provides session state, CSRF protection, and cookie encryption. If your application does not offer a stateless, RESTful API then all your routes will most likely be defined in the `web.php` file.
+`web.php` ファイルには、`RouteServiceProvider` が `web` ミドルウェアグループに配置するルートが含まれており、セッション状態、CSRF 保護、および Cookie 暗号化が提供されます。 アプリケーションがステートレスな RESTful API を提供しない場合、すべてのルートはおそらく `web.php` ファイルに定義されるでしょう。
 
-The `api.php` file contains routes that the `RouteServiceProvider` places in the `api` middleware group. These routes are intended to be stateless, so requests entering the application through these routes are intended to be authenticated [via tokens](/docs/{{version}}/sanctum) and will not have access to session state.
+`api.php` ファイルには、`RouteServiceProvider` が `api` ミドルウェアグループに配置するルートが含まれています。これらのルートはステートレスを意図しており、これらのルートを通じてアプリケーションに入るリクエストは、[トークン経由](/laravel10_ja/sanctum) で認証され、セッション状態にアクセスできません。
 
-The `console.php` file is where you may define all of your closure based console commands. Each closure is bound to a command instance allowing a simple approach to interacting with each command's IO methods. Even though this file does not define HTTP routes, it defines console based entry points (routes) into your application.
+`console.php` ファイルは、クロージャベースのコンソールコマンドをすべて定義できます。各クロージャはコマンドインスタンスにバインドされており、各コマンドの IO メソッドとのやり取りを簡単にするアプローチが提供されます。このファイルは HTTP ルートを定義していませんが、アプリケーションへのコンソールベースのエントリーポイント（ルート）を定義しています。
 
-The `channels.php` file is where you may register all of the [event broadcasting](/docs/{{version}}/broadcasting) channels that your application supports.
+`channels.php` ファイルは、アプリケーションがサポートするすべての [イベントブロードキャスト](/laravel10_ja/broadcasting) チャネルを登録できる場所です。
 
 <a name="the-storage-directory"></a>
-#### The Storage Directory
+#### storage ディレクトリ
 
-The `storage` directory contains your logs, compiled Blade templates, file based sessions, file caches, and other files generated by the framework. This directory is segregated into `app`, `framework`, and `logs` directories. The `app` directory may be used to store any files generated by your application. The `framework` directory is used to store framework generated files and caches. Finally, the `logs` directory contains your application's log files.
+`storage` ディレクトリには、ログ、コンパイルされた Blade テンプレート、ファイル ベースのセッション、ファイル キャッシュ、およびフレームワークによって生成されたその他のファイルが含まれます。 このディレクトリは、「app」、「framework」、および「logs」ディレクトリに分離されています。 `app` ディレクトリは、アプリケーションによって生成されたファイルを保存するために使用できます。 `framework` ディレクトリは、フレームワークで生成されたファイルとキャッシュを格納するために使用されます。 最後に、`logs` ディレクトリにはアプリケーションのログ ファイルが含まれます。
 
-The `storage/app/public` directory may be used to store user-generated files, such as profile avatars, that should be publicly accessible. You should create a symbolic link at `public/storage` which points to this directory. You may create the link using the `php artisan storage:link` Artisan command.
+`storage/app/public` ディレクトリは、ユーザーが生成したファイル (プロファイル アバターなど) を格納するために使用できます。 このディレクトリを指す `public/storage` にシンボリック リンクを作成する必要があります。 `php artisan storage:link` Artisan コマンドを使用してリンクを作成できます。
 
 <a name="the-tests-directory"></a>
-#### The Tests Directory
+#### テスト ディレクトリ
 
-The `tests` directory contains your automated tests. Example [PHPUnit](https://phpunit.de/) unit tests and feature tests are provided out of the box. Each test class should be suffixed with the word `Test`. You may run your tests using the `phpunit` or `php vendor/bin/phpunit` commands. Or, if you would like a more detailed and beautiful representation of your test results, you may run your tests using the `php artisan test` Artisan command.
+`tests` ディレクトリには、自動化されたテストが含まれています。 例 [PHPUnit](https://phpunit.de/) 単体テストと機能テストは、すぐに使用できます。 各テスト クラスには、`Test` という単語を接尾辞として付ける必要があります。 `phpunit` または `php vendor/bin/phpunit` コマンドを使用してテストを実行できます。 または、テスト結果のより詳細で美しい表現が必要な場合は、`php artisan test` Artisan コマンドを使用してテストを実行できます。
 
 <a name="the-vendor-directory"></a>
-#### The Vendor Directory
+#### ベンダー ディレクトリ
 
-The `vendor` directory contains your [Composer](https://getcomposer.org) dependencies.
+`vendor` ディレクトリには、[Composer](https://getcomposer.org) の依存関係が含まれています。
 
 <a name="the-app-directory"></a>
-## The App Directory
+## App ディレクトリ
 
-The majority of your application is housed in the `app` directory. By default, this directory is namespaced under `App` and is autoloaded by Composer using the [PSR-4 autoloading standard](https://www.php-fig.org/psr/psr-4/).
+アプリケーションの大部分は、`app` ディレクトリに格納されています。 デフォルトでは、このディレクトリは「App」の下に名前空間があり、[PSR-4 自動ロード標準](https://www.php-fig.org/psr/psr-4/) を使用して Composer によって自動ロードされます。
 
-The `app` directory contains a variety of additional directories such as `Console`, `Http`, and `Providers`. Think of the `Console` and `Http` directories as providing an API into the core of your application. The HTTP protocol and CLI are both mechanisms to interact with your application, but do not actually contain application logic. In other words, they are two ways of issuing commands to your application. The `Console` directory contains all of your Artisan commands, while the `Http` directory contains your controllers, middleware, and requests.
+`app` ディレクトリには、`Console`、`Http`、`Providers` などのさまざまな追加ディレクトリが含まれています。 `Console` および `Http` ディレクトリは、アプリケーションのコアに API を提供するものと考えてください。 HTTP プロトコルと CLI はどちらもアプリケーションとやり取りするためのメカニズムですが、実際にはアプリケーション ロジックは含まれていません。 つまり、これらはアプリケーションにコマンドを発行する 2 つの方法です。 `Console` ディレクトリにはすべての Artisan コマンドが含まれ、`Http` ディレクトリにはコントローラ、ミドルウェア、およびリクエストが含まれます。
 
-A variety of other directories will be generated inside the `app` directory as you use the `make` Artisan commands to generate classes. So, for example, the `app/Jobs` directory will not exist until you execute the `make:job` Artisan command to generate a job class.
+`make` Artisan コマンドを使用してクラスを生成すると、`app` ディレクトリ内に他のさまざまなディレクトリが生成されます。 したがって、たとえば、`make:job` Artisan コマンドを実行してジョブ クラスを生成するまで、`app/Jobs` ディレクトリは存在しません。
 
-> **Note**  
-> Many of the classes in the `app` directory can be generated by Artisan via commands. To review the available commands, run the `php artisan list make` command in your terminal.
+> **注**
+> `app` ディレクトリ内のクラスの多くは、Artisan によってコマンドを介して生成できます。 利用可能なコマンドを確認するには、ターミナルで「php artisan list make」コマンドを実行します。
 
 <a name="the-broadcasting-directory"></a>
-#### The Broadcasting Directory
+#### 放送ディレクトリ
 
-The `Broadcasting` directory contains all of the broadcast channel classes for your application. These classes are generated using the `make:channel` command. This directory does not exist by default, but will be created for you when you create your first channel. To learn more about channels, check out the documentation on [event broadcasting](/docs/{{version}}/broadcasting).
+`Broadcasting` ディレクトリには、アプリケーションのブロードキャスト チャネル クラスがすべて含まれています。 これらのクラスは、`make:channel` コマンドを使用して生成されます。 このディレクトリはデフォルトでは存在しませんが、最初のチャネルを作成するときに作成されます。 チャネルの詳細については、[イベント ブロードキャスト](/docs/{{version}}/broadcasting) のドキュメントをご覧ください。
 
 <a name="the-console-directory"></a>
-#### The Console Directory
+#### コンソール ディレクトリ
 
-The `Console` directory contains all of the custom Artisan commands for your application. These commands may be generated using the `make:command` command. This directory also houses your console kernel, which is where your custom Artisan commands are registered and your [scheduled tasks](/docs/{{version}}/scheduling) are defined.
+`Console` ディレクトリには、アプリケーション用のすべてのカスタム Artisan コマンドが含まれています。 これらのコマンドは、`make:command` コマンドを使用して生成できます。 このディレクトリには、カスタム Artisan コマンドが登録され、[スケジュールされたタスク](/docs/{{version}}/scheduling) が定義されるコンソール カーネルも格納されます。
 
 <a name="the-events-directory"></a>
-#### The Events Directory
+#### イベント ディレクトリ
 
-This directory does not exist by default, but will be created for you by the `event:generate` and `make:event` Artisan commands. The `Events` directory houses [event classes](/docs/{{version}}/events). Events may be used to alert other parts of your application that a given action has occurred, providing a great deal of flexibility and decoupling.
+このディレクトリはデフォルトでは存在しませんが、`event:generate` および `make:event` Artisan コマンドによって作成されます。 `Events` ディレクトリには、[イベント クラス](/docs/{{version}}/events) が格納されています。 イベントを使用して、特定のアクションが発生したことをアプリケーションの他の部分に警告し、柔軟性と分離を大幅に向上させることができます。
 
 <a name="the-exceptions-directory"></a>
-#### The Exceptions Directory
+#### 例外ディレクトリ
 
-The `Exceptions` directory contains your application's exception handler and is also a good place to place any exceptions thrown by your application. If you would like to customize how your exceptions are logged or rendered, you should modify the `Handler` class in this directory.
+`Exceptions` ディレクトリには、アプリケーションの例外ハンドラが含まれており、アプリケーションによってスローされた例外を配置するのにも適しています。 例外のログまたはレンダリング方法をカスタマイズしたい場合は、このディレクトリの `Handler` クラスを変更する必要があります。
 
 <a name="the-http-directory"></a>
-#### The Http Directory
+#### HTTP ディレクトリ
 
-The `Http` directory contains your controllers, middleware, and form requests. Almost all of the logic to handle requests entering your application will be placed in this directory.
+`Http` ディレクトリには、コントローラ、ミドルウェア、およびフォーム リクエストが含まれています。 アプリケーションに入るリクエストを処理するほとんどすべてのロジックは、このディレクトリに配置されます。
 
 <a name="the-jobs-directory"></a>
-#### The Jobs Directory
+#### ジョブ ディレクトリ
 
-This directory does not exist by default, but will be created for you if you execute the `make:job` Artisan command. The `Jobs` directory houses the [queueable jobs](/docs/{{version}}/queues) for your application. Jobs may be queued by your application or run synchronously within the current request lifecycle. Jobs that run synchronously during the current request are sometimes referred to as "commands" since they are an implementation of the [command pattern](https://en.wikipedia.org/wiki/Command_pattern).
+このディレクトリはデフォルトでは存在しませんが、`make:job` Artisan コマンドを実行すると作成されます。 `Jobs` ディレクトリには、アプリケーションの [キュー可能なジョブ](/docs/{{version}}/queues) が格納されています。 ジョブは、アプリケーションによってキューに入れられるか、現在のリクエスト ライフサイクル内で同期的に実行されます。 現在のリクエスト中に同期的に実行されるジョブは、[コマンド パターン](https://en.wikipedia.org/wiki/Command_pattern) の実装であるため、「コマンド」と呼ばれることがあります。
 
 <a name="the-listeners-directory"></a>
-#### The Listeners Directory
+#### リスナー ディレクトリ
 
-This directory does not exist by default, but will be created for you if you execute the `event:generate` or `make:listener` Artisan commands. The `Listeners` directory contains the classes that handle your [events](/docs/{{version}}/events). Event listeners receive an event instance and perform logic in response to the event being fired. For example, a `UserRegistered` event might be handled by a `SendWelcomeEmail` listener.
+このディレクトリはデフォルトでは存在しませんが、`event:generate` または `make:listener` Artisan コマンドを実行すると作成されます。 `Listeners` ディレクトリには、[イベント](/docs/{{version}}/events) を処理するクラスが含まれています。 イベント リスナーは、イベント インスタンスを受け取り、発生したイベントに応答してロジックを実行します。 たとえば、「UserRegistered」イベントは「SendWelcomeEmail」リスナーによって処理される場合があります。
 
 <a name="the-mail-directory"></a>
-#### The Mail Directory
+#### メールディレクトリ
 
-This directory does not exist by default, but will be created for you if you execute the `make:mail` Artisan command. The `Mail` directory contains all of your [classes that represent emails](/docs/{{version}}/mail) sent by your application. Mail objects allow you to encapsulate all of the logic of building an email in a single, simple class that may be sent using the `Mail::send` method.
+このディレクトリはデフォルトでは存在しませんが、`make:mail` Artisan コマンドを実行すると作成されます。 `Mail` ディレクトリには、アプリケーションから送信された [メールを表すクラス](/docs/{{version}}/mail) がすべて含まれています。 Mail オブジェクトを使用すると、`Mail::send` メソッドを使用して送信できる単一の単純なクラスにメールを作成するすべてのロジックをカプセル化できます。
 
 <a name="the-models-directory"></a>
-#### The Models Directory
+#### モデル ディレクトリ
 
-The `Models` directory contains all of your [Eloquent model classes](/docs/{{version}}/eloquent). The Eloquent ORM included with Laravel provides a beautiful, simple ActiveRecord implementation for working with your database. Each database table has a corresponding "Model" which is used to interact with that table. Models allow you to query for data in your tables, as well as insert new records into the table.
+`Models` ディレクトリには、すべての [Eloquent モデル クラス](/docs/{{version}}/eloquent) が含まれています。 Laravel に含まれる Eloquent ORM は、データベースを操作するための美しくシンプルな ActiveRecord 実装を提供します。 各データベース テーブルには、そのテーブルとの対話に使用される対応する「モデル」があります。 モデルを使用すると、テーブル内のデータをクエリしたり、新しいレコードをテーブルに挿入したりできます。
 
 <a name="the-notifications-directory"></a>
-#### The Notifications Directory
+#### 通知ディレクトリ
 
-This directory does not exist by default, but will be created for you if you execute the `make:notification` Artisan command. The `Notifications` directory contains all of the "transactional" [notifications](/docs/{{version}}/notifications) that are sent by your application, such as simple notifications about events that happen within your application. Laravel's notification feature abstracts sending notifications over a variety of drivers such as email, Slack, SMS, or stored in a database.
+このディレクトリはデフォルトでは存在しませんが、`make:notification` Artisan コマンドを実行すると作成されます。 `Notifications` ディレクトリには、アプリケーション内で発生するイベントに関する単純な通知など、アプリケーションによって送信されるすべての「トランザクション」[通知](/docs/{{version}}/notifications) が含まれます。 Laravel の通知機能は、電子メール、Slack、SMS、またはデータベースに保存されたさまざまなドライバーを介して通知を送信することを抽象化します。
 
 <a name="the-policies-directory"></a>
-#### The Policies Directory
+#### ポリシー ディレクトリ
 
-This directory does not exist by default, but will be created for you if you execute the `make:policy` Artisan command. The `Policies` directory contains the [authorization policy classes](/docs/{{version}}/authorization) for your application. Policies are used to determine if a user can perform a given action against a resource.
+このディレクトリはデフォルトでは存在しませんが、`make:policy` Artisan コマンドを実行すると作成されます。 `Policies` ディレクトリには、アプリケーションの [認可ポリシー クラス](/docs/{{version}}/authorization) が含まれています。 ポリシーは、ユーザーがリソースに対して特定のアクションを実行できるかどうかを判断するために使用されます。
 
 <a name="the-providers-directory"></a>
-#### The Providers Directory
+#### プロバイダー ディレクトリ
 
-The `Providers` directory contains all of the [service providers](/docs/{{version}}/providers) for your application. Service providers bootstrap your application by binding services in the service container, registering events, or performing any other tasks to prepare your application for incoming requests.
+`Providers` ディレクトリには、アプリケーションのすべての [サービス プロバイダ](/docs/{{version}}/providers) が含まれています。 サービス プロバイダーは、サービス コンテナーでサービスをバインドしたり、イベントを登録したり、その他のタスクを実行したりして、アプリケーションを受信要求に備えて準備することにより、アプリケーションをブートストラップします。
 
-In a fresh Laravel application, this directory will already contain several providers. You are free to add your own providers to this directory as needed.
+新しい Laravel アプリケーションでは、このディレクトリにはすでにいくつかのプロバイダーが含まれています。 必要に応じて、独自のプロバイダーをこのディレクトリに自由に追加できます。
 
 <a name="the-rules-directory"></a>
-#### The Rules Directory
+#### ルール ディレクトリ
 
-This directory does not exist by default, but will be created for you if you execute the `make:rule` Artisan command. The `Rules` directory contains the custom validation rule objects for your application. Rules are used to encapsulate complicated validation logic in a simple object. For more information, check out the [validation documentation](/docs/{{version}}/validation).
+このディレクトリはデフォルトでは存在しませんが、`make:rule` Artisan コマンドを実行すると作成されます。 `Rules` ディレクトリには、アプリケーションのカスタム検証ルール オブジェクトが含まれています。 ルールは、複雑な検証ロジックを単純なオブジェクトにカプセル化するために使用されます。 詳細については、[検証ドキュメント](/docs/{{version}}/validation)をご覧ください。
