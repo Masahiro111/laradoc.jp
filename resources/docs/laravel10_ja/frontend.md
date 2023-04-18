@@ -109,66 +109,66 @@ PHP と Livewire を使用してフロントエンドを構築する場合は、
 
 Laravel と Livewire を使用して最新のフロントエンドを構築することは可能ですが、多くの開発者は依然として Vue や React などの JavaScript フレームワークの機能を活用することを好みます。 これにより、開発者は、NPM 経由で利用できる JavaScript パッケージとツールの豊富なエコシステムを活用できます。
 
-ただし、追加のツールがなければ、Laravel を Vue または React と組み合わせると、クライアント側のルーティング、データ ハイドレーション、認証など、さまざまな複雑な問題を解決する必要が生じます。 クライアント側のルーティングは、多くの場合、[Nuxt](https://nuxtjs.org/) や [Next](https://nextjs.org/) などの独自の Vue / React フレームワークを使用して簡素化されます。 ただし、Laravel のようなバックエンド フレームワークをこれらのフロントエンド フレームワークと組み合わせる場合、データのハイドレーションと認証は依然として複雑で面倒な問題です。
+ただし、追加のツールがなければ、Laravel を Vue または React と組み合わせると、クライアント側のルーティング、データ ハイドレーション、認証など、さまざまな複雑な問題を解決する必要が生じます。 クライアント側のルーティングは、多くの場合、[Nuxt](https://nuxtjs.org/) や [Next](https://nextjs.org/) などの独自の Vue / React フレームワークを使用して簡素化されます。ただし、Laravel のようなバックエンドフレームワークをこれらのフロントエンドフレームワークと組み合わせる場合、データのハイドレーションと認証は依然として複雑で面倒な問題です。
 
-さらに、開発者は 2 つの別個のコード リポジトリを維持する必要があり、多くの場合、両方のリポジトリ間でメンテナンス、リリース、および展開を調整する必要があります。 これらの問題は克服できないわけではありませんが、アプリケーションを開発するための生産的または楽しい方法ではないと考えています。
+さらに、開発者は 2 つの別個のコードリポジトリを維持する必要があり、多くの場合、両方のリポジトリ間でメンテナンス、リリース、および展開を調整する必要があります。これらの問題は克服できないわけではありませんが、アプリケーションを開発するための生産的または楽しい方法ではないと考えています。
 
 <a name="inertia"></a>
-### 慣性
+### Inertia
 
-ありがたいことに、Laravel は両方の長所を提供します。 [Inertia](https://inertiajs.com) は、Laravel アプリケーションと最新の Vue または React フロントエンドの間のギャップを埋め、Laravel のルートとコントローラーをルーティングに活用しながら、Vue または React を使用して本格的な最新のフロントエンドを構築できるようにします。 データ ハイドレーションと認証 — すべてが単一のコード リポジトリ内にあります。 このアプローチにより、Laravel と Vue / React の両方の機能を損なうことなく、両方の機能を最大限に活用できます。
+ありがたいことに、Laravel は両方の長所を提供します。[Inertia](https://inertiajs.com) は、Laravel アプリケーションと最新の Vue または React フロントエンドの間のギャップを埋め、Laravel のルートとコントローラーをルーティングに活用しながら、Vue または React を使用して本格的な最新のフロントエンドを構築できるようにします。データハイドレーションと認証 — すべてが単一のコード リポジトリ内にあります。このアプローチにより、Laravel と Vue / React の両方の機能を損なうことなく、両方の機能を最大限に活用できます。
 
-Inertia を Laravel アプリケーションにインストールしたら、通常どおりルートとコントローラーを記述します。 ただし、コントローラーから Blade テンプレートを返す代わりに、Inertia ページを返します。
+Inertia を Laravel アプリケーションにインストールしたら、通常どおりルートとコントローラーを記述します。ただし、コントローラーから Blade テンプレートを返す代わりに、Inertia ページを返します。
 
-php
+```php
 <?php
 
-名前空間 App\Http\Controllers;
+namespace App\Http\Controllers;
 
-App\Http\Controllers\Controller を使用します。
-App\Models\User を使用します。
-慣性\慣性を使用します。
-Inertia\Response を使用します。
+use App\Http\Controllers\Controller;
+use App\Models\User;
+use Inertia\Inertia;
+use Inertia\Response;
 
-クラス UserController は Controller を拡張します
+class UserController extends Controller
 {
-     /**
-      * 特定のユーザーのプロフィールを表示します。
-      */
-     public function show(string $id): レスポンス
-     {
-         return Inertia::render('Users/Profile', [
-             'user' => ユーザー::findOrFail($id)
-         ]);
-     }
+    /**
+     * Show the profile for a given user.
+     */
+    public function show(string $id): Response
+    {
+        return Inertia::render('Users/Profile', [
+            'user' => User::findOrFail($id)
+        ]);
+    }
 }
 ```
 
-慣性ページは Vue または React コンポーネントに対応し、通常はアプリケーションの「resources/js/Pages」ディレクトリ内に保存されます。 `Inertia::render` メソッドを介してページに与えられたデータは、ページ コンポーネントの「小道具」を水和するために使用されます。
+慣性ページは Vue または React コンポーネントに対応し、通常はアプリケーションの「resources/js/Pages」ディレクトリ内に保存されます。`Inertia::render` メソッドを介してページに与えられたデータは、ページ コンポーネントの「小道具」を水和するために使用されます。
 
-```ビュー
-<スクリプト設定>
-「@/Layouts/Authenticated.vue」からレイアウトをインポートします。
-'@inertiajs/inertia-vue3' から { ヘッド } をインポートします。
+```vue
+<script setup>
+import Layout from '@/Layouts/Authenticated.vue';
+import { Head } from '@inertiajs/inertia-vue3';
 
 const props = defineProps(['user']);
 </script>
 
-<テンプレート>
-     <Head title="ユーザー プロフィール" />
+<template>
+    <Head title="User Profile" />
 
-     <レイアウト>
-         <テンプレート #ヘッダー>
-             <h2 class="text-xl font-semibold text-gray-800 reading-tight">
-                 プロフィール
-             </h2>
-         </テンプレート>
+    <Layout>
+        <template #header>
+            <h2 class="text-xl font-semibold leading-tight text-gray-800">
+                Profile
+            </h2>
+        </template>
 
-         <div class="py-12">
-             こんにちは、{{ user.name }}
-         </div>
-     </レイアウト>
-</テンプレート>
+        <div class="py-12">
+            Hello, {{ user.name }}
+        </div>
+    </Layout>
+</template>
 ```
 
 ご覧のとおり、Inertia を使用すると、フロントエンドを構築するときに Vue または React のフルパワーを活用しながら、Laravel を使用したバックエンドと JavaScript を使用したフロントエンドとの間に軽量のブリッジを提供できます。
