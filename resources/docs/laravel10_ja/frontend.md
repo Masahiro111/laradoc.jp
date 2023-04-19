@@ -144,7 +144,7 @@ class UserController extends Controller
 }
 ```
 
-慣性ページは Vue または React コンポーネントに対応し、通常はアプリケーションの「resources/js/Pages」ディレクトリ内に保存されます。`Inertia::render` メソッドを介してページに与えられたデータは、ページ コンポーネントの「小道具」を水和するために使用されます。
+Inertia ページは、Vue または React コンポーネントに対応し、通常はアプリケーションの `resources/js/Pages` ディレクトリ内に保存されます。`Inertia::render` メソッドでページに渡されるデータは、ページコンポーネントの「props」をハイドレートするために使用されます。
 
 ```vue
 <script setup>
@@ -171,25 +171,25 @@ const props = defineProps(['user']);
 </template>
 ```
 
-ご覧のとおり、Inertia を使用すると、フロントエンドを構築するときに Vue または React のフルパワーを活用しながら、Laravel を使用したバックエンドと JavaScript を使用したフロントエンドとの間に軽量のブリッジを提供できます。
+このように、Inertia を使えば、フロントエンドを構築する際に Vue や React の全機能を活用できるだけでなく、Laravel で動作するバックエンドと JavaScript で動作するフロントエンドとの間の軽量なブリッジを提供します。
 
-#### サーバー側のレンダリング
+#### サーバーサイドレンダリング
 
-アプリケーションでサーバー側のレンダリングが必要なために Inertia に飛び込むことを心配している場合でも、心配する必要はありません。 Inertia は [サーバー側レンダリングのサポート] (https://inertiajs.com/server-side-rendering) を提供します。 また、[Laravel Forge](https://forge.laravel.com) を介してアプリケーションをデプロイする場合、Inertia のサーバー側レンダリング プロセスが常に実行されていることを確認するのは簡単です。
+もし Inertia を使ってアプリケーションを構築する際に、サーバーサイドレンダリングが必要で心配な場合でも、大丈夫です。Inertia は [サーバーサイドレンダリングのサポート] (https://inertiajs.com/server-side-rendering) を提供します。また、[Laravel Forge](https://forge.laravel.com) を使ってアプリケーションをデプロイする際に、Inertia のサーバーサイドレンダリングプロセスが常に実行されていることを簡単に確認できます。
 
 <a name="inertia-starter-kits"></a>
 ### スターター キット
 
-Inertia と Vue / React を使用してフロントエンドを構築したい場合は、Breeze または Jetstream [スターター キット](/docs/{{version}}/starter-kits#breeze-and-inertia) を活用してすぐに開始できます。 アプリケーションの開発。 これらのスターター キットは両方とも、Inertia、Vue / React、[Tailwind](https://tailwindcss.com)、および [Vite](https://vitejs.dev) を使用して、アプリケーションのバックエンドとフロントエンドの認証フローを足場にします。 次の大きなアイデアの構築を開始します。
+もし Inertia と Vue / React を使ってフロントエンドを構築したい場合は、Breeze または Jetstream の [スターター キット](/laravel10_ja/starter-kits#breeze-and-inertia) を利用して、アプリケーションの開発をすくに開始できます。これらのスターターキットは、Inertia、Vue / React、[Tailwind](https://tailwindcss.com)、および [Vite](https://vitejs.dev) を使用してアプリケーションのバックエンドとフロントエンドの認証フローをスキャフォールドし、次のビッグアイデアをすぐに構築できるようにします。
 
 <a name="bundling-assets"></a>
 ## アセットのバンドル
 
-Blade と Livewire を使用してフロントエンドを開発するか、Vue / React と Inertia を使用してフロントエンドを開発するかに関係なく、アプリケーションの CSS をプロダクション対応のアセットにバンドルする必要がある可能性があります。 もちろん、アプリケーションのフロントエンドを Vue または React で構築することを選択した場合は、コンポーネントをブラウザ対応の JavaScript アセットにバンドルする必要もあります。
+Blade と Livewire または Vue / React と Inertia を使ってフロントエンドを開発する場合に関係なく、アプリケーションの CSS をプロダクション用のアセットにバンドルする必要があります。もちろん、Vue や React を使ってアプリケーションのフロントエンドを構築する場合は、ブラウザで利用可能な JavaScript アセットにコンポーネントをバンドルする必要もあります。
 
-デフォルトでは、Laravel は [Vite](https://vitejs.dev) を利用してアセットをバンドルします。 Vite は、超高速のビルド時間と、ローカル開発中のほぼ瞬時のホット モジュール交換 (HMR) を提供します。 [スターター キット](/docs/{{version}}/starter-kits) を使用するものを含むすべての新しい Laravel アプリケーションには、軽量の Laravel Vite プラグインをロードする「vite.config.js」ファイルがあります。 これにより、Vite は Laravel アプリケーションで楽しく使用できます。
+デフォルトでは、Laravel は [Vite](https://vitejs.dev) を使ってアセットをバンドルします。Vite は、非常に高速なビルド時間と、ローカル開発時にほぼ瞬時に実行される Hot Module Replacement (HMR) を提供します。新しい Laravel アプリケーションでは、[スターターキット](/laravel10_ja/starter-kits) を含むすべてのアプリケーションで、Laravel Vite プラグインを読み込む `vite.config.js` ファイルが見つかります。このプラグインは軽量で、Laravel アプリケーションと Vite を使いやすくします。
 
-Laravel と Vite を開始する最も簡単な方法は、[Laravel Breeze](/docs/{{version}}/starter-kits#laravel-breeze) を使用してアプリケーションの開発を開始することです。これは、アプリケーションをすぐに開始できる最もシンプルなスターター キットです。 フロントエンドとバックエンドの認証足場を提供することによって。
+Laravel と Vite を使ってアプリケーションの開発を始める最速の方法は、[Laravel Breeze](/laravel10_ja/starter-kits#laravel-breeze) を使って始めることです。これは、フロントエンドとバックエンドの認証スキャフォールドを提供してアプリケーションをジャンプスタートする、最もシンプルなスターターキットです。
 
-> **注**
-> Laravel での Vite の利用に関する詳細なドキュメントについては、[アセットのバンドルとコンパイルに関する専用ドキュメント](/docs/{{version}}/vite) を参照してください。
+> **Note**
+> Laravel での Vite の利用に関する詳細なドキュメントについては、[アセットのバンドルとコンパイルに関する専用ドキュメント](/laravel10_ja/vite) を参照してください。
