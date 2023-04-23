@@ -11,49 +11,49 @@
 <a name="introduction"></a>
 ## はじめに
 
-新しい Laravel アプリケーションを構築するための手助けとして、認証とアプリケーションスターターキットを提供しています。これらのキットは、アプリケーションに必要なルート、コントローラー、ビューを自動的に生成し、ユーザーの登録と認証を可能にします。
+新しい Laravel アプリケーションを構築するための手助けとして、認証とアプリケーションスターターキットを提供しています。これらのキットは、アプリケーションのユーザ登録・認証するために必要なルート、コントローラー、ビューを自動的に生成します。
 
-これらのスターターキットを使用していただくことも歓迎しますが、必須ではありません。単に Laravel の新しいバージョンをインストールすることで、自分自身でアプリケーションを作成することもできます。いずれの場合でも、素晴らしいものが作れると思います。
+スターターキットを使うことは歓迎しますが、必須ではありません。新しい Laravel のインストールから始めて、独自のアプリケーションをゼロから構築することもできます。どちらにせよ、素晴らしいものが作れることを確信しています！
 
 <a name="laravel-breeze"></a>
 ## Laravel Breeze
 
-[Laravel Breeze](https://github.com/laravel/breeze) は、ログイン、ユーザ登録、パスワードリセット、メール認証、パスワード確認などを含む、Laravel のすべての [認証機能](/laravel10_ja/authentication) を最小限、かつシンプルに実装したものとなっています。さらに、Breeze には、ユーザーが自分の名前、電子メール アドレス、およびパスワードを更新できるシンプルな「プロフィール」ページが含まれています。
+[Laravel Breeze](https://github.com/laravel/breeze) は、ログイン、登録、パスワードリセット、メールアドレス確認、パスワード確認を含む Laravel の [認証機能](/laravel10_ja/authentication) をすべてシンプルかつ最小限に実装したものです。さらに、Breeze にはユーザーが名前、メールアドレス、パスワードを更新できるシンプルな「プロフィール」ページが含まれています。
 
-Laravel Breeze のデフォルトビューレイヤーは、[Tailwind CSS](https://tailwindcss.com) でスタイル設定されたシンプルな [Blade テンプレート](/laravel10_ja/blade) で構成されています。また、Breeze は、Vue や React と [Inertia](https://inertiajs.com) を使用してアプリケーションを自動生成することもできます。
+Laravel Breeze のデフォルトのビューレイヤーは、シンプルな [Blade テンプレート](/laravel10_ja/blade) を使用して [Tailwind CSS](https://tailwindcss.com) でスタイルが適用されています。また、Breeze は Vue または React を使用した [Inertia](https://inertiajs.com) を使ったアプリケーションのスケルトンを作成することもできます。
 
-Breeze は、新しい Laravel アプリケーションを始めるための素晴らしい出発点を提供し、[Laravel Livewire](https://laravel-livewire.com) を使用して Blade テンプレートを次のレベルに引き上げることを計画しているプロジェクトにも最適です。
+Breeze は、新しい Laravel アプリケーションを始めるのに最適なスタート地点であり、[Laravel Livewire](https://laravel-livewire.com) を使って Blade テンプレートを次のレベルに引き上げるプロジェクトにも適しています。
 
 <img src="https://laravel.com/img/docs/breeze-register.png">
 
 #### Laravel Bootcamp
 
-Laravel を初めて使用する場合は、[Laravel Bootcamp](https://bootcamp.laravel.com) に参加してみてください。。Laravel Bootcamp では、Breeze を使用して最初の Laravel アプリケーションを構築する手順を説明しています。Laravel と Breeze が提供するすべての機能を学ぶ良い方法となるでしょう。
+Laravel を初めて使用する場合は、[Laravel Bootcamp](https://bootcamp.laravel.com) に参加してみてください。。Laravel Bootcamp では、Breeze を使って最初の Laravel アプリケーションを構築する方法を学ぶことができます。Laravel と Breeze が提供するすべての機能を体験するのに最適な方法です。
 
 <a name="laravel-breeze-installation"></a>
 ### インストール
 
-まず、[新しい Laravel アプリケーションを作成](/laravel10_ja/installation) して、データベースを構成し、[データベースマイグレーション](/laravel10_ja/migrations) を実行する必要があります。新しい Laravel アプリケーションを作成したら、Composer を使用して Laravel Breeze をインストールできます。
+まず、[新しい Laravel アプリケーションを作成](/laravel10_ja/installation) して、データベースを構成し、[データベースマイグレーション](/laravel10_ja/migrations) を実行してください。新しい Laravel アプリケーションを作成したら、Composer を使用して Laravel Breeze をインストールできます。
 
 ```shell
 composer require laravel/breeze --dev
 ```
 
-Breeze をインストールしたら、以下のドキュメントで説明されている Breeze の「スタック」のいずれかを使用して、アプリケーションを自動生成することか可能です。
+Breeze をインストールしたら、以下のドキュメントで説明されている Breeze の「スタック」のいずれかを使用して、アプリケーションのスケルトンを作成できます。
 
 <a name="breeze-and-blade"></a>
 ### Breeze & Blade
 
-Composer が Laravel Breeze パッケージをインストールした後に、`breeze:install` Artisanコマンドを実行できます。このコマンドにより、認証ビュー、ルート、コントローラ、その他のリソースがアプリケーションに公開されます。Laravel Breeze はすべてのコードをアプリケーションに公開するため、機能と実装に完全な制御と可視性があります。
+Composer が Laravel Breeze パッケージをインストールしたら、`breeze:install` Artisan コマンドを実行できます。このコマンドは、認証ビュー、ルート、コントローラー、およびアプリケーションにその他のリソースを公開します。Laravel Breeze は、その機能と実装に関する完全な制御と可視性を持つために、すべてのコードをアプリケーションに公開します。
 
-デフォルトの Breeze の「スタック」は Blade スタックで、シンプルな [Blade テンプレート](/docs/{{version}}/blade) を使用してアプリケーションのフロントエンドをレンダリングします。 Blade スタックは、他の引数を指定せずに「breeze:install」コマンドを呼び出すことでインストールできます。 Breeze のスキャフォールディングをインストールしたら、アプリケーションのフロントエンド アセットもコンパイルする必要があります。
+デフォルトの Breeze "スタック" は Blade スタックで、シンプルな [Blade テンプレート](/docs/{{version}}/blade) を使ってアプリケーションのフロントエンドをレンダリングします。Blade スタックは、`breeze:install` コマンドを追加の引数なしで呼び出すことでインストールできます。Breeze のスケルトンがインストールされた後、アプリケーションのフロントエンドアセットもコンパイルする必要があります。
 
-シェル
-php職人風:インストール
+```shell
+php artisan breeze:install
 
-php 職人の移行
-npm インストール
-npm 実行 dev
+php artisan migrate
+npm install
+npm run dev
 ```
 
 次に、Web ブラウザでアプリケーションの `/login` または `/register` URL に移動できます。 Breeze のすべてのルートは、`routes/auth.php` ファイル内で定義されています。
@@ -61,16 +61,16 @@ npm 実行 dev
 <a name="ダークモード"></a>
 #### ダークモード
 
-アプリケーションのフロントエンドをスキャフォールディングするときに Breeze に「ダーク モード」サポートを含めたい場合は、`breeze:install` コマンドを実行するときに `--dark` ディレクティブを指定するだけです。
+アプリケーションのフロントエンドをスケルトン化する際に Breeze に「ダークモード」サポートを含めたい場合は、`breeze:install` コマンドを実行する際に `--dark` ディレクティブを指定してください。
 
-シェル
-php 職人風:インストール --dark
+```shell
+php artisan breeze:install --dark
 ```
 
-> **注**
+> **Note**
 > アプリケーションの CSS と JavaScript のコンパイルについて詳しくは、Laravel の [Vite ドキュメント](/docs/{{version}}/vite#running-vite) をご覧ください。
 
-<a name="そよ風と慣性"></a>
+<a name="breeze-and-inertia"></a>
 ### Breeze & React / Vue
 
 Laravel Breeze は、[Inertia](https://inertiajs.com) フロントエンド実装を介して React と Vue の足場も提供します。 Inertia を使用すると、従来のサーバー側のルーティングとコントローラーを使用して、最新の単一ページの React および Vue アプリケーションを構築できます。
