@@ -92,38 +92,38 @@ npm run dev
 次に、Web ブラウザでアプリケーションの `/login` または `/register` URL に移動できます。 Breeze のすべてのルートは、`routes/auth.php` ファイル内で定義されています。
 
 <a name="server-side-rendering"></a>
-#### サーバー側のレンダリング
+#### サーバーサイドレンダリング
 
-Breeze に [Inertia SSR](https://inertiajs.com/server-side-rendering) のサポートをスキャフォールディングさせたい場合は、`breeze:install` コマンドを呼び出すときに `ssr` オプションを指定できます。
+Breeze に [Inertia SSR](https://inertiajs.com/server-side-rendering) のサポートをスケルトン化して欲しい場合は、`breeze:install` コマンドを呼び出す際に `ssr` オプションを指定してください。
 
-シェル
-php 職人風:インストール vue --ssr
-php 職人のそよ風: 反応をインストール --ssr
+```shell
+php artisan breeze:install vue --ssr
+php artisan breeze:install react --ssr
 ```
 
 <a name="breeze-and-next"></a>
 ### Breeze & Next.js / API
 
-Laravel Breeze は、[Next](https://nextjs.org) や [Nuxt](https://nuxtjs.org) などによって強化された最新の JavaScript アプリケーションを認証する準備ができている認証 API をスキャフォールディングすることもできます。 開始するには、`breeze:install` Artisan コマンドを実行するときに、目的のスタックとして `api` スタックを指定します。
+Laravel Breeze は、[Next](https://nextjs.org) や [Nuxt](https://nuxtjs.org) などの最新の JavaScript アプリケーションを認証するための認証 API もスケルトン化できます。始めるには、`breeze:install` Artisan コマンドを実行する際に、希望するスタックとして `api` スタックを指定してください。
 
-シェル
-PHP職人風：APIをインストール
+```shell
+php artisan breeze:install api
 
-php 職人の移行
+php artisan migrate
 ```
 
-インストール中に、Breeze は「FRONTEND_URL」環境変数をアプリケーションの「.env」ファイルに追加します。 この URL は、JavaScript アプリケーションの URL である必要があります。 これは通常、ローカルでの開発中は `http://localhost:3000` になります。 さらに、`APP_URL` が `http://localhost:8000` に設定されていることを確認する必要があります。これは `serve` Artisan コマンドで使用されるデフォルトの URL です。
+インストール中に、Breeze はアプリケーションの `.env` ファイルに `FRONTEND_URL` 環境変数を追加します。この URL は、JavaScript アプリケーションの URL にする必要があります。通常、ローカル開発時には `http://localhost:3000` になります。また、APP_URL を `http://localhost:8000` に設定しておく必要があります。これは、`serve` Artisan コマンドで使用されるデフォルトの URL です。
 
 <a name="next-reference-implementation"></a>
 #### Next.js リファレンス実装
 
-最後に、このバックエンドを選択したフロントエンドとペアリングする準備が整いました。 Breeze フロントエンドの次のリファレンス実装は [GitHub で入手可能](https://github.com/laravel/breeze-next) です。 このフロントエンドは Laravel によって維持され、Breeze によって提供される従来の Blade および Inertia スタックと同じユーザー インターフェイスが含まれています。
+最後に、このバックエンドを選択したフロントエンドとペアリングする準備が整いました。Breeze フロントエンドの Next リファレンス実装は [GitHub で入手可能](https://github.com/laravel/breeze-next) です。このフロントエンドは Laravel によってメンテナンスされており、Breeze が提供する従来の Blade および Inertia スタックと同じユーザーインターフェースが含まれています。
 
 <a name="laravel-jetstream"></a>
-## Laravel ジェットストリーム
+## Laravel Jetstream
 
-Laravel Breeze は、Laravel アプリケーションを構築するためのシンプルで最小限の出発点を提供しますが、Jetstream は、より堅牢な機能と追加のフロントエンド テクノロジ スタックでその機能を強化します。 **Laravel を初めて使用する場合は、Laravel Jetstream を卒業する前に、Laravel Breeze でコツを学ぶことをお勧めします。**
+Laravel Breeze は Laravel アプリケーションを構築するためのシンプルで最小限なスタート地点を提供していますが、Jetstream はより堅牢な機能と追加のフロントエンド技術スタックでその機能を強化します。**Laravel を初めて使う方は、Laravel Breeze で基本を学んだ後、Laravel Jetstream に進むことをお勧めします。**
 
-Jetstream は、Laravel 用に美しく設計されたアプリケーション スキャフォールディングを提供し、ログイン、登録、電子メール検証、2 要素認証、セッション管理、Laravel Sanctum による API サポート、およびオプションのチーム管理を含みます。 Jetstream は [Tailwind CSS](https://tailwindcss.com) を使用して設計されており、[Livewire](https://laravel-livewire.com) または [慣性](https://inertiajs.com) 駆動の選択を提供します。 フロントエンドの足場。
+Jetstream は、Laravel 用の美しくデザインされたアプリケーションのスケルトンを提供し、ログイン、登録、メール認証、2要素認証、セッション管理、Laravel Sanctum を介した API サポート、およびオプションのチーム管理を含みます。Jetstream は [Tailwind CSS](https://tailwindcss.com) を使用してデザインされており、[Livewire](https://laravel-livewire.com) または [Inertia](https://inertiajs.com) ドリブンのフロントエンドスケルトンを選択できます。
 
-Laravel Jetstream のインストールに関する完全なドキュメントは、[公式の Jetstream ドキュメント](https://jetstream.laravel.com/3.x/introduction.html) にあります。
+Laravel Jetstream のインストールに関する完全なドキュメントは、[公式の Jetstream ドキュメント](https://jetstream.laravel.com/3.x/introduction.html) をご覧ください。
