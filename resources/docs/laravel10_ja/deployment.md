@@ -1,26 +1,26 @@
-# Deployment
+# デプロイ
 
-- [Introduction](#introduction)
-- [Server Requirements](#server-requirements)
-- [Server Configuration](#server-configuration)
-    - [Nginx](#nginx)
-- [Optimization](#optimization)
-    - [Autoloader Optimization](#autoloader-optimization)
-    - [Optimizing Configuration Loading](#optimizing-configuration-loading)
-    - [Optimizing Route Loading](#optimizing-route-loading)
-    - [Optimizing View Loading](#optimizing-view-loading)
-- [Debug Mode](#debug-mode)
-- [Deploying With Forge / Vapor](#deploying-with-forge-or-vapor)
+- [はじめに](#introduction)
+- [サーバー要件](#server-requirements)
+- [サーバー構成](#server-configuration)
+     - [Nginx](#nginx)
+- [最適化](#optimization)
+     - [オートローダーの最適化](#autoloader-optimization)
+     - [構成の読み込みの最適化](#optimizing-configuration-loading)
+     - [ルート読み込みの最適化](#optimizing-route-loading)
+     - [ビューの読み込みの最適化](#optimizing-view-loading)
+- [デバッグモード](#debug-mode)
+- [Forge / Vapor でのデプロイ](#deploying-with-forge-or-vapor)
 
 <a name="introduction"></a>
-## Introduction
+## はじめに
 
-When you're ready to deploy your Laravel application to production, there are some important things you can do to make sure your application is running as efficiently as possible. In this document, we'll cover some great starting points for making sure your Laravel application is deployed properly.
+Laravel アプリケーションを本番環境にデプロイする準備が整ったら、アプリケーションができる限り効率的に動作するようにするためにできることがいくつかあります。このドキュメントでは、Laravel アプリケーションが適切にデプロイされるようにするための素晴らしいスタート地点について説明します。
 
 <a name="server-requirements"></a>
-## Server Requirements
+## サーバー要件
 
-The Laravel framework has a few system requirements. You should ensure that your web server has the following minimum PHP version and extensions:
+Laravel フレームワークにはいくつかのシステム要件があります。Web サーバーが以下の最低 PHP バージョンと拡張機能を持っていることを確認してください。
 
 <div class="content-list" markdown="1">
 
@@ -42,14 +42,14 @@ The Laravel framework has a few system requirements. You should ensure that your
 </div>
 
 <a name="server-configuration"></a>
-## Server Configuration
+## サーバー構成
 
 <a name="nginx"></a>
 ### Nginx
 
-If you are deploying your application to a server that is running Nginx, you may use the following configuration file as a starting point for configuring your web server. Most likely, this file will need to be customized depending on your server's configuration. **If you would like assistance in managing your server, consider using a first-party Laravel server management and deployment service such as [Laravel Forge](https://forge.laravel.com).**
+アプリケーションを Nginx が動作しているサーバーにデプロイする場合は、以下の設定ファイルをウェブサーバー設定の出発点として使用できます。ほとんどの場合、このファイルはサーバーの設定に応じてカスタマイズする必要があります。**サーバーの管理に関する支援が必要な場合は、[Laravel Forge](https://forge.laravel.com) などの Laravel の第一級のサーバー管理およびデプロイメントサービスを利用することを検討してください。**
 
-Please ensure, like the configuration below, your web server directs all requests to your application's `public/index.php` file. You should never attempt to move the `index.php` file to your project's root, as serving the application from the project root will expose many sensitive configuration files to the public Internet:
+以下の設定のように、Web サーバーがすべてのリクエストをアプリケーションの `public/index.php` ファイルにリダイレクトするようにしてください。プロジェクトのルートに `index.php` ファイルを移動しようとしないでください。プロジェクトのルートからアプリケーションを提供すると、多くの機密設定ファイルがインターネットに公開されることになります。
 
 ```nginx
 server {
@@ -87,77 +87,77 @@ server {
 ```
 
 <a name="optimization"></a>
-## Optimization
+## 最適化
 
 <a name="autoloader-optimization"></a>
-### Autoloader Optimization
+### オートローダーの最適化
 
-When deploying to production, make sure that you are optimizing Composer's class autoloader map so Composer can quickly find the proper file to load for a given class:
+本番環境にデプロイする際は、Composer のクラスオートローダーマップを最適化して、Composer が指定されたクラスのロードに適切なファイルをすばやく見つけられるようにすることを確認してください。
 
 ```shell
 composer install --optimize-autoloader --no-dev
 ```
 
-> **Note**  
-> In addition to optimizing the autoloader, you should always be sure to include a `composer.lock` file in your project's source control repository. Your project's dependencies can be installed much faster when a `composer.lock` file is present.
+> **Note**
+> オートローダーを最適化することに加えて、プロジェクトのソース管理リポジトリに常に `composer.lock` ファイルを含めるようにしてください。`composer.lock` ファイルが存在する場合、プロジェクトの依存関係がはるかに高速にインストールされます。
 
 <a name="optimizing-configuration-loading"></a>
-### Optimizing Configuration Loading
+### 設定の読み込みの最適化
 
-When deploying your application to production, you should make sure that you run the `config:cache` Artisan command during your deployment process:
+アプリケーションを本番環境にデプロイする際は、デプロイメントプロセス中に `config:cache` Artisan コマンドを実行していることを確認してください。
 
 ```shell
 php artisan config:cache
 ```
 
-This command will combine all of Laravel's configuration files into a single, cached file, which greatly reduces the number of trips the framework must make to the filesystem when loading your configuration values.
+このコマンドは、Laravel のすべての設定ファイルを 1 つのキャッシュされたファイルに結合し、フレームワークが設定値を読み込む際にファイルシステムへのアクセス回数を大幅に減らします。
 
-> **Warning**  
-> If you execute the `config:cache` command during your deployment process, you should be sure that you are only calling the `env` function from within your configuration files. Once the configuration has been cached, the `.env` file will not be loaded and all calls to the `env` function for `.env` variables will return `null`.
+> **Warning**
+> デプロイプロセス中に `config:cache` コマンドを実行する場合は、設定ファイル内からのみ `env` 関数を呼び出していることを確認してください。設定がキャッシュされると `.env` ファイルは読み込まれなくなり `.env` 変数に対する `env` 関数の呼び出し結果はすべて `null` を返します。
 
 <a name="optimizing-route-loading"></a>
-### Optimizing Route Loading
+### ルートの読み込みの最適化
 
-If you are building a large application with many routes, you should make sure that you are running the `route:cache` Artisan command during your deployment process:
+多くのルートを持つ大規模なアプリケーションを構築している場合は、デプロイメントプロセス中に `route:cache` Artisan コマンドを実行していることを確認してください。
 
 ```shell
 php artisan route:cache
 ```
 
-This command reduces all of your route registrations into a single method call within a cached file, improving the performance of route registration when registering hundreds of routes.
+このコマンドは、キャッシュファイルの１つのメソッド呼び出しにすべてのルート登録をまとめるので、数百のルートを登録した際、ルート登録のパフォーマンスを向上させます。
 
 <a name="optimizing-view-loading"></a>
-### Optimizing View Loading
+### ビューの読み込みの最適化
 
-When deploying your application to production, you should make sure that you run the `view:cache` Artisan command during your deployment process:
+アプリケーションを本番環境にデプロイする際は、デプロイメントプロセス中に `view:cache` Artisan コマンドを実行していることを確認してください。
 
 ```shell
 php artisan view:cache
 ```
 
-This command precompiles all your Blade views so they are not compiled on demand, improving the performance of each request that returns a view.
+このコマンドはすべての Blade ビューを事前にコンパイルし、オンデマンドでコンパイルされず、ビューを返す各リクエストのパフォーマンスが向上します。
 
 <a name="debug-mode"></a>
-## Debug Mode
+＃＃ デバッグモード
 
-The debug option in your config/app.php configuration file determines how much information about an error is actually displayed to the user. By default, this option is set to respect the value of the `APP_DEBUG` environment variable, which is stored in your application's `.env` file.
+`config/app.php` 設定ファイル内のデバッグオプションは、エラーに関する情報が実際にユーザーに表示される量を決定します。デフォルトでは、このオプションはアプリケーションの `.env` ファイルに格納されている `APP_DEBUG` 環境変数の値を尊重するように設定されています。
 
-**In your production environment, this value should always be `false`. If the `APP_DEBUG` variable is set to `true` in production, you risk exposing sensitive configuration values to your application's end users.**
+**本番環境では、この値は常に `false` `にする必要があります。APP_DEBUG` 変数が本番環境で `true` に設定されている場合、アプリケーションのエンドユーザーに機密性の高い設定値が晒されるリスクがあります。**
 
 <a name="deploying-with-forge-or-vapor"></a>
-## Deploying With Forge / Vapor
+## Forge / Vapor でのデプロイ
 
 <a name="laravel-forge"></a>
 #### Laravel Forge
 
-If you aren't quite ready to manage your own server configuration or aren't comfortable configuring all of the various services needed to run a robust Laravel application, [Laravel Forge](https://forge.laravel.com) is a wonderful alternative.
+自分でサーバー設定を管理する準備ができていない場合や、堅牢な Laravel アプリケーションを実行するために必要なさまざまなサービスの設定に慣れていない場合、[Laravel Forge](https://forge.laravel.com) は素晴らしい代替手段です。
 
-Laravel Forge can create servers on various infrastructure providers such as DigitalOcean, Linode, AWS, and more. In addition, Forge installs and manages all of the tools needed to build robust Laravel applications, such as Nginx, MySQL, Redis, Memcached, Beanstalk, and more.
+Laravel Forge は、DigitalOcean、Linode、AWS などのさまざまなインフラストラクチャプロバイダでサーバーを作成することができます。さらに、Forge は Nginx、MySQL、Redis、Memcached、Beanstalk などの堅牢な Laravel アプリケーションを構築するために必要なすべてのツールをインストールおよび管理します。
 
 > **Note**
-> Want a full guide to deploying with Laravel Forge? Check out the [Laravel Bootcamp](https://bootcamp.laravel.com/deploying) and the Forge [video series available on Laracasts](https://laracasts.com/series/learn-laravel-forge-2022-edition).
+> Laravel Forge でデプロイするための完全なガイドが必要ですか? [Laravel Bootcamp](https://bootcamp.laravel.com/deploying) と Forge  の [Laracasts で利用可能なビデオ シリーズ](https://laracasts.com/series/learn-laravel-forge-2022-edition) を確認してください。 ）。
 
 <a name="laravel-vapor"></a>
 #### Laravel Vapor
 
-If you would like a totally serverless, auto-scaling deployment platform tuned for Laravel, check out [Laravel Vapor](https://vapor.laravel.com). Laravel Vapor is a serverless deployment platform for Laravel, powered by AWS. Launch your Laravel infrastructure on Vapor and fall in love with the scalable simplicity of serverless. Laravel Vapor is fine-tuned by Laravel's creators to work seamlessly with the framework so you can keep writing your Laravel applications exactly like you're used to.
+Laravel 用にチューニングされた、完全にサーバーレスで自動スケーリングするデプロイメントプラットフォームが欲しい場合は、[Laravel Vapor](https://vapor.laravel.com) を試してください。Laravel Vapor は、AWS を搭載した Laravel のサーバーレスデプロイメントプラットフォームです。Vapor 上で Laravel インフラを立ち上げ、サーバーレスのシンプルさをスケーラブルに実現しましょう。Laravel Vapor は、フレームワークとシームレスに連携できるように Laravel の開発者によって微調整されており、今まで通りの Laravel アプリケーションを書き続けることができます。
