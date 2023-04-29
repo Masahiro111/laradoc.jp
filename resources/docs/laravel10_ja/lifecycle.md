@@ -1,13 +1,13 @@
-# Request Lifecycle
+# リクエストライフサイクル
 
-- [Introduction](#introduction)
-- [Lifecycle Overview](#lifecycle-overview)
-    - [First Steps](#first-steps)
-    - [HTTP / Console Kernels](#http-console-kernels)
-    - [Service Providers](#service-providers)
-    - [Routing](#routing)
-    - [Finishing Up](#finishing-up)
-- [Focus On Service Providers](#focus-on-service-providers)
+- [はじめに](#introduction)
+- [ライフサイクル概要](#lifecycle-overview)
+    - [最初の手順](#first-steps)
+    - [HTTP / コンソールカーネル](#http-console-kernels)
+    - [サービスプロバイダ](#service-providers)
+    - [ルーティング](#routing)
+    - [仕上げ](#finishing-up)
+- [サービスプロバイダに焦点を当てる](#focus-on-service-providers)
 
 <a name="introduction"></a>
 ## Introduction
