@@ -10,65 +10,67 @@
 - [サービスプロバイダに焦点を当てる](#focus-on-service-providers)
 
 <a name="introduction"></a>
-## Introduction
+## はじめに
 
-When using any tool in the "real world", you feel more confident if you understand how that tool works. Application development is no different. When you understand how your development tools function, you feel more comfortable and confident using them.
+「現実世界」でどんなツールを使う場合でも、そのツールの仕組みがわかっていると自信を持って使えます。アプリケーション開発も同じです。開発ツールの機能を理解していれば、それらを使うのに快適に自信を持って使用できるようになります。
 
-The goal of this document is to give you a good, high-level overview of how the Laravel framework works. By getting to know the overall framework better, everything feels less "magical" and you will be more confident building your applications. If you don't understand all of the terms right away, don't lose heart! Just try to get a basic grasp of what is going on, and your knowledge will grow as you explore other sections of the documentation.
+このドキュメントの目的は、Laravel フレームワークの仕組みを高レベルで概観することです。フレームワーク全体をよりよく理解することで、すべてが「魔法のように」感じることがなくなり、アプリケーションの構築に自信を持てるようになります。すぐにすべての用語を理解できなくても落胆しないでください！まずは何が起こっているのかを基本的に理解しようと努力し、他のドキュメントのセクションを調べていくうちに知識が増えていきます。
 
 <a name="lifecycle-overview"></a>
-## Lifecycle Overview
+## ライフサイクル概要
 
 <a name="first-steps"></a>
-### First Steps
+### 最初の手順
 
-The entry point for all requests to a Laravel application is the `public/index.php` file. All requests are directed to this file by your web server (Apache / Nginx) configuration. The `index.php` file doesn't contain much code. Rather, it is a starting point for loading the rest of the framework.
+Laravel アプリケーションへのすべてのリクエストのエントリポイントは、`public/index.php`ファイルです。すべてのリクエストは、Web サーバー（Apache / Nginx）の設定によってこのファイルに向けられます。`index.php` ファイルにはあまりコードが含まれていません。むしろ、フレームワークの残りの部分をロードするための出発点です。
 
-The `index.php` file loads the Composer generated autoloader definition, and then retrieves an instance of the Laravel application from `bootstrap/app.php`. The first action taken by Laravel itself is to create an instance of the application / [service container](/docs/{{version}}/container).
+`index.php`ファイルは、Composer が生成したオートローダ定義を読み込み、`bootstrap/app.php` からLaravel アプリケーションのインスタンスを取得します。Laravel 自体が最初に行うアクションは、アプリケーション / [サービス コンテナ](/docs/{{version}}/container) のインスタンスを作成することです。
 
 <a name="http-console-kernels"></a>
-### HTTP / Console Kernels
+### HTTP / コンソールカーネル
 
-Next, the incoming request is sent to either the HTTP kernel or the console kernel, depending on the type of request that is entering the application. These two kernels serve as the central location that all requests flow through. For now, let's just focus on the HTTP kernel, which is located in `app/Http/Kernel.php`.
+次に、入ってくるリクエストは、アプリケーションに入るリクエストのタイプに応じて、HTTP カーネルまたはコンソールカーネルに送信されます。これら2つのカーネルは、すべてのリクエストが通過する中心的な場所として機能します。ここでは `app/Http/Kernel.php` にある HTTP カーネルに注目しましょう。
 
-The HTTP kernel extends the `Illuminate\Foundation\Http\Kernel` class, which defines an array of `bootstrappers` that will be run before the request is executed. These bootstrappers configure error handling, configure logging, [detect the application environment](/docs/{{version}}/configuration#environment-configuration), and perform other tasks that need to be done before the request is actually handled. Typically, these classes handle internal Laravel configuration that you do not need to worry about.
+HTTP カーネルは `Illuminate\Foundation\Http\Kernel` クラスを拡張し、リクエストが実行される前に実行される `bootstrappers` の配列を定義します。これらのブートストラッパは、エラー処理の設定、ログの設定、[アプリケーション環境の検出](/docs/{{version}}/configuration#environment-configuration) 、およびリクエストが実際に処理される前に実行する必要があるその他のタスクを実行します。通常、これらのクラスは、あなたが気にする必要のない Laravel の内部構成を処理します。
 
-The HTTP kernel also defines a list of HTTP [middleware](/docs/{{version}}/middleware) that all requests must pass through before being handled by the application. These middleware handle reading and writing the [HTTP session](/docs/{{version}}/session), determining if the application is in maintenance mode, [verifying the CSRF token](/docs/{{version}}/csrf), and more. We'll talk more about these soon.
+HTTP カーネルは、すべてのリクエストがアプリケーションによって処理される前に通過する必要がある HTTP [ミドルウェア](/docs/{{version}}/middleware) のリストも定義します。 これらのミドルウェアは、[HTTP セッション](/docs/{{version}}/session) の読み取りと書き込みを処理し、アプリケーションがメンテナンス モードであるかどうかを判断し、[CSRF トークンを確認します](/docs/{{version}}/csrf ) 。これらについては後ほど詳しく説明します。
 
-The method signature for the HTTP kernel's `handle` method is quite simple: it receives a `Request` and returns a `Response`. Think of the kernel as being a big black box that represents your entire application. Feed it HTTP requests and it will return HTTP responses.
+HTTP カーネルの `handle` メソッドの引数は非常にシンプルです。`Request` を受け取り、`Response` を返します。カーネルは、アプリケーション全体を表す大きなブラックボックスだと考えてください。HTTP リクエストを取り込めば、HTTP レスポンスが返ってきます。
 
 <a name="service-providers"></a>
-### Service Providers
+### サービスプロバイダ
 
-One of the most important kernel bootstrapping actions is loading the [service providers](/docs/{{version}}/providers) for your application. Service providers are responsible for bootstrapping all of the framework's various components, such as the database, queue, validation, and routing components. All of the service providers for the application are configured in the `config/app.php` configuration file's `providers` array.
+カーネルの初期起動処理の中で最も重要なのが、アプリケーションの [サービス プロバイダー](/docs/{{version}}/providers) をロードすることです。サービスプロバイダは、データベース、キュー、バリデーション、ルーティングなどのさまざまなフレームワークコンポーネントのすべてを初期起動処理する役割を担っています。アプリケーションのすべてのサービスプロバイダは、`config/app.php` 構成ファイルの `providers` 配列で設定されています。
 
-Laravel will iterate through this list of providers and instantiate each of them. After instantiating the providers, the `register` method will be called on all of the providers. Then, once all of the providers have been registered, the `boot` method will be called on each provider. This is so service providers may depend on every container binding being registered and available by the time their `boot` method is executed.
+Laravelは、このプロバイダのリストを反復処理し、それぞれをインスタンス化します。プロバイダをインスタンス化した後、すべてのプロバイダの `register` メソッドが呼び出されます。次に、すべてのプロバイダが登録された後、各プロバイダで `boot` メソッドが呼び出されます。 これは、`boot` メソッドが実行されるまでに、登録済みで利用可能なすべてのコンテナバインディングに依存する可能性があるためです。
 
-Essentially every major feature offered by Laravel is bootstrapped and configured by a service provider. Since they bootstrap and configure so many features offered by the framework, service providers are the most important aspect of the entire Laravel bootstrap process.
+Laravel が提供する、ほぼすべての主要な機能は、サービスプロバイダによって初期起動および設定されます。フレームワークが提供する多くの機能を初期起動および設定するため、サービスプロバイダは、Laravel の初期起動プロセス全体の最も重要な側面です。
 
 <a name="routing"></a>
-### Routing
+### ルーティング
 
-One of the most important service providers in your application is the `App\Providers\RouteServiceProvider`. This service provider loads the route files contained within your application's `routes` directory. Go ahead, crack open the `RouteServiceProvider` code and take a look at how it works!
+アプリケーションで最も重要なサービスプロバイダの１つは、`App\Providers\RouteServiceProvider` です。このサービスプロバイダは、アプリケーションの `routes` ディレクトリに含まれるルートファイルをロードします。`RouteServiceProvider` のコードを開いて、どのように機能するか見てみましょう！
 
-Once the application has been bootstrapped and all service providers have been registered, the `Request` will be handed off to the router for dispatching. The router will dispatch the request to a route or controller, as well as run any route specific middleware.
+アプリケーションが初期起動され、すべてのサービスプロバイダが登録されると、`Request` がルータに渡されてディスパッチされます。ルータは、ルートまたはコントローラにリクエストをディスパッチし、ルート固有のミドルウェアを実行します。
 
-Middleware provide a convenient mechanism for filtering or examining HTTP requests entering your application. For example, Laravel includes a middleware that verifies if the user of your application is authenticated. If the user is not authenticated, the middleware will redirect the user to the login screen. However, if the user is authenticated, the middleware will allow the request to proceed further into the application. Some middleware are assigned to all routes within the application, like those defined in the `$middleware` property of your HTTP kernel, while some are only assigned to specific routes or route groups. You can learn more about middleware by reading the complete [middleware documentation](/docs/{{version}}/middleware).
+ミドルウェアは、アプリケーションに入る HTTP リクエストをフィルタリングまたは検査する便利な仕組みを提供しています。たとえば、Laravel には、アプリケーションのユーザーが認証されているかどうかを確認するミドルウェアが含まれています。ユーザーが認証されていない場合、このミドルウェアはユーザーをログイン画面にリダイレクトします。ただし、ユーザーが認証されている場合、ミドルウェアはリクエストをアプリケーションにさらに進めることを許可します。HTTP カーネルの `$middleware` プロパティの定義を見てみると、アプリケーション内のすべてのルートに割り当てられているミドルウェアもあれば、特定のルートまたはルートグループにのみ割り当てられているミドルウェアもあります。ミドルウェアについての詳細は、[ミドルウェア ドキュメント](/docs/{{version}}/middleware) をお読みください。
 
-If the request passes through all of the matched route's assigned middleware, the route or controller method will be executed and the response returned by the route or controller method will be sent back through the route's chain of middleware.
+一致したルートに割り当てられたすべてのミドルウェアをリクエストが通過する場合、ルートまたはコントローラー メソッドが実行され、ルートまたはコントローラー メソッドによって返された応答が、ルートのミドルウェア チェーンを介して送り返されます。
+リクエストがマッチしたルートの割り当てられたすべてのミドルウェアを通過すると、ルートまたはコントローラーメソッドが実行され、ルートまたはコントローラーメソッドから返されたレスポンスがルートのミドルウェアチェーンを通って送信されます。
 
 <a name="finishing-up"></a>
-### Finishing Up
+### 仕上げ
 
-Once the route or controller method returns a response, the response will travel back outward through the route's middleware, giving the application a chance to modify or examine the outgoing response.
+ルートまたはコントローラーメソッドがレスポンスを返すと、レスポンスはルートのミドルウェアを通って外側に戻り、アプリケーションが送信されるレスポンスを変更または検査する機会を与えます。
 
-Finally, once the response travels back through the middleware, the HTTP kernel's `handle` method returns the response object and the `index.php` file calls the `send` method on the returned response. The `send` method sends the response content to the user's web browser. We've finished our journey through the entire Laravel request lifecycle!
+最後に、応答がミドルウェアを通過すると、HTTP カーネルの「handle」メソッドが応答オブジェクトを返し、「index.php」ファイルが返された応答に対して「send」メソッドを呼び出します。 `send` メソッドは、応答コンテンツをユーザーの Web ブラウザーに送信します。 これで、Laravel リクエストのライフサイクル全体を通しての旅が終わりました!
+最後に、レスポンスがミドルウェアを通過すると、HTTP カーネルの `handle` メソッドがレスポンスオブジェクトを返し、`index.php` ファイルは返されたレスポンスに対して `send` メソッドを呼び出します。`send` メソッドは、レスポンスコンテンツをユーザーの Web ブラウザに送信します。これで、Laravel リクエストライフサイクルの全体を通じた旅が終了しました！
 
 <a name="focus-on-service-providers"></a>
-## Focus On Service Providers
+## サービスプロバイダーに焦点を当てる
 
-Service providers are truly the key to bootstrapping a Laravel application. The application instance is created, the service providers are registered, and the request is handed to the bootstrapped application. It's really that simple!
+サービスプロバイダは、Laravel アプリケーションを初期起動をするための鍵となります。 アプリケーションインスタンスが作成され、サービスプロバイダが登録され、リクエストが初期起動を完了したアプリケーションに渡されます。 簡単ですね！
 
-Having a firm grasp of how a Laravel application is built and bootstrapped via service providers is very valuable. Your application's default service providers are stored in the `app/Providers` directory.
+Laravel アプリケーションがどのように構築され、サービスプロバイダを経由して初期起動されるかをしっかりと把握することは、非常に価値があります。 アプリケーションのデフォルトのサービスプロバイダは、`app/Providers` ディレクトリに保存されます。
 
-By default, the `AppServiceProvider` is fairly empty. This provider is a great place to add your application's own bootstrapping and service container bindings. For large applications, you may wish to create several service providers, each with more granular bootstrapping for specific services used by your application.
+デフォルトでは、`AppServiceProvider `のほとんどは空です。このプロバイダは、アプリケーション独自の初期起動処理とサービスコンテナー結合を追加するのに適した場所です。 大規模なアプリケーションの場合は、アプリケーションで使用される特定のサービスに対して、より細かい初期起動処理を行う複数のサービスプロバイダを作成することが望ましいかもしれません。
