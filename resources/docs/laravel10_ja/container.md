@@ -1,29 +1,29 @@
-# Service Container
+# サービスコンテナ
 
-- [Introduction](#introduction)
-    - [Zero Configuration Resolution](#zero-configuration-resolution)
-    - [When To Use The Container](#when-to-use-the-container)
-- [Binding](#binding)
-    - [Binding Basics](#binding-basics)
-    - [Binding Interfaces To Implementations](#binding-interfaces-to-implementations)
-    - [Contextual Binding](#contextual-binding)
-    - [Binding Primitives](#binding-primitives)
-    - [Binding Typed Variadics](#binding-typed-variadics)
-    - [Tagging](#tagging)
-    - [Extending Bindings](#extending-bindings)
-- [Resolving](#resolving)
-    - [The Make Method](#the-make-method)
-    - [Automatic Injection](#automatic-injection)
-- [Method Invocation & Injection](#method-invocation-and-injection)
-- [Container Events](#container-events)
+- [はじめに](#introduction)
+     - [設定なしでの依存解決](#zero-configuration-resolution)
+     - [コンテナを使うタイミング](#when-to-use-the-container)
+- [結合](#binding)
+     - [結合の基本](#binding-basics)
+     - [インターフェイスを実装に結合する](#binding-interfaces-to-implementations)
+     - [コンテキスト結合](#contextual-binding)
+     - [プリミティブ結合](#binding-primitives)
+     - [型付き可変長引数の結合](#binding-typed-variadics)
+     - [タグ付け](#tagging)
+     - [結合の拡張](#extending-bindings)
+- [依存の解決](#resolving)
+     - [Make メソッド](#the-make-method)
+     - [自動注入](#automatic-injection)
+- [メソッドの呼び出しと依存注入](#method-invocation-and-injection)
+- [コンテナイベント](#container-events)
 - [PSR-11](#psr-11)
 
 <a name="introduction"></a>
-## Introduction
+## はじめに
 
-The Laravel service container is a powerful tool for managing class dependencies and performing dependency injection. Dependency injection is a fancy phrase that essentially means this: class dependencies are "injected" into the class via the constructor or, in some cases, "setter" methods.
+Laravel のサービスコンテナは、クラスの依存関係を管理し、依存性の注入を行う強力なツールです。依存性注入とは、基本的には以下の意味です。クラスの依存関係は、コンストラクタを通じてクラスに「注入」されるか、場合によっては「セッター」メソッドを使って行われます。
 
-Let's look at a simple example:
+簡単な例を見てみましょう。
 
     <?php
 
@@ -54,14 +54,14 @@ Let's look at a simple example:
         }
     }
 
-In this example, the `UserController` needs to retrieve users from a data source. So, we will **inject** a service that is able to retrieve users. In this context, our `UserRepository` most likely uses [Eloquent](/docs/{{version}}/eloquent) to retrieve user information from the database. However, since the repository is injected, we are able to easily swap it out with another implementation. We are also able to easily "mock", or create a dummy implementation of the `UserRepository` when testing our application.
+この例では、`UserController` はデータ ソースからユーザーを取得する必要があります。 そのため、ユーザーを取得できるサービスを**注入**します。 このコンテキストでは、`UserRepository` はおそらく [Eloquent](/docs/{{version}}/eloquent) を使用してデータベースからユーザー情報を取得します。 ただし、リポジトリは注入されているため、別の実装と簡単に交換できます。 アプリケーションをテストするときに、簡単に「モック」するか、`UserRepository` のダミー実装を作成することもできます。
 
-A deep understanding of the Laravel service container is essential to building a powerful, large application, as well as for contributing to the Laravel core itself.
+Laravel コア自体に貢献するだけではなく、強力で大規模なアプリケーションを構築するには、Laravel のサービスコンテナーを深く理解することが不可欠です。
 
 <a name="zero-configuration-resolution"></a>
-### Zero Configuration Resolution
+### 設定なしでの依存解決
 
-If a class has no dependencies or only depends on other concrete classes (not interfaces), the container does not need to be instructed on how to resolve that class. For example, you may place the following code in your `routes/web.php` file:
+クラスに依存関係がないか、他の具体的なクラス (インターフェイスではない) にのみ依存している場合、そのクラスを解決する方法をコンテナーに指示する必要はありません。 たとえば、`routes/web.php` ファイルに次のコードを配置できます。
 
     <?php
 
@@ -74,14 +74,14 @@ If a class has no dependencies or only depends on other concrete classes (not in
         die(get_class($service));
     });
 
-In this example, hitting your application's `/` route will automatically resolve the `Service` class and inject it into your route's handler. This is game changing. It means you can develop your application and take advantage of dependency injection without worrying about bloated configuration files.
+この例では、アプリケーションの `/` ルートにアクセスすると、`Service` クラスが自動的に解決され、ルートのハンドラに注入されます。これは画期的です。これにより、設定ファイルが肥大化することなく、アプリケーションの開発を行い、依存性の注入を活用できます。
 
-Thankfully, many of the classes you will be writing when building a Laravel application automatically receive their dependencies via the container, including [controllers](/docs/{{version}}/controllers), [event listeners](/docs/{{version}}/events), [middleware](/docs/{{version}}/middleware), and more. Additionally, you may type-hint dependencies in the `handle` method of [queued jobs](/docs/{{version}}/queues). Once you taste the power of automatic and zero configuration dependency injection it feels impossible to develop without it.
+ありがたいことに、Laravel アプリケーションを構築する際に書く多くのクラスは、コンテナを介して自動的に依存関係を受け取ります。これには、[コントローラー](/docs/{{version}}/controllers)、[イベントリスナ](/docs/{{ version}}/events)、[ミドルウェア](/docs/{{version}}/middleware)  などが含まれます。さらに、[キューに入れられたジョブ](/docs/{{version}}/queues) の `handle` メソッドで依存関係を型指定することもできます。設定をせずとも、自動的に依存性注入の力を味わうと、それなしでは開発ができなくなる気がします。
 
 <a name="when-to-use-the-container"></a>
-### When To Use The Container
+### コンテナを使うタイミング
 
-Thanks to zero configuration resolution, you will often type-hint dependencies on routes, controllers, event listeners, and elsewhere without ever manually interacting with the container. For example, you might type-hint the `Illuminate\Http\Request` object on your route definition so that you can easily access the current request. Even though we never have to interact with the container to write this code, it is managing the injection of these dependencies behind the scenes:
+設定いらずで依存性の解決をすることができるため、ルートやコントローラ、イベントリスナなどで依存関係を型指定することで、コンテナと手動でやり取りすることなく作業を行うことがあると思います。例えば、現在のリクエストに簡単にアクセスできるように、ルート定義で `Illuminate\Http\Request` オブジェクトを型指定することができます。このコードを書くためにコンテナとやり取りする必要はありませんが、コンテナは依存関係の注入を裏で管理しています。
 
     use Illuminate\Http\Request;
 
