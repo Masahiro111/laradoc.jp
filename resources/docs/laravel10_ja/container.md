@@ -89,9 +89,9 @@ Laravel コア自体に貢献するだけではなく、強力で大規模なア
         // ...
     });
 
-In many cases, thanks to automatic dependency injection and [facades](/docs/{{version}}/facades), you can build Laravel applications without **ever** manually binding or resolving anything from the container. **So, when would you ever manually interact with the container?** Let's examine two situations.
+多くの場合、自動依存性注入や [ファサード](/docs/{{version}}/facades) のおかげで、コンテナから何かを手動でバインドしたり依存関係を解決したりすることなく、Laravel アプリケーションを構築することができます。 **では、いつコンテナを手動で操作するのでしょうか？** 2つのケースを見てみましょう。
 
-First, if you write a class that implements an interface and you wish to type-hint that interface on a route or class constructor, you must [tell the container how to resolve that interface](#binding-interfaces-to-implementations). Secondly, if you are [writing a Laravel package](/docs/{{version}}/packages) that you plan to share with other Laravel developers, you may need to bind your package's services into the container.
+１つ目のケースは、インターフェイスを実装したクラスを作成し、そのインターフェイスをルートやクラスコンストラクタに型指定する場合、コンテナ [そのインターフェイスを解決する方法をコンテナーに伝える](#binding-interfaces-to-implementations) 必要があります。２つ目のケースとしては、他の Laravel 開発者と共有する [Laravel パッケージを作成](/docs/{{version}}/packages) している場合、パッケージのサービスをコンテナにバインドする必要があるかもしれません。
 
 <a name="binding"></a>
 ## Binding
