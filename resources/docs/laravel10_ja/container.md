@@ -94,17 +94,17 @@ Laravel コア自体に貢献するだけではなく、強力で大規模なア
 １つ目のケースは、インターフェイスを実装したクラスを作成し、そのインターフェイスをルートやクラスコンストラクタに型指定する場合、コンテナ [そのインターフェイスを解決する方法をコンテナーに伝える](#binding-interfaces-to-implementations) 必要があります。２つ目のケースとしては、他の Laravel 開発者と共有する [Laravel パッケージを作成](/docs/{{version}}/packages) している場合、パッケージのサービスをコンテナにバインドする必要があるかもしれません。
 
 <a name="binding"></a>
-## Binding
+## 結合
 
 <a name="binding-basics"></a>
-### Binding Basics
+### 結合の基本
 
 <a name="simple-bindings"></a>
-#### Simple Bindings
+#### シンプルな結合
 
-Almost all of your service container bindings will be registered within [service providers](/docs/{{version}}/providers), so most of these examples will demonstrate using the container in that context.
+ほとんどのサービスコンテナの結合は [サービスプロバイダ](/docs/{{version}}/providers) 内で登録されるため、これらの例のほとんどはそのコンテキストでコンテナを使用する方法を示しています。
 
-Within a service provider, you always have access to the container via the `$this->app` property. We can register a binding using the `bind` method, passing the class or interface name that we wish to register along with a closure that returns an instance of the class:
+サービスプロバイダ内では、`$this->app` プロパティを介して常にコンテナにアクセスできます。 `bind` メソッドを使用して結合を登録できます。登録したいクラスまたはインターフェイス名、クラスのインスタンスを返すクロージャとともに渡します。
 
     use App\Services\Transistor;
     use App\Services\PodcastParser;
@@ -114,9 +114,9 @@ Within a service provider, you always have access to the container via the `$thi
         return new Transistor($app->make(PodcastParser::class));
     });
 
-Note that we receive the container itself as an argument to the resolver. We can then use the container to resolve sub-dependencies of the object we are building.
+コンテナ自体をリゾルバへの引数として受け取ることに注意してください。その後、コンテナを使用して、構築中のオブジェクトのサブ依存関係を解決できます。
 
-As mentioned, you will typically be interacting with the container within service providers; however, if you would like to interact with the container outside of a service provider, you may do so via the `App` [facade](/docs/{{version}}/facades):
+前述の通り、通常はサービスプロバイダ内でコンテナを操作しますが、サービスプロバイダの外でコンテナを操作したい場合は、`App` [ファサード](/docs/{{version}}/facades) を使用して行うことができます。
 
     use App\Services\Transistor;
     use Illuminate\Contracts\Foundation\Application;
@@ -127,12 +127,12 @@ As mentioned, you will typically be interacting with the container within servic
     });
 
 > **Note**  
-> There is no need to bind classes into the container if they do not depend on any interfaces. The container does not need to be instructed on how to build these objects, since it can automatically resolve these objects using reflection.
+> インターフェイスに依存していないクラスをコンテナにバインドする必要はありません。コンテナは、リフレクションを使用してこれらのオブジェクトを自動的に解決できるため、これらのオブジェクトの構築方法を指示する必要はありません。
 
 <a name="binding-a-singleton"></a>
-#### Binding A Singleton
+#### シングルトン結合
 
-The `singleton` method binds a class or interface into the container that should only be resolved one time. Once a singleton binding is resolved, the same object instance will be returned on subsequent calls into the container:
+`singleton` メソッドは、１回だけ解決する必要があるクラスやインターフェイスをコンテナに結合します。シングルトン結合の依存性の解決がされると、コンテナに対する後続の呼び出しで同じオブジェクトインスタンスが返されます。
 
     use App\Services\Transistor;
     use App\Services\PodcastParser;
@@ -143,9 +143,9 @@ The `singleton` method binds a class or interface into the container that should
     });
 
 <a name="binding-scoped"></a>
-#### Binding Scoped Singletons
+#### スコープ付きのシングルトン結合
 
-The `scoped` method binds a class or interface into the container that should only be resolved one time within a given Laravel request / job lifecycle. While this method is similar to the `singleton` method, instances registered using the `scoped` method will be flushed whenever the Laravel application starts a new "lifecycle", such as when a [Laravel Octane](/docs/{{version}}/octane) worker processes a new request or when a Laravel [queue worker](/docs/{{version}}/queues) processes a new job:
+`scoped` メソッドは、特定の Laravel リクエストやジョブのライフサイクル内で 1 回だけ解決する必要があるクラスまたはインターフェイスをコンテナに結合します。 このメソッドは `singleton` メソッドに似ていますが、`scoped` メソッドを使って登録されたインスタンスは、Laravel アプリケーションが新しい「ライフサイクル」を開始するたびにフラッシュされます。たとえば、[Laravel Octane](/docs/{{version}}/octane) ワーカが新しいリクエストを処理する場合や、Laravel [キュー ワーカ](/docs/{{version}}/queues) が新しいジョブを処理する場合です。
 
     use App\Services\Transistor;
     use App\Services\PodcastParser;
@@ -156,9 +156,9 @@ The `scoped` method binds a class or interface into the container that should on
     });
 
 <a name="binding-instances"></a>
-#### Binding Instances
+#### インスタンスの結合
 
-You may also bind an existing object instance into the container using the `instance` method. The given instance will always be returned on subsequent calls into the container:
+`instance` メソッドを使用して、既存のオブジェクトインスタンスをコンテナに結合することもできます。 指定されたインスタンスは、コンテナへの後続の呼び出しで常に返されます。
 
     use App\Services\Transistor;
     use App\Services\PodcastParser;
