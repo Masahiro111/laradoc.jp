@@ -168,16 +168,16 @@ Laravel コア自体に貢献するだけではなく、強力で大規模なア
     $this->app->instance(Transistor::class, $service);
 
 <a name="binding-interfaces-to-implementations"></a>
-### Binding Interfaces To Implementations
+### インターフェースを実装に結合する
 
-A very powerful feature of the service container is its ability to bind an interface to a given implementation. For example, let's assume we have an `EventPusher` interface and a `RedisEventPusher` implementation. Once we have coded our `RedisEventPusher` implementation of this interface, we can register it with the service container like so:
+サービスコンテナの非常に強力な機能は、特定の実装にインターフェイスをバインドする機能です。 たとえば、 `EventPusher` インターフェイスと `RedisEventPusher` 実装があるとしましょう。このインターフェースの `RedisEventPusher` 実装を作成したら、次のようにサービスコンテナに登録できます。
 
     use App\Contracts\EventPusher;
     use App\Services\RedisEventPusher;
 
     $this->app->bind(EventPusher::class, RedisEventPusher::class);
 
-This statement tells the container that it should inject the `RedisEventPusher` when a class needs an implementation of `EventPusher`. Now we can type-hint the `EventPusher` interface in the constructor of a class that is resolved by the container. Remember, controllers, event listeners, middleware, and various other types of classes within Laravel applications are always resolved using the container:
+このステートメントは、クラスが `EventPusher` の実装を必要とするときに `RedisEventPusher` を注入する必要があることをコンテナに指示しています。これで、コンテナによって解決されるクラスのコンストラクタで `EventPusher` インターフェイースをタイプヒントとして使用できます。Laravel アプリケーション内のコントローラー、イベントリスナー、ミドルウェア、およびその他のさまざまなタイプのクラスは、常にコンテナを使用して解決されることに注意してください。
 
     use App\Contracts\EventPusher;
 
@@ -189,9 +189,9 @@ This statement tells the container that it should inject the `RedisEventPusher` 
     ) {}
 
 <a name="contextual-binding"></a>
-### Contextual Binding
+### コンテキスト結合
 
-Sometimes you may have two classes that utilize the same interface, but you wish to inject different implementations into each class. For example, two controllers may depend on different implementations of the `Illuminate\Contracts\Filesystem\Filesystem` [contract](/docs/{{version}}/contracts). Laravel provides a simple, fluent interface for defining this behavior:
+場合によっては、同じインターフェイスを利用する２つのクラスに、異なる実装を注入したいことがあります。たとえば、２つのコントローラが `Illuminate\Contracts\Filesystem\Filesystem` [コントラクト](/docs/{{version}}/contracts) の異なる実装に依存している場合があります。Laravel は、この動作を定義するためのシンプルで流暢なインターフェースを提供します。
 
     use App\Http\Controllers\PhotoController;
     use App\Http\Controllers\UploadController;
@@ -212,9 +212,9 @@ Sometimes you may have two classes that utilize the same interface, but you wish
               });
 
 <a name="binding-primitives"></a>
-### Binding Primitives
+### プリミティブ結合
 
-Sometimes you may have a class that receives some injected classes, but also needs an injected primitive value such as an integer. You may easily use contextual binding to inject any value your class may need:
+場合によっては、いくつかの注入されたクラスを受け取るクラスがあり、整数のような注入されたプリミティブな値も必要とすることがあります。コンテキスト結合を使用して、クラスが必要とする任意の値を簡単に注入できます。
 
     use App\Http\Controllers\UserController;
     
