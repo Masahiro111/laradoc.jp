@@ -398,9 +398,9 @@ For example, you may type-hint a repository defined by your application in a con
     }
 
 <a name="method-invocation-and-injection"></a>
-## Method Invocation & Injection
+## メソッドの呼び出しと注入
 
-Sometimes you may wish to invoke a method on an object instance while allowing the container to automatically inject that method's dependencies. For example, given the following class:
+コンテナがメソッドの依存関係を自動的に注入できるようにしながら、オブジェクトインスタンスでメソッドを呼び出したい場合があります。たとえば、以下のようなクラスがあるとします。
 
     <?php
 
@@ -421,14 +421,14 @@ Sometimes you may wish to invoke a method on an object instance while allowing t
         }
     }
 
-You may invoke the `generate` method via the container like so:
+コンテナを使って `generate` メソッドを以下のように呼び出すことができます。
 
     use App\UserReport;
     use Illuminate\Support\Facades\App;
 
     $report = App::call([new UserReport, 'generate']);
 
-The `call` method accepts any PHP callable. The container's `call` method may even be used to invoke a closure while automatically injecting its dependencies:
+`call` メソッドは、任意の PHP callable を受け入れます。コンテナの `call` メソッドを使用して、依存関係を自動的に注入しながらクロージャを呼び出すこともできます。
 
     use App\Repositories\UserRepository;
     use Illuminate\Support\Facades\App;
@@ -438,9 +438,9 @@ The `call` method accepts any PHP callable. The container's `call` method may ev
     });
 
 <a name="container-events"></a>
-## Container Events
+## コンテナイベント
 
-The service container fires an event each time it resolves an object. You may listen to this event using the `resolving` method:
+サービスコンテナは、オブジェクトの依存性を解決するたびにイベントを発生させます。`resolving` メソッドを使用して、このイベントをリッスンできます。
 
     use App\Services\Transistor;
     use Illuminate\Contracts\Foundation\Application;
@@ -453,12 +453,12 @@ The service container fires an event each time it resolves an object. You may li
         // Called when container resolves object of any type...
     });
 
-As you can see, the object being resolved will be passed to the callback, allowing you to set any additional properties on the object before it is given to its consumer.
+ご覧のように、依存性解決されるオブジェクトがコールバックに渡されます。利用者側に渡される前にオブジェクトに追加のプロパティを設定できます。
 
 <a name="psr-11"></a>
 ## PSR-11
 
-Laravel's service container implements the [PSR-11](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-11-container.md) interface. Therefore, you may type-hint the PSR-11 container interface to obtain an instance of the Laravel container:
+Laravel のサービスコンテナは [PSR-11](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-11-container.md) インターフェイスを実装しています。 そのため、PSR-11 コンテナインターフェイスを型指定して、Laravel コンテナのインスタンスを取得できます。
 
     use App\Services\Transistor;
     use Psr\Container\ContainerInterface;
@@ -469,4 +469,4 @@ Laravel's service container implements the [PSR-11](https://github.com/php-fig/f
         // ...
     });
 
-An exception is thrown if the given identifier can't be resolved. The exception will be an instance of `Psr\Container\NotFoundExceptionInterface` if the identifier was never bound. If the identifier was bound but was unable to be resolved, an instance of `Psr\Container\ContainerExceptionInterface` will be thrown.
+指定された識別子が解決できない場合、例外がスローされます。識別子が一度も結合されなかった場合、例外は `Psr\Container\NotFoundExceptionInterface` のインスタンスになります。識別子がバインドされたが解決できなかった場合は、 `Psr\Container\ContainerExceptionInterface` のインスタンスがスローされます。
