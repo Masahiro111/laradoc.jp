@@ -222,22 +222,22 @@ Laravel コア自体に貢献するだけではなく、強力で大規模なア
               ->needs('$variableName')
               ->give($value);
 
-Sometimes a class may depend on an array of [tagged](#tagging) instances. Using the `giveTagged` method, you may easily inject all of the container bindings with that tag:
+クラスが [タグ付けされた](#tagging) インスタンスの配列に依存している場合があります。`giveTagged` メソッドを使用すると、そのタグを持つすべてのコンテナバインディングを簡単に注入できます。
 
     $this->app->when(ReportAggregator::class)
         ->needs('$reports')
         ->giveTagged('reports');
 
-If you need to inject a value from one of your application's configuration files, you may use the `giveConfig` method:
+アプリケーションの構成ファイルの 1 つから値を注入する必要がある場合は、`giveConfig` メソッドを使用できます。
 
     $this->app->when(ReportAggregator::class)
         ->needs('$timezone')
         ->giveConfig('app.timezone');
 
 <a name="binding-typed-variadics"></a>
-### Binding Typed Variadics
+### 型付き可変引数の結合
 
-Occasionally, you may have a class that receives an array of typed objects using a variadic constructor argument:
+場合によっては、可変コンストラクタ引数を使用して型付きオブジェクトの配列を受け取るクラスがある場合があります。
 
     <?php
 
@@ -264,7 +264,7 @@ Occasionally, you may have a class that receives an array of typed objects using
         }
     }
 
-Using contextual binding, you may resolve this dependency by providing the `give` method with a closure that returns an array of resolved `Filter` instances:
+文脈上の結合を使用して `give` メソッドに、依存性解決された `Filter` インスタンスの配列を返すクロージャを提供することで、この依存関係を解決できます。
 
     $this->app->when(Firewall::class)
               ->needs(Filter::class)
@@ -276,7 +276,7 @@ Using contextual binding, you may resolve this dependency by providing the `give
                     ];
               });
 
-For convenience, you may also just provide an array of class names to be resolved by the container whenever `Firewall` needs `Filter` instances:
+便宜上、`Firewall` が `Filter` インスタンスを必要とするたびに、コンテナによって依存性解決されるクラス名の配列を提供することもできます。
 
     $this->app->when(Firewall::class)
               ->needs(Filter::class)
