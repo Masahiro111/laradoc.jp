@@ -343,7 +343,7 @@ Laravel コア自体に貢献するだけではなく、強力で大規模なア
 
     $transistor = $this->app->makeWith(Transistor::class, ['id' => 1]);
 
-If you are outside of a service provider in a location of your code that does not have access to the `$app` variable, you may use the `App` [facade](/docs/{{version}}/facades) or the `app` [helper](/docs/{{version}}/helpers#method-app) to resolve a class instance from the container:
+サービスプロバイダの外部で、`$app` 変数にアクセスできないコードの場所では、`App` [ファサード](/docs/{{version}}/facades) または、`app` [ヘルパー](/docs/{{version}}/helpers#method-app)を使用して、コンテナからクラスインスタンスを解決できます。
 
     use App\Services\Transistor;
     use Illuminate\Support\Facades\App;
@@ -352,7 +352,7 @@ If you are outside of a service provider in a location of your code that does no
 
     $transistor = app(Transistor::class);
 
-If you would like to have the Laravel container instance itself injected into a class that is being resolved by the container, you may type-hint the `Illuminate\Container\Container` class on your class's constructor:
+コンテナで解決されるクラスに Laravel コンテナインスタンス自体を注入したい場合は、クラスのコンストラクタで `Illuminate\Container\Container` クラスをタイプヒントとして使用できます。
 
     use Illuminate\Container\Container;
 
@@ -364,11 +364,11 @@ If you would like to have the Laravel container instance itself injected into a 
     ) {}
 
 <a name="automatic-injection"></a>
-### Automatic Injection
+### 自動注入
 
-Alternatively, and importantly, you may type-hint the dependency in the constructor of a class that is resolved by the container, including [controllers](/docs/{{version}}/controllers), [event listeners](/docs/{{version}}/events), [middleware](/docs/{{version}}/middleware), and more. Additionally, you may type-hint dependencies in the `handle` method of [queued jobs](/docs/{{version}}/queues). In practice, this is how most of your objects should be resolved by the container.
+依存性を解決するには他の方法もあります。コンテナによって依存性解決されるクラスのコンストラクタに依存関係をタイプヒントとして指定できます。これには、[コントローラ](/docs/{{version}}/controllers)、[イベントリスナ](/docs/ {{version}}/events)、[ミドルウェア](/docs/{{version}}/middleware) などが含まれます。さらに、[キューに入れられたジョブ](/docs/{{version}}/queues) の `handle` メソッドでも依存関係をタイプ実際には、これはほとんどのオブジェクトがコンテナによって依存性解決される方法です。
 
-For example, you may type-hint a repository defined by your application in a controller's constructor. The repository will automatically be resolved and injected into the class:
+たとえば、コントローラのコンストラクタで、アプリケーションによって定義されたリポジトリをタイプヒントすることができます。 リポジトリは自動的に依存性が解決され、クラスに注入されます。
 
     <?php
 
