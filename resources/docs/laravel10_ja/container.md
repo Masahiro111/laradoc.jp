@@ -287,18 +287,18 @@ Laravel コア自体に貢献するだけではなく、強力で大規模なア
               ]);
 
 <a name="variadic-tag-dependencies"></a>
-#### Variadic Tag Dependencies
+#### 可変長タグの依存関係
 
-Sometimes a class may have a variadic dependency that is type-hinted as a given class (`Report ...$reports`). Using the `needs` and `giveTagged` methods, you may easily inject all of the container bindings with that [tag](#tagging) for the given dependency:
+クラスには、特定のクラスとして型宣言された可変長引数の依存関係がある場合があります (`Report ...$reports`)。`needs` および `giveTagged` メソッドを使用すると、指定された依存関係の [tag](#tagging) を含むすべてのコンテナ結合を簡単に注入できます。
 
     $this->app->when(ReportAggregator::class)
         ->needs(Report::class)
         ->giveTagged('reports');
 
 <a name="tagging"></a>
-### Tagging
+### タグ付け
 
-Occasionally, you may need to resolve all of a certain "category" of binding. For example, perhaps you are building a report analyzer that receives an array of many different `Report` interface implementations. After registering the `Report` implementations, you can assign them a tag using the `tag` method:
+場合によっては、特定の結合「カテゴリ」をすべて依存性解決する必要がある場合があります。 たとえば、多数の異なる `Report` インターフェイス実装の配列を受け取るレポート アナライザーを作成しているとします。`Report` の実装を登録したら、`tag` メソッドを使用してタグを割り当てることができます。
 
     $this->app->bind(CpuReport::class, function () {
         // ...
@@ -310,34 +310,34 @@ Occasionally, you may need to resolve all of a certain "category" of binding. Fo
 
     $this->app->tag([CpuReport::class, MemoryReport::class], 'reports');
 
-Once the services have been tagged, you may easily resolve them all via the container's `tagged` method:
+サービスにタグが付けられたら、コンテナの `tagged` メソッドを使用して簡単に依存性解決ができます。
 
     $this->app->bind(ReportAnalyzer::class, function (Application $app) {
         return new ReportAnalyzer($app->tagged('reports'));
     });
 
 <a name="extending-bindings"></a>
-### Extending Bindings
+### 結合の拡張
 
-The `extend` method allows the modification of resolved services. For example, when a service is resolved, you may run additional code to decorate or configure the service. The `extend` method accepts two arguments, the service class you're extending and a closure that should return the modified service. The closure receives the service being resolved and the container instance:
+`extend` メソッドを使用すると、依存性が解決済みのサービスを変更できます。 たとえば、サービスの依存性が解決されると、追加のコードを実行してサービスを装飾または構成できます。`extend` メソッドは、拡張するサービスクラスと、変更されたサービスを返すクロージャの２つの引数を受け取ります。 クロージャは、依存性解決されるサービスとコンテナインスタンスを受け取ります。
 
     $this->app->extend(Service::class, function (Service $service, Application $app) {
         return new DecoratedService($service);
     });
 
 <a name="resolving"></a>
-## Resolving
+## 依存性解決
 
 <a name="the-make-method"></a>
-### The `make` Method
+### `make`メソッド
 
-You may use the `make` method to resolve a class instance from the container. The `make` method accepts the name of the class or interface you wish to resolve:
+`make` メソッドを使用して、コンテナからクラスインスタンスを依存性解決できます。 `make` メソッドは、依存性解決したいクラスまたはインターフェースの名前を受け取ります。
 
     use App\Services\Transistor;
 
     $transistor = $this->app->make(Transistor::class);
 
-If some of your class's dependencies are not resolvable via the container, you may inject them by passing them as an associative array into the `makeWith` method. For example, we may manually pass the `$id` constructor argument required by the `Transistor` service:
+クラスの依存関係の一部がコンテナを介して依存性解決できない場合は、`makeWith` メソッドに連想配列を渡すことで、それらを依存注入できます。 たとえば、`Transistor` サービスに必要な `$id` コンストラクタ引数を手動で渡すことができます。
 
     use App\Services\Transistor;
 
