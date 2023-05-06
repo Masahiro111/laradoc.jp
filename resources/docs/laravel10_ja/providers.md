@@ -1,11 +1,11 @@
-# Service Providers
+# サービスプロバイダー
 
-- [Introduction](#introduction)
-- [Writing Service Providers](#writing-service-providers)
-    - [The Register Method](#the-register-method)
-    - [The Boot Method](#the-boot-method)
-- [Registering Providers](#registering-providers)
-- [Deferred Providers](#deferred-providers)
+- [はじめに](#introduction)
+- [サービスプロバイダの作成](#writing-service-providers)
+     - [register メソッド](#the-register-method)
+     - [boot メソッド](#the-boot-method)
+- [プロバイダの登録](#registering-providers)
+- [遅延プロバイダ](#deferred-providers)
 
 <a name="introduction"></a>
 ## Introduction
