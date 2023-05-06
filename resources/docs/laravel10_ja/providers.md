@@ -8,25 +8,26 @@
 - [遅延プロバイダ](#deferred-providers)
 
 <a name="introduction"></a>
-## Introduction
+## はじめに
 
-Service providers are the central place of all Laravel application bootstrapping. Your own application, as well as all of Laravel's core services, are bootstrapped via service providers.
+サービスプロバイダは、Laravel アプリケーションの起動を処理する中心的な場所です。あなたが作成するアプリケーション同様に、Laravel のすべてのコアサービスは、サービスプロバイダを経由して **初期起動処理** を行っています。
 
-But, what do we mean by "bootstrapped"? In general, we mean **registering** things, including registering service container bindings, event listeners, middleware, and even routes. Service providers are the central place to configure your application.
+しかし、「**初期起動処理**」とは何を意味するのでしょうか？ 一般的には、サービスコンテナによる結合、イベントリスナ、ミドルウェア、さらにはルートの登録など、**登録する** ことを意味します。サービスプロバイダは、アプリケーションを設定するための中心的な場所です。
 
-If you open the `config/app.php` file included with Laravel, you will see a `providers` array. These are all of the service provider classes that will be loaded for your application. By default, a set of Laravel core service providers are listed in this array. These providers bootstrap the core Laravel components, such as the mailer, queue, cache, and others. Many of these providers are "deferred" providers, meaning they will not be loaded on every request, but only when the services they provide are actually needed.
+Laravel に含まれている `config/app.php` ファイルを開くと、`providers` 配列がありあす。これは、アプリケーションにロードされるすべてのサービスプロバイダクラスです。デフォルトでは、Laravelコアサービスプロバイダの一連のセットがこの配列にリストされています。これらのプロバイダは、メーラー、キュー、キャッシュなどの Laravel コアコンポーネントを処理起動処理します。これらのプロバイダの多くは「遅延」プロバイダです。つまり、すべてのリクエストでロードされるわけではなく、提供されるサービスが実際に必要になったときにのみロードされます。
 
-In this overview, you will learn how to write your own service providers and register them with your Laravel application.
+この概要では、独自のサービス プロバイダーを作成し、それらを Laravel アプリケーションに登録する方法を学習します。
+この概要では、独自のサービスプロバイダを作成し、Laravelアプリケーションに登録する方法を学びます。
 
-> **Note**  
-> If you would like to learn more about how Laravel handles requests and works internally, check out our documentation on the Laravel [request lifecycle](/docs/{{version}}/lifecycle).
+> **Note**
+> Laravel がリクエストを処理し、内部でどのように機能するかについて詳しく知りたい場合は、Laravel [リクエスト ライフサイクル](/docs/{{version}}/lifecycle) に関するドキュメントをご覧ください。
 
 <a name="writing-service-providers"></a>
-## Writing Service Providers
+## サービスプロバイダの作成
 
-All service providers extend the `Illuminate\Support\ServiceProvider` class. Most service providers contain a `register` and a `boot` method. Within the `register` method, you should **only bind things into the [service container](/docs/{{version}}/container)**. You should never attempt to register any event listeners, routes, or any other piece of functionality within the `register` method.
+すべてのサービスプロバイダは、`Illuminate\Support\ServiceProvider` クラスを拡張します。 ほとんどのサービス プロバイダには、「register」メソッドと「boot」メソッドが含まれています。 `register` メソッド内では、**[サービスコンテナー](/docs/{{version}}/container)** にバインドするものだけを記述してください。`register` メソッド内で、イベントリスナ、ルート、またはその他の機能を登録しようとしないでください。
 
-The Artisan CLI can generate a new provider via the `make:provider` command:
+Artisan CLI は、`make:provider` コマンドを使って新しいプロバイダを生成できます。
 
 ```shell
 php artisan make:provider RiakServiceProvider
