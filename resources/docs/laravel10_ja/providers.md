@@ -34,11 +34,11 @@ php artisan make:provider RiakServiceProvider
 ```
 
 <a name="the-register-method"></a>
-### The Register Method
+### register メソッド
 
-As mentioned previously, within the `register` method, you should only bind things into the [service container](/docs/{{version}}/container). You should never attempt to register any event listeners, routes, or any other piece of functionality within the `register` method. Otherwise, you may accidentally use a service that is provided by a service provider which has not loaded yet.
+前述の通り、`register `メソッド内では、[サービスコンテナ](/docs/{{version}}/container) にのみバインドするものだけを記述する必要があります。`register` メソッド内で、イベントリスナやルート、またはその他の機能を登録しないでください。理由として、まだロードされていないサービスプロバイダによって提供されるサービスを誤って使用してしまう可能性があります。
 
-Let's take a look at a basic service provider. Within any of your service provider methods, you always have access to the `$app` property which provides access to the service container:
+基本的なサービスプロバイダを見てみましょう。どのサービスプロバイダメソッド内でも、サービスコンテナへのアクセスを提供する `$app` プロパティに常にアクセスできます。
 
     <?php
 
@@ -61,12 +61,12 @@ Let's take a look at a basic service provider. Within any of your service provid
         }
     }
 
-This service provider only defines a `register` method, and uses that method to define an implementation of `App\Services\Riak\Connection` in the service container. If you're not yet familiar with Laravel's service container, check out [its documentation](/docs/{{version}}/container).
+このサービスプロバイダは `register` メソッドのみを定義し、そのメソッドを使用してサービスコンテナ内で  `App\Services\Riak\Connection` の実装を定義しています。Laravel のサービスコンテナにまだ慣れていない場合は、[ドキュメント](/docs/{{version}}/container) を確認してください。
 
 <a name="the-bindings-and-singletons-properties"></a>
-#### The `bindings` And `singletons` Properties
+#### `bindings` と `singletons` プロパティ
 
-If your service provider registers many simple bindings, you may wish to use the `bindings` and `singletons` properties instead of manually registering each container binding. When the service provider is loaded by the framework, it will automatically check for these properties and register their bindings:
+サービスプロバイダがシンプルな結合を多く登録している場合は、各コンテナ結合を手動で登録する代わりに、`bindings` および `singletons` プロパティを使用することをお勧めします。フレームワークによってサービスプロバイダがロードされると、自動的にこれらのプロパティをチェックし、結合情報を登録します。
 
     <?php
 
@@ -102,9 +102,9 @@ If your service provider registers many simple bindings, you may wish to use the
     }
 
 <a name="the-boot-method"></a>
-### The Boot Method
+### boot メソッド
 
-So, what if we need to register a [view composer](/docs/{{version}}/views#view-composers) within our service provider? This should be done within the `boot` method. **This method is called after all other service providers have been registered**, meaning you have access to all other services that have been registered by the framework:
+サービスプロバイダ内で [ビューコンポーザ](/docs/{{version}}/views#view-composers) を登録する必要がある場合はどうすればよいでしょうか？これは `boot` メソッド内で行う必要があります。**このメソッドは、他のすべてのサービスプロバイダが登録された後に呼び出されます。** つまり、フレームワークによって登録された他のすべてのサービスにアクセスできます。
 
     <?php
 
@@ -127,9 +127,9 @@ So, what if we need to register a [view composer](/docs/{{version}}/views#view-c
     }
 
 <a name="boot-method-dependency-injection"></a>
-#### Boot Method Dependency Injection
+#### boot メソッドの依存性注入
 
-You may type-hint dependencies for your service provider's `boot` method. The [service container](/docs/{{version}}/container) will automatically inject any dependencies you need:
+サービスプロバイダの `boot` メソッドには、依存関係をタイプヒントとして指定できます。[サービスコンテナ](/docs/{{version}}/container) は、必要な依存関係を自動的に注入します。
 
     use Illuminate\Contracts\Routing\ResponseFactory;
 
@@ -144,11 +144,11 @@ You may type-hint dependencies for your service provider's `boot` method. The [s
     }
 
 <a name="registering-providers"></a>
-## Registering Providers
+## プロバイダの登録
 
-All service providers are registered in the `config/app.php` configuration file. This file contains a `providers` array where you can list the class names of your service providers. By default, a set of Laravel core service providers are listed in this array. These providers bootstrap the core Laravel components, such as the mailer, queue, cache, and others.
+すべてのサービスプロバイダは `config/app.php` 設定ファイルに登録されています。このファイルには `providers` 配列が含まれており、サービスプロバイダのクラス名を登録できます。この配列は、デフォルトで、Laravel コアサービスプロバイダの一連のセットが登録されています。これらのプロバイダは、メーラー、キュー、キャッシュなどの主要な Laravel コンポーネントを初期起動させます。
 
-To register your provider, add it to the array:
+プロバイダを登録するには、この配列に追加します。
 
     'providers' => [
         // Other Service Providers
