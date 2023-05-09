@@ -157,13 +157,13 @@ php artisan make:provider RiakServiceProvider
     ],
 
 <a name="deferred-providers"></a>
-## Deferred Providers
+## 遅延プロバイダ
 
-If your provider is **only** registering bindings in the [service container](/docs/{{version}}/container), you may choose to defer its registration until one of the registered bindings is actually needed. Deferring the loading of such a provider will improve the performance of your application, since it is not loaded from the filesystem on every request.
+プロバイダが [サービスコンテナ](/docs/{{version}}/container) にコンテナ結合を登録する **のみ** の場合は、登録された結合のいずれかが実際に必要になるまで、その登録を遅延させることができます。このようなプロバイダの読み込みを遅らせることによって、リクエストごとにファイルシステムから読み込まれる必要がなくなり、アプリケーションのパフォーマンスが向上します。
 
-Laravel compiles and stores a list of all of the services supplied by deferred service providers, along with the name of its service provider class. Then, only when you attempt to resolve one of these services does Laravel load the service provider.
+Laravel は、遅延サービスプロバイダにより提供されるすべてのサービスのリストと、そのサービスプロバイダのクラス名をコンパイルして保存します。その後、登録済みサービスのいずれかを依存解決しようした際に、Laravel はそのサービスプロバイダをロードします。
 
-To defer the loading of a provider, implement the `\Illuminate\Contracts\Support\DeferrableProvider` interface and define a `provides` method. The `provides` method should return the service container bindings registered by the provider:
+プロバイダのロードを遅延させるには、`\Illuminate\Contracts\Support\DeferrableProvider` インターフェイスを実装し、`provides` メソッドを定義します。 `provides` メソッドは、プロバイダによって登録されたサービスコンテナ結合を返します。
 
     <?php
 
