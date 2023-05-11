@@ -55,11 +55,11 @@ Laravel は、ファサードを補完するためのグローバルな「ヘル
 ただし、ファサードを使用する場合は注意が必要です。ファサードの主な危険性はクラスの「スコープクリープ」です。 ファサードは非常に使いやすく、依存性注入の必要がないため、クラス内のコードを成長させ続けてしまい 1つのクラスで多くのファサードを使用することが容易にになってしまうでしょう。 依存性注入を活用すると、大規模なコンストラクタによりクラスが大きくなっていないかを視覚的にフィードバックすることができるでしょう。したがって、ファサードを使用するときは、クラスの責任範囲が狭くならないように、クラスの規模に特に注意してください。クラスが大きくなりすぎる場合は、複数の小さなクラスに分割することを検討してください。
 
 <a name="facades-vs-dependency-injection"></a>
-### Facades Vs. Dependency Injection
+### ファサードと依存性注入
 
-One of the primary benefits of dependency injection is the ability to swap implementations of the injected class. This is useful during testing since you can inject a mock or stub and assert that various methods were called on the stub.
+依存性注入の主な利点の 1 つは、注入されたクラスの実装を交換できることです。これは、モックまたはスタブを挿入し、スタブでさまざまなメソッドが呼び出されたことを確認することができるため、テスト中に役立ちます。
 
-Typically, it would not be possible to mock or stub a truly static class method. However, since facades use dynamic methods to proxy method calls to objects resolved from the service container, we actually can test facades just as we would test an injected class instance. For example, given the following route:
+通常、真に静的なクラスメソッドをモックしたりスタブしたりすることはできません。しかし、ファサードはサービスコンテナから解決されたオブジェクトへのメソッド呼び出しを動的メソッドでプロキシするため、注入されたクラスインスタンスのテストと同様にファサードをテストすることができます。 たとえば、次のルートがあるとします。
 
     use Illuminate\Support\Facades\Cache;
 
@@ -67,7 +67,7 @@ Typically, it would not be possible to mock or stub a truly static class method.
         return Cache::get('key');
     });
 
-Using Laravel's facade testing methods, we can write the following test to verify that the `Cache::get` method was called with the argument we expected:
+Laravel のファサードテストメソッドを使用して、`Cache::get` メソッドが期待した引数で呼び出されたことを確認するテストを次のように書くことができます。
 
     use Illuminate\Support\Facades\Cache;
 
@@ -86,9 +86,9 @@ Using Laravel's facade testing methods, we can write the following test to verif
     }
 
 <a name="facades-vs-helper-functions"></a>
-### Facades Vs. Helper Functions
+### ファサードとヘルパ関数
 
-In addition to facades, Laravel includes a variety of "helper" functions which can perform common tasks like generating views, firing events, dispatching jobs, or sending HTTP responses. Many of these helper functions perform the same function as a corresponding facade. For example, this facade call and helper call are equivalent:
+ファサードに加えて、Laravel には、ビューの生成、イベントの起動、ジョブのディスパッチ、HTTP レスポンスの送信などの一般的なタスクを実行できるさまざまな「ヘルパ」関数が含まれています。これらのヘルパ関数の多くは、対応するファサードと同じ機能を実行しています。たとえば、次のファサード呼び出しとヘルパ呼び出しは同等です。
 
     return Illuminate\Support\Facades\View::make('profile');
 
