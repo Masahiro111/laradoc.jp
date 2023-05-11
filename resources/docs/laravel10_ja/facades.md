@@ -94,13 +94,13 @@ Laravel のファサードテストメソッドを使用して、`Cache::get` �
 
     return view('profile');
 
-There is absolutely no practical difference between facades and helper functions. When using helper functions, you may still test them exactly as you would the corresponding facade. For example, given the following route:
+ファサードとヘルパ関数の間には実質的な違いはまったくありません。ヘルパ関数を使用する場合でも、対応するファサードとまったく同じ方法でテストできます。たとえば、次のルートがあるとします。
 
     Route::get('/cache', function () {
         return cache('key');
     });
 
-The `cache` helper is going to call the `get` method on the class underlying the `Cache` facade. So, even though we are using the helper function, we can write the following test to verify that the method was called with the argument we expected:
+`cache` ヘルパーは、`Cache` ファサードの基礎となるクラスの `get` メソッドを呼び出します。したがって、ヘルパ関数を使用している場合でも、次ようなテストを作成して、予期した引数でメソッドが呼び出されているかどうかを確認できます。
 
     use Illuminate\Support\Facades\Cache;
 
