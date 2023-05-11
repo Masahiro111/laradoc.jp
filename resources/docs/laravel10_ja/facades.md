@@ -1,21 +1,21 @@
-# Facades
+# ファサード
 
-- [Introduction](#introduction)
-- [When To Use Facades](#when-to-use-facades)
-    - [Facades Vs. Dependency Injection](#facades-vs-dependency-injection)
-    - [Facades Vs. Helper Functions](#facades-vs-helper-functions)
-- [How Facades Work](#how-facades-work)
-- [Real-Time Facades](#real-time-facades)
-- [Facade Class Reference](#facade-class-reference)
+- [はじめに](#introduction)
+- [ファサードを使うべきタイミング](#when-to-use-facades)
+     - [ファサードと依存性注入](#facades-vs-dependency-injection)
+     - [ファサードとヘルパ関数](#facades-vs-helper-functions)
+- [ファサードの仕組み](#how-facades-work)
+- [リアルタイムファサード](#real-time-facades)
+- [ファサードクラスリファレンス](#facade-class-reference)
 
 <a name="introduction"></a>
-## Introduction
+## はじめに
 
-Throughout the Laravel documentation, you will see examples of code that interacts with Laravel's features via "facades". Facades provide a "static" interface to classes that are available in the application's [service container](/docs/{{version}}/container). Laravel ships with many facades which provide access to almost all of Laravel's features.
+Laravel のドキュメント全体で、「ファサード」を介して Laravel の機能とやりとりするコード例を見ることがあるでしょう。ファサードは、アプリケーションの [サービスコンテナ](/docs/{{version}}/container) で利用可能なクラスへの「静的」なインターフェースを提供します。Laravel には、ほぼすべての Laravel の機能にアクセスできる多くのファサードを搭載しています。
 
-Laravel facades serve as "static proxies" to underlying classes in the service container, providing the benefit of a terse, expressive syntax while maintaining more testability and flexibility than traditional static methods. It's perfectly fine if you don't totally understand how facades work - just go with the flow and continue learning about Laravel.
+Laravel のファサードは、サービスコン「静的プロキシ」として機能し、従来の静的メソッドよりも高いテスト容易性と柔軟性を維持しながら、簡潔で表現力豊かな構文の利点を提供します。ファサードの仕組みが完全に理解できなくても大丈夫です。流れに沿って、Laravel について学習を続けてください。
 
-All of Laravel's facades are defined in the `Illuminate\Support\Facades` namespace. So, we can easily access a facade like so:
+Laravel のすべてのファサードは `Illuminate\Support\Facades` 名前空間で定義されています。そのため、以下のように簡単にファサードにアクセスできます。
 
     use Illuminate\Support\Facades\Cache;
     use Illuminate\Support\Facades\Route;
@@ -24,7 +24,7 @@ All of Laravel's facades are defined in the `Illuminate\Support\Facades` namespa
         return Cache::get('key');
     });
 
-Throughout the Laravel documentation, many of the examples will use facades to demonstrate various features of the framework.
+Laravel ドキュメント全体を通じ、多くのコード例でファサードを使用して、フレームワークのさまざまな機能を実演しています。
 
 <a name="helper-functions"></a>
 #### Helper Functions
