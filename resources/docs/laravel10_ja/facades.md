@@ -1,7 +1,7 @@
 # ファサード
 
 - [はじめに](#introduction)
-- [ファサードを使うべきタイミング](#when-to-use-facades)
+- [ファサードを使うタイミング](#when-to-use-facades)
      - [ファサードと依存性注入](#facades-vs-dependency-injection)
      - [ファサードとヘルパ関数](#facades-vs-helper-functions)
 - [ファサードの仕組み](#how-facades-work)
@@ -27,11 +27,11 @@ Laravel のすべてのファサードは `Illuminate\Support\Facades` 名前空
 Laravel ドキュメント全体を通じ、多くのコード例でファサードを使用して、フレームワークのさまざまな機能を実演しています。
 
 <a name="helper-functions"></a>
-#### Helper Functions
+#### ヘルパ関数
 
-To complement facades, Laravel offers a variety of global "helper functions" that make it even easier to interact with common Laravel features. Some of the common helper functions you may interact with are `view`, `response`, `url`, `config`, and more. Each helper function offered by Laravel is documented with their corresponding feature; however, a complete list is available within the dedicated [helper documentation](/docs/{{version}}/helpers).
+Laravel は、ファサードを補完するためのグローバルな「ヘルパ関数」を提供しており、Laravel 共通の機能を更に簡単に扱うことができます。 操作できる一般的なヘルパー関数として `view`、`response`、`url`、`config` などがあります。 Laravel が提供する各ヘルパ関数は、対応する機能とともにドキュメント化されています。完全なリストは専用の [ヘルパドキュメント](/docs/{{version}}/helpers) をご覧ください。
 
-For example, instead of using the `Illuminate\Support\Facades\Response` facade to generate a JSON response, we may simply use the `response` function. Because helper functions are globally available, you do not need to import any classes in order to use them:
+たとえば、`Illuminate\Support\Facades\Response` ファサードを使用して JSON レスポンスを生成する代わりに、単純に `response` 関数を使用することができます。ヘルパ関数はグローバルに利用可能なため、それらを使用するためにクラスをインポートする必要はありません。
 
     use Illuminate\Support\Facades\Response;
 
@@ -48,11 +48,11 @@ For example, instead of using the `Illuminate\Support\Facades\Response` facade t
     });
 
 <a name="when-to-use-facades"></a>
-## When To Use Facades
+## ファサードを使うタイミング
 
-Facades have many benefits. They provide a terse, memorable syntax that allows you to use Laravel's features without remembering long class names that must be injected or configured manually. Furthermore, because of their unique usage of PHP's dynamic methods, they are easy to test.
+ファサードには多くの利点があります。手作業で挿入または設定する必要がある長いクラス名を覚えなくても、Laravel の機能を使用できる簡潔で覚えやすい構文を提供します。 さらに、PHP の動的メソッドを独自に使用しているため、テストが簡単です。
 
-However, some care must be taken when using facades. The primary danger of facades is class "scope creep". Since facades are so easy to use and do not require injection, it can be easy to let your classes continue to grow and use many facades in a single class. Using dependency injection, this potential is mitigated by the visual feedback a large constructor gives you that your class is growing too large. So, when using facades, pay special attention to the size of your class so that its scope of responsibility stays narrow. If your class is getting too large, consider splitting it into multiple smaller classes.
+ただし、ファサードを使用する場合は注意が必要です。ファサードの主な危険性はクラスの「スコープクリープ」です。 ファサードは非常に使いやすく、依存性注入の必要がないため、クラス内のコードを成長させ続けてしまい 1つのクラスで多くのファサードを使用することが容易にになってしまうでしょう。 依存性注入を活用すると、大規模なコンストラクタによりクラスが大きくなっていないかを視覚的にフィードバックすることができるでしょう。したがって、ファサードを使用するときは、クラスの責任範囲が狭くならないように、クラスの規模に特に注意してください。クラスが大きくなりすぎる場合は、複数の小さなクラスに分割することを検討してください。
 
 <a name="facades-vs-dependency-injection"></a>
 ### Facades Vs. Dependency Injection
