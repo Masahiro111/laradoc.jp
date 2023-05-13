@@ -100,7 +100,7 @@ Laravel のファサードテストメソッドを使用して、`Cache::get` �
         return cache('key');
     });
 
-`cache` ヘルパーは、`Cache` ファサードの基礎となるクラスの `get` メソッドを呼び出します。したがって、ヘルパ関数を使用している場合でも、次ようなテストを作成して、予期した引数でメソッドが呼び出されているかどうかを確認できます。
+`cache` ヘルパは、`Cache` ファサードの基礎となるクラスの `get` メソッドを呼び出します。したがって、ヘルパ関数を使用している場合でも、次ようなテストを作成して、予期した引数でメソッドが呼び出されているかどうかを確認できます。
 
     use Illuminate\Support\Facades\Cache;
 
@@ -119,9 +119,9 @@ Laravel のファサードテストメソッドを使用して、`Cache::get` �
     }
 
 <a name="how-facades-work"></a>
-## How Facades Work
+## ファサードの仕組み
 
-In a Laravel application, a facade is a class that provides access to an object from the container. The machinery that makes this work is in the `Facade` class. Laravel's facades, and any custom facades you create, will extend the base `Illuminate\Support\Facades\Facade` class.
+Laravel アプリケーションでは、ファサードはコンテナからオブジェクトにアクセスするためのクラスです。この仕組みを実現するのが `Facade` クラスです。Laravel のファサード、および作成するカスタムファサードは、基本クラス `Illuminate\Support\Facades\Facade` を拡張します。
 
 The `Facade` base class makes use of the `__callStatic()` magic-method to defer calls from your facade to an object resolved from the container. In the example below, a call is made to the Laravel cache system. By glancing at this code, one might assume that the static `get` method is being called on the `Cache` class:
 
