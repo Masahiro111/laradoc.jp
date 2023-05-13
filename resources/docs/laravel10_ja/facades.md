@@ -123,7 +123,7 @@ Laravel のファサードテストメソッドを使用して、`Cache::get` �
 
 Laravel アプリケーションでは、ファサードはコンテナからオブジェクトにアクセスするためのクラスです。この仕組みを実現するのが `Facade` クラスです。Laravel のファサード、および作成するカスタムファサードは、基本クラス `Illuminate\Support\Facades\Facade` を拡張します。
 
-The `Facade` base class makes use of the `__callStatic()` magic-method to defer calls from your facade to an object resolved from the container. In the example below, a call is made to the Laravel cache system. By glancing at this code, one might assume that the static `get` method is being called on the `Cache` class:
+`Facade` ベースクラスは、`__callStatic()` マジックメソッドを使用して、ファサードからの呼び出しをコンテナから解決されたオブジェクトに委ねることができます。以下の例では、Laravel のキャッシュシステムを呼び出しています。このコードを見ると、静的な `get` メソッドが `Cache` クラスで呼び出されていると思うでしょう。
 
     <?php
 
@@ -146,9 +146,9 @@ The `Facade` base class makes use of the `__callStatic()` magic-method to defer 
         }
     }
 
-Notice that near the top of the file we are "importing" the `Cache` facade. This facade serves as a proxy for accessing the underlying implementation of the `Illuminate\Contracts\Cache\Factory` interface. Any calls we make using the facade will be passed to the underlying instance of Laravel's cache service.
+ファイルの先頭近くで `Cache` ファサードを「インポート」していることに注意してください。このファサードは、 `Illuminate\Contracts\Cache\Factory` インターフェイスの基礎となる実装にアクセスするためのプロキシとして機能します。ファサードを使って行う呼び出しはすべて、Laravel のキャッシュサービスの基礎となるインスタンスに渡されます。
 
-If we look at that `Illuminate\Support\Facades\Cache` class, you'll see that there is no static method `get`:
+その `Illuminate\Support\Facades\Cache` クラスを見ると、静的メソッド `get` がないことがわかります。
 
     class Cache extends Facade
     {
