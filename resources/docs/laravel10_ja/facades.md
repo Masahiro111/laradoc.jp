@@ -121,9 +121,9 @@ Laravel のファサードテストメソッドを使用して、`Cache::get` �
 <a name="how-facades-work"></a>
 ## ファサードの仕組み
 
-Laravel アプリケーションでは、ファサードはコンテナからオブジェクトにアクセスするためのクラスです。この仕組みを実現するのが `Facade` クラスです。Laravel のファサード、および作成するカスタムファサードは、基本クラス `Illuminate\Support\Facades\Facade` を拡張します。
+Laravel アプリケーションでは、ファサードはコンテナからオブジェクトにアクセスするためのクラスです。この仕組みを実現するのが `Facade` クラスです。Laravel のファサード、および作成するカスタムファサードは、基底クラス `Illuminate\Support\Facades\Facade` を拡張します。
 
-`Facade` ベースクラスは、`__callStatic()` マジックメソッドを使用して、ファサードからの呼び出しをコンテナから解決されたオブジェクトに委ねることができます。以下の例では、Laravel のキャッシュシステムを呼び出しています。このコードを見ると、静的な `get` メソッドが `Cache` クラスで呼び出されていると思うでしょう。
+`Facade` 基底クラスは、`__callStatic()` マジックメソッドを使用して、ファサードからの呼び出しをコンテナから解決されたオブジェクトに委ねることができます。以下の例では、Laravel のキャッシュシステムを呼び出しています。このコードを見ると、静的な `get` メソッドが `Cache` クラスで呼び出されていると思うでしょう。
 
     <?php
 
@@ -146,7 +146,7 @@ Laravel アプリケーションでは、ファサードはコンテナからオ
         }
     }
 
-ファイルの先頭近くで `Cache` ファサードを「インポート」していることに注意してください。このファサードは、 `Illuminate\Contracts\Cache\Factory` インターフェイスの基礎となる実装にアクセスするためのプロキシとして機能します。ファサードを使って行う呼び出しはすべて、Laravel のキャッシュサービスの基礎となるインスタンスに渡されます。
+ファイルの先頭近くで `Cache` ファサードを「インポート」していることに注意してください。このファサードは、 `Illuminate\Contracts\Cache\Factory` インターフェイスの基底となる実装にアクセスするためのプロキシとして機能します。ファサードを使って行う呼び出しはすべて、Laravel のキャッシュサービスの基礎となるインスタンスに渡されます。
 
 その `Illuminate\Support\Facades\Cache` クラスを見ると、静的メソッド `get` がないことがわかります。
 
@@ -161,12 +161,12 @@ Laravel アプリケーションでは、ファサードはコンテナからオ
         }
     }
 
-Instead, the `Cache` facade extends the base `Facade` class and defines the method `getFacadeAccessor()`. This method's job is to return the name of a service container binding. When a user references any static method on the `Cache` facade, Laravel resolves the `cache` binding from the [service container](/docs/{{version}}/container) and runs the requested method (in this case, `get`) against that object.
+代わりに、`Cache` ファサードは `Facade` 基底クラスを拡張し、メソッド `getFacadeAccessor()` を定義します。 このメソッドの役割は、サービスコンテナの結合名を返すことです。 ユーザーが `Cache` ファサード上で静的メソッドを参照すると、Laravel は [サービスコンテナ](/docs/{{version}}/container) からの `cache` 結合を解決し、要求されたメソッド(この場合は` get`) をそのオブジェクトに対して実行します。
 
 <a name="real-time-facades"></a>
-## Real-Time Facades
+## リアルタイムファサード
 
-Using real-time facades, you may treat any class in your application as if it was a facade. To illustrate how this can be used, let's first examine some code that does not use real-time facades. For example, let's assume our `Podcast` model has a `publish` method. However, in order to publish the podcast, we need to inject a `Publisher` instance:
+リアルタイムファサードを使用すると、アプリケーション内の任意のクラスをファサードであるかのように扱うことができます。これがどのように使われるかを説明するために、まずリアルタイムファサードを使用しないコードを見てみましょう。たとえば、`Podcast` モデルに `publish` メソッドがあると仮定しましょう。ただし、ポッドキャストを公開するためには、`Publisher` インスタンスを依存性注入する必要があります。
 
     <?php
 
@@ -188,7 +188,7 @@ Using real-time facades, you may treat any class in your application as if it wa
         }
     }
 
-Injecting a publisher implementation into the method allows us to easily test the method in isolation since we can mock the injected publisher. However, it requires us to always pass a publisher instance each time we call the `publish` method. Using real-time facades, we can maintain the same testability while not being required to explicitly pass a `Publisher` instance. To generate a real-time facade, prefix the namespace of the imported class with `Facades`:
+Publisher の実装をメソッドに注入すると、注入されたPublisher をモックできるため、メソッドを分離して簡単にテストできます。ただし、`publish` メソッドを呼び出すたびに、常に Publisher  インスタンスを渡す必要があります。リアルタイムファサードを使用すると、`Publisher` インスタンスを明示的に渡す必要がなく、同じテストの容易性を維持できます。 リアルタイムファサードを生成するには、インポートされたクラスの名前空間に `Facades` をプレフィックスとして追加します。
 
     <?php
 
@@ -210,7 +210,7 @@ Injecting a publisher implementation into the method allows us to easily test th
         }
     }
 
-When the real-time facade is used, the publisher implementation will be resolved out of the service container using the portion of the interface or class name that appears after the `Facades` prefix. When testing, we can use Laravel's built-in facade testing helpers to mock this method call:
+リアルタイムファサードが使用されると、`Facades` プレフィックスの後に表示されるインターフェイスまたはクラス名の部分を使って、サービスコンテナが Publisher の実装を依存性解決させます。 テストするときは、Laravel の組み込みファサードテストヘルパを使用して、このメソッド呼び出しをモックできます。
 
     <?php
 
@@ -239,13 +239,13 @@ When the real-time facade is used, the publisher implementation will be resolved
     }
 
 <a name="facade-class-reference"></a>
-## Facade Class Reference
+## ファサードクラスリファレンス
 
-Below you will find every facade and its underlying class. This is a useful tool for quickly digging into the API documentation for a given facade root. The [service container binding](/docs/{{version}}/container) key is also included where applicable.
+以下に、すべてのファサードとその基礎となるクラスが表示されます。 これは、特定のファサード ルートの API ドキュメントをすばやく調べるのに便利なツールです。 該当する場合、[サービスコンテナ結合](/docs/{{version}}/container) キーも含まれます。
 
 <div class="overflow-auto">
 
-Facade  |  Class  |  Service Container Binding
+ファサード | クラス | サービスコンテナの結合キー
 ------------- | ------------- | -------------
 App  |  [Illuminate\Foundation\Application](https://laravel.com/api/{{version}}/Illuminate/Foundation/Application.html)  |  `app`
 Artisan  |  [Illuminate\Contracts\Console\Kernel](https://laravel.com/api/{{version}}/Illuminate/Contracts/Console/Kernel.html)  |  `artisan`
