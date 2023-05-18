@@ -28,41 +28,41 @@
 - [オリジン間でのリソース共有 (CORS)](#cors)
 - [ルートのキャッシュ](#route-caching)
 
-<a name="基本ルーティング"></a>
+<a name="basic-routing"></a>
 ## 基本的なルーティング
 
-最も基本的な Laravel ルートは URI とクロージャを受け入れ、複雑なルーティング設定ファイルを使用せずにルートと動作を定義する非常にシンプルで表現力豊かな方法を提供します。
+最も基本的な Laravel のルートは URI とクロージャを引数にとり、複雑なルーティング設定ファイルなしに、ルートと動作を定義する、非常にシンプルで表現力豊かな方法を提供します。
 
-     Illuminate\Support\Facades\Route を使用します。
+    use Illuminate\Support\Facades\Route;
 
-     Route::get('/greeting', function () {
-         「Hello World」を返します。
-     });
+    Route::get('/greeting', function () {
+        return 'Hello World';
+    });
 
 <a name="the-default-route-files"></a>
-#### デフォルトのルート ファイル
+#### デフォルトのルートファイル
 
-すべての Laravel ルートは、`routes` ディレクトリにあるルート ファイルで定義されます。 これらのファイルは、アプリケーションの「App\Providers\RouteServiceProvider」によって自動的にロードされます。 `routes/web.php` ファイルは、Web インターフェースのルートを定義します。 これらのルートには、セッション状態や CSRF 保護などの機能を提供する「web」ミドルウェア グループが割り当てられます。 「routes/api.php」内のルートはステートレスであり、「api」ミドルウェア グループに割り当てられます。
+Laravel のすべてのルートは、`routes` ディレクトリにあるルートファイルで定義されています。これらのファイルは、アプリケーションの `App\Providers\RouteServiceProvider` によって自動的に読み込まれます。`routes/web.php` ファイルは、Web インターフェース用のルートを定義します。これらのルートは `web` ミドルウェアグループに割り当てられ、セッション状態や CSRF 保護などの機能が提供されます。`routes/api.php` にあるルートはステートレスで、`api` ミドルウェアグループが割り当てられています。
 
-ほとんどのアプリケーションでは、「routes/web.php」ファイルでルートを定義することから始めます。 「routes/web.php」で定義されたルートには、定義されたルートの URL をブラウザに入力することでアクセスできます。 たとえば、ブラウザで「http://example.com/user」に移動すると、次のルートにアクセスできます。
+ほとんどのアプリケーションでは、`routes/web.php` ファイルでルートを定義することから始めます。`routes/web.php` で定義されたルートは、ブラウザで定義されたルートの URL を入力することでアクセスできます。たとえば、ブラウザで `http://example.com/user` に移動すると、次のルートにアクセスできます。
 
-     App\Http\Controllers\UserController を使用します。
+    use App\Http\Controllers\UserController;
 
-     Route::get('/user', [UserController::class, 'index']);
+    Route::get('/user', [UserController::class, 'index']);
 
-`routes/api.php` ファイルで定義されたルートは、`RouteServiceProvider` によってルート グループ内にネストされます。 このグループ内では、「/api」 URI プレフィックスが自動的に適用されるため、ファイル内のすべてのルートに手動で適用する必要はありません。 「RouteServiceProvider」クラスを変更することで、プレフィックスやその他のルート グループ オプションを変更できます。
+`routes/api.php` ファイルで定義されたルートは、`RouteServiceProvider` によってルートグループ内にネストされています。このグループ内では、`/api` URI プレフィックスが自動的に適用されるため、ファイル内のすべてのルートに手作業で適用する必要はありません。`RouteServiceProvider` クラスを変更することで、プレフィックスや他のルートグループオプションを変更できます。
 
 <a name="available-router-methods"></a>
-#### 利用可能なルーター方式
+#### 利用可能なルーターメソッド
 
 ルーターを使用すると、任意の HTTP 動詞に応答するルートを登録できます。
 
-     Route::get($uri, $callback);
-     Route::post($uri, $callback);
-     Route::put($uri, $callback);
-     Route::patch($uri, $callback);
-     Route::delete($uri, $callback);
-     Route::options($uri, $callback);
+    Route::get($uri, $callback);
+    Route::post($uri, $callback);
+    Route::put($uri, $callback);
+    Route::patch($uri, $callback);
+    Route::delete($uri, $callback);
+    Route::options($uri, $callback);
 
 場合によっては、複数の HTTP 動詞に応答するルートを登録する必要があるかもしれません。 `match` メソッドを使用してこれを行うことができます。 または、「any」メソッドを使用してすべての HTTP 動詞に応答するルートを登録することもできます。
 
