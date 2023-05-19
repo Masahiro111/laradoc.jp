@@ -64,102 +64,102 @@ Laravel のすべてのルートは、`routes` ディレクトリにあるルー
     Route::delete($uri, $callback);
     Route::options($uri, $callback);
 
-場合によっては、複数の HTTP 動詞に応答するルートを登録する必要があるかもしれません。 `match` メソッドを使用してこれを行うことができます。 または、「any」メソッドを使用してすべての HTTP 動詞に応答するルートを登録することもできます。
+複数の HTTP 動詞に対応するルートを登録する必要がある場合があります。これには `match` メソッドを使用できます。また、`any` メソッドを使用して、すべての HTTP 動詞に対応するルートを登録することもできます。
 
-     Route::match(['get', 'post'], '/', function () {
-         // ...
-     });
+    Route::match(['get', 'post'], '/', function () {
+        // ...
+    });
 
-     Route::any('/', function () {
-         // ...
-     });
+    Route::any('/', function () {
+        // ...
+    });
 
-> **注意**
-> 同じ URI を共有する複数のルートを定義する場合、`get`、`post`、`put`、`patch`、`delete`、および `options` メソッドを使用するルートを、`any` を使用するルートよりも前に定義する必要があります。 「match」メソッドと「redirect」メソッド。 これにより、受信リクエストが正しいルートと一致することが保証されます。
+> **Note**
+> 同じ URI を共有する複数のルートを定義する場合、`get`、`post`、`put`、`patch`、`delete`、および `options` メソッドを使用するルートは、`any`、`match`、および `redirect` メソッドを使用するルートよりも先に定義する必要があります。これにより、受信リクエストが正しいルートと一致するようになります
 
 <a name="dependency-injection"></a>
-#### 依存関係の注入
+#### 依存性の注入
 
-ルートのコールバック署名で、ルートに必要な依存関係をタイプヒントで指定できます。 宣言された依存関係は、Laravel [サービスコンテナ](/docs/{{version}}/container) によって自動的に解決され、コールバックに挿入されます。 たとえば、「Illuminate\Http\Request」クラスにタイプヒントを入力すると、現在の HTTP リクエストがルート コールバックに自動的に挿入されます。
+ルートのコールバック引数に、ルートに必要な依存関係を型ヒントとして指定することができます。宣言された依存関係は、Laravel の [サービスコンテナ](/docs/{{version}}/container) によって自動的に解決され、コールバックに注入されます。たとえば、現在の HTTP リクエストをルートコールバックに自動的に注入させるには、`Illuminate\Http\Request` クラスを型ヒントとして指定できます。
 
-     Illuminate\Http\Request を使用します。
+    use Illuminate\Http\Request;
 
-     Route::get('/users', function (Request $request) {
-         // ...
-     });
+    Route::get('/users', function (Request $request) {
+        // ...
+    });
 
 <a name="csrf-protection"></a>
 #### CSRF 保護
 
-「web」ルート ファイルで定義されている「POST」、「PUT」、「PATCH」、または「DELETE」ルートを指す HTML フォームには、CSRF トークン フィールドが含まれている必要があることに注意してください。 それ以外の場合、リクエストは拒否されます。 CSRF 保護の詳細については、[CSRF ドキュメント](/docs/{{version}}/csrf) を参照してください。
+`web` ルートファイルで定義されている `POST`、`PUT`、`PATCH`、または `DELETE` ルートを指す HTML フォームには、CSRF トークンフィールドが含まれている必要があることに注意してください。それ以外の場合、リクエストは拒否されます。CSRF 保護の詳細については、[CSRF ドキュメント](/docs/{{version}}/csrf) を参照してください。
 
-     <フォームメソッド="POST" アクション="/プロファイル">
-         @csrf
-         ...
-     </form>
+    <form method="POST" action="/profile">
+        @csrf
+        ...
+    </form>
 
 <a name="redirect-routes"></a>
 ### リダイレクトルート
 
-別の URI にリダイレクトするルートを定義している場合は、`Route::redirect` メソッドを使用できます。 このメソッドは便利なショートカットを提供するため、単純なリダイレクトを実行するために完全なルートまたはコントローラーを定義する必要はありません。
+別の URI にリダイレクトするルートを定義する場合は、`Route::redirect` メソッドを使用できます。このメソッドは便利なショートカットを提供するため、単純なリダイレクトを実行するために完全なルートまたはコントローラーを定義する必要はありません。
 
-     Route::redirect('/here', '/there');
+    Route::redirect('/here', '/there');
 
-デフォルトでは、`Route::redirect` は `302` ステータス コードを返します。 オプションの 3 番目のパラメータを使用してステータス コードをカスタマイズできます。
+デフォルトでは、`Route::redirect` は `302` ステータスコードを返します。オプションの 3 番目のパラメータを使用してステータスコードをカスタマイズできます。
 
-     Route::redirect('/here', '/there', 301);
+    Route::redirect('/here', '/there', 301);
 
-または、「Route::permanentRedirect」メソッドを使用して「301」ステータス コードを返すこともできます。
+または、`Route::permanentRedirect` メソッドを使用して `301` ステータス コードを返すこともできます。
 
-     Route::permanentRedirect('/here', '/there');
+    Route::permanentRedirect('/here', '/there');
 
-> **警告**
-> リダイレクトルートでルートパラメーターを使用する場合、次のパラメーターは Laravel によって予約されているため使用できません: `destination` と `status`。
+> **Warning**
+> リダイレクトルートでルートパラメータを使用する場合、`destination` と `status` パラメータは Laravel によって予約されているため使用できません。
 
 <a name="view-routes"></a>
-### ルートを表示
+### ビュールート
 
-ルートが [view](/docs/{{version}}/views) を返すだけでよい場合は、`Route::view` メソッドを使用できます。 「redirect」メソッドと同様に、このメソッドは単純なショートカットを提供するため、完全なルートまたはコントローラーを定義する必要はありません。 `view` メソッドは、最初の引数として URI を、2 番目の引数としてビュー名を受け入れます。 さらに、オプションの 3 番目の引数としてビューに渡すデータの配列を指定できます。
+ルートが [ビュー](/docs/{{version}}/views) のみを返すだけでよい場合は、`Route::view` メソッドを使用できます。`redirect` メソッドと同様に、このメソッドは単純なショートカットを提供するため、完全なルートまたはコントローラーを定義する必要はありません。`view` メソッドは、最初の引数として URI を、2 番目の引数としてビュー名を受け取ります。 さらに、オプションの 3 番目の引数としてビューに渡すデータの配列を指定できます。
 
-     Route::view('/welcome', 'welcome');
+    Route::view('/welcome', 'welcome');
 
-     Route::view('/welcome', 'welcome', ['name' => 'Taylor']);
+    Route::view('/welcome', 'welcome', ['name' => 'Taylor']);
 
-> **警告**
-> ビュールートでルートパラメータを使用する場合、次のパラメータはLaravelによって予約されているため使用できません: `view`、`data`、`status`、および `headers`。
+> **Warning**
+> ビュールートでルートパラメータを使用する場合、`view`、`data`、`status`、および `headers`のパラメータはLaravelによって予約されているため使用できません。
 
 <a name="the-route-list"></a>
 ### ルートリスト
 
-「route:list」アーティザン コマンドを使用すると、アプリケーションによって定義されているすべてのルートの概要を簡単に提供できます。
+`route:list` Artisan コマンドを使用すると、アプリケーションによって定義されているすべてのルートの概要を簡単に提供できます。
 
-```シェル
-php 職人ルート:リスト
-「」
+```shell
+php artisan route:list
+```
 
-デフォルトでは、各ルートに割り当てられたルートミドルウェアは「route:list」出力には表示されません。 ただし、コマンドに `-v` オプションを追加することで、Laravel にルートミドルウェアを表示するように指示できます。
+デフォルトでは、各ルートに割り当てられたルートミドルウェアは `route:list` 出力には表示されません。 ただし、コマンドに `-v` オプションを追加することで、Laravel にルートミドルウェアを表示するように指示できます。
 
-```シェル
-php 職人ルート:list -v
-「」
+```shell
+php artisan route:list -v
+```
 
 特定の URI で始まるルートのみを表示するように Laravel に指示することもできます。
 
-```シェル
-php 職人ルート:リスト --path=api
-「」
+```shell
+php artisan route:list --path=api
+```
 
-さらに、`route:list` コマンドを実行するときに `--excel-vendor` オプションを指定することで、サードパーティのパッケージによって定義されたルートを非表示にするように Laravel に指示することもできます。
+さらに、`route:list` コマンドを実行するときに `--excel-vendor` オプションを指定することで、サードパーティのパッケージによって定義されたルートを非表示にするよう Laravel に指示することもできます。
 
-```シェル
-php 職人ルート:リスト --excel-vendor
-「」
+```shell
+php artisan route:list --except-vendor
+```
 
-同様に、「route:list」コマンドの実行時に「--only-vendor」オプションを指定することで、サードパーティパッケージによって定義されたルートのみを表示するようにLaravelに指示することもできます。
+同様に、`route:list` コマンドを実行する際に `--only-vendor` オプションを指定することで、サードパーティのパッケージによって定義されているルートのみを表示するよう Laravel に指示できます。
 
-```シェル
-php 職人ルート:リスト --only-vendor
-「」
+```shell
+php artisan route:list --only-vendor
+```
 
 <a name="ルートパラメータ"></a>
 ## ルートパラメータ
