@@ -167,158 +167,155 @@ php artisan route:list --only-vendor
 <a name="必須パラメータ"></a>
 ### 必須パラメータ
 
-場合によっては、ルート内の URI のセグメントをキャプチャする必要があります。 たとえば、URL からユーザー ID を取得する必要がある場合があります。 これを行うには、ルート パラメーターを定義します。
+ルート内で URI のセグメントを取得する必要がある場合があります。たとえば、URL からユーザー ID を取得する必要があるかもしれません。これを行うには、ルートパラメーターを定義します。
 
-     Route::get('/user/{id}', function (string $id) {
-         'ユーザー'.$idを返します;
-     });
+    Route::get('/user/{id}', function (string $id) {
+        return 'User '.$id;
+    });
 
-ルートに必要な数のルート パラメータを定義できます。
+ルートに必要なルートパラメータをいくつでも定義できます。
 
-     Route::get('/posts/{post}/comments/{comment}', function (string $postId, string $commentId) {
-         // ...
-     });
+    Route::get('/posts/{post}/comments/{comment}', function (string $postId, string $commentId) {
+        // ...
+    });
 
-ルート パラメータは常に「{}」中括弧で囲まれ、アルファベット文字で構成されている必要があります。 ルート パラメーター名内ではアンダースコア (「_」) も使用できます。 ルート パラメーターは、その順序に基づいてルート コールバック/コントローラーに挿入されます。ルート コールバック/コントローラー引数の名前は関係ありません。
+ルートパラメータは常に `{}` 中括弧で囲まれ、アルファベット文字で構成されている必要があります。ルートパラメータ名ではアンダースコア ( `_` ) も使用できます。 ルートパラメータは、その順序に基づいてルートのコールバック / コントローラに注入されます。ルート のコールバック / コントローラ引数の名前は関係ありません。
 
 <a name="parameters-and-dependency-injection"></a>
 #### パラメータと依存関係の注入
 
-Laravel サービスコンテナがルートのコールバックに自動的に挿入する依存関係がルートにある場合は、依存関係の後にルートパラメーターをリストする必要があります。
+Laravel サービスコンテナによって、ルートのコールバックへ自動的に注入したい依存関係がある際、依存関係の後にルートパラメータを記述する必要があります。
 
-     Illuminate\Http\Request を使用します。
+    use Illuminate\Http\Request;
 
-     Route::get('/user/{id}', function (Request $request, string $id) {
-         'ユーザー'.$idを返します;
-     });
+    Route::get('/user/{id}', function (Request $request, string $id) {
+        return 'User '.$id;
+    });
 
 <a name="パラメータ-オプションパラメータ"></a>
 ### オプションのパラメータ
 
-場合によっては、URI に常に存在するとは限らないルート パラメーターの指定が必要になることがあります。 これを行うには、パラメータ名の後に「?」マークを付けます。 ルートの対応する変数にデフォルト値を指定してください。
+場合によっては、URI に存在するとは限らないルートパラメータの指定が必要になることがあります。その際は、パラメータ名の後に `?` マークを付けます。ルートの対応する変数にデフォルト値を指定してください。
 
-     Route::get('/user/{name?}', function (string $name = null) {
-         $name を返します。
-     });
+    Route::get('/user/{name?}', function (string $name = null) {
+        return $name;
+    });
 
-     Route::get('/user/{name?}', function (string $name = 'John') {
-         $name を返します。
-     });
+    Route::get('/user/{name?}', function (string $name = 'John') {
+        return $name;
+    });
 
 <a name="パラメータ-正規表現-制約"></a>
-### 正規表現の制約
+### 正規表現制約
 
-ルート インスタンスの「where」メソッドを使用して、ルート パラメータの形式を制限できます。 「where」メソッドは、パラメータの名前と、パラメータをどのように制約するかを定義する正規表現を受け入れます。
+ルートインスタンスの `where` メソッドを使用して、ルートパラメータの形式を制約できます。`where` メソッドは、パラメータ名と、パラメータがどのように制約されるべきかを定義する正規表現を引数に受け取ります。
 
-     Route::get('/user/{name}', function (string $name) {
-         // ...
-     })->where('名前', '[A-Za-z]+');
+    Route::get('/user/{name}', function (string $name) {
+        // ...
+    })->where('name', '[A-Za-z]+');
 
-     Route::get('/user/{id}', function (string $id) {
-         // ...
-     })->where('id', '[0-9]+');
+    Route::get('/user/{id}', function (string $id) {
+        // ...
+    })->where('id', '[0-9]+');
 
-     Route::get('/user/{id}/{name}', function (string $id, string $name) {
-         // ...
-     })->where(['id' => '[0-9]+', 'name' => '[a-z]+']);
+    Route::get('/user/{id}/{name}', function (string $id, string $name) {
+        // ...
+    })->where(['id' => '[0-9]+', 'name' => '[a-z]+']);
 
-便宜上、一般的に使用される一部の正規表現パターンには、パターン制約をルートにすばやく追加できるヘルパー メソッドが用意されています。
+便宜上、一般的に使用される一部の正規表現パターンには、パターン制約をルートにすばやく追加できるヘルパメソッドが用意されています。
 
-     Route::get('/user/{id}/{name}', function (string $id, string $name) {
-         // ...
-     })->whereNumber('id')->whereAlpha('name');
+    Route::get('/user/{id}/{name}', function (string $id, string $name) {
+        // ...
+    })->whereNumber('id')->whereAlpha('name');
 
-     Route::get('/user/{name}', function (string $name) {
-         // ...
-     })->whereAlphaNumeric('名前');
+    Route::get('/user/{name}', function (string $name) {
+        // ...
+    })->whereAlphaNumeric('name');
 
-     Route::get('/user/{id}', function (string $id) {
-         // ...
-     })->whereUuid('id');
+    Route::get('/user/{id}', function (string $id) {
+        // ...
+    })->whereUuid('id');
 
-     Route::get('/user/{id}', function (string $id) {
-         //
-     })->whereUlid('id');
+    Route::get('/user/{id}', function (string $id) {
+        //
+    })->whereUlid('id');
 
-     Route::get('/category/{category}', function (string $category) {
-         // ...
-     })->whereIn('カテゴリー', ['映画', '歌', '絵画']);
+    Route::get('/category/{category}', function (string $category) {
+        // ...
+    })->whereIn('category', ['movie', 'song', 'painting']);
 
-受信リクエストがルート パターン制約と一致しない場合、404 HTTP 応答が返されます。
+受信リクエストがルートパターン制約と一致しない場合、404 HTTP レスポンスを返します。
 
 <a name="parameters-global-constraints"></a>
 #### グローバル制約
 
-ルートパラメータを常に指定された正規表現によって制約したい場合は、`pattern` メソッドを使用できます。 これらのパターンは、「App\Providers\RouteServiceProvider」クラスの「boot」メソッドで定義する必要があります。
+ルートパラメータを常に指定された正規表現によって制約したい場合は、`pattern` メソッドを使用できます。 これらのパターンは、 `App\Providers\RouteServiceProvider` クラスの `boot` メソッドで定義する必要があります。
 
-     /**
-      * ルート モデル バインディング、パターン フィルターなどを定義します。
-      */
-     パブリック関数 boot(): void
-     {
-         Route::pattern('id', '[0-9]+');
-     }
+    /**
+     * Define your route model bindings, pattern filters, etc.
+     */
+    public function boot(): void
+    {
+        Route::pattern('id', '[0-9]+');
+    }
 
-パターンが定義されると、そのパラメータ名を使用してすべてのルートに自動的に適用されます。
+パターンが定義されると、そのパラメータ名を使用するすべてのルートに自動的に適用されます。
 
-     Route::get('/user/{id}', function (string $id) {
-         // {id} が数値の場合のみ実行...
-     });
+    Route::get('/user/{id}', function (string $id) {
+        // Only executed if {id} is numeric...
+    });
 
 <a name="parameters-encoded-forward-slashes"></a>
 #### エンコードされたスラッシュ
 
-Laravel ルーティングコンポーネントでは、「/」を除くすべての文字をルートパラメーター値内に含めることができます。 「where」条件正規表現を使用して、「/」をプレースホルダーの一部として明示的に許可する必要があります。
+Laravel ルーティングコンポーネントでは、`/` を除くすべての文字をルートパラメータ値内に含めることができます。 `/` をプレースホルダの一部として明示的に許可するには、`where` 条件の正規表現を使用する必要があります。
 
-     Route::get('/search/{search}', function (string $search) {
-         $search を返します。
-     })->where('検索', '.*');
+    Route::get('/search/{search}', function (string $search) {
+        return $search;
+    })->where('search', '.*');
 
 > **警告**
-> エンコードされたスラッシュは、最後のルート セグメント内でのみサポートされます。
+> エンコードされたスラッシュは、最後のルートセグメント内でのみサポートされています。
 
 <a name="named-routes"></a>
 ## 名前付きルート
 
-名前付きルートを使用すると、特定のルートの URL またはリダイレクトを簡単に生成できます。 `name` メソッドをルート定義に連鎖させることで、ルートの名前を指定できます。
+名前付きルートを使用すると、特定のルートの URL やリダイレクトを便利に生成できます。ルート定義に `name` メソッドをチェーンしてルートに名前を指定できます。
 
-     Route::get('/user/profile', function () {
-         // ...
-     })->名前('プロファイル');
+    Route::get('/user/profile', function () {
+        // ...
+    })->name('profile');
 
-コントローラーアクションのルート名を指定することもできます。
+コントローラアクションのルート名も指定できます。
 
-     ルート::get(
-         '/ユーザー/プロフィール',
-         [UserProfileController::class, 'show']
-     )->名前('プロフィール');
+    Route::get(
+        '/user/profile',
+        [UserProfileController::class, 'show']
+    )->name('profile');
 
 > **警告**
 > ルート名は常に一意である必要があります。
 
-4,485 / 5,000
-翻訳結果
-翻訳の結果
-<a name="名前付きルートへの URL の生成"></a>
-#### 名前付きルートへの URL の生成
+<a name="generating-urls-to-named-routes"></a>
+#### 名前付きルートの URL 生成
 
-特定のルートに名前を割り当てたら、Laravel の「route」および「redirect」ヘルパー関数を介して URL またはリダイレクトを生成するときにルートの名前を使用できます。
+特定のルートに名前を割り当てたら、Laravel の `route` および `redirect` ヘルパ関数を使用して URL やリダイレクトを生成する際にルートの名前を使用できます。
 
-     // URL を生成しています...
-     $url = ルート('プロファイル');
+    // Generating URLs...
+    $url = route('profile');
 
-     // リダイレクトを生成しています...
-     return redirect()->route('profile');
+    // Generating Redirects...
+    return redirect()->route('profile');
 
-     return to_route('プロファイル');
+    return to_route('profile');
 
-名前付きルートがパラメーターを定義している場合、そのパラメーターを 2 番目の引数として `route` 関数に渡すことができます。 指定されたパラメータは、生成された URL の正しい位置に自動的に挿入されます。
+名前付きルートがパラメータを定義している場合、パラメータを 2 番目の引数として `route` 関数に渡すことができます。 指定されたパラメータは、生成された URL の正しい位置に自動的に挿入されます。
 
-     Route::get('/user/{id}/profile', function (string $id) {
-         // ...
-     })->名前('プロファイル');
+    Route::get('/user/{id}/profile', function (string $id) {
+        // ...
+    })->name('profile');
 
-     $url = ルート('プロファイル', ['id' => 1]);
+    $url = route('profile', ['id' => 1]);
 
 追加のパラメーターを配列で渡すと、それらのキーと値のペアが、生成された URL のクエリ文字列に自動的に追加されます。
 
