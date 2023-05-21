@@ -319,46 +319,46 @@ Laravel ルーティングコンポーネントでは、`/` を除くすべて�
 
 追加のパラメーターを配列で渡すと、それらのキーと値のペアが、生成された URL のクエリ文字列に自動的に追加されます。
 
-     Route::get('/user/{id}/profile', function (string $id) {
-         // ...
-     })->名前('プロファイル');
+    Route::get('/user/{id}/profile', function (string $id) {
+        // ...
+    })->name('profile');
 
-     $url = Route('プロフィール', ['id' => 1, '写真' => 'はい']);
+    $url = route('profile', ['id' => 1, 'photos' => 'yes']);
 
-     // /user/1/profile?photos=はい
+    // /user/1/profile?photos=yes
 
 > **注意**
-> 現在のロケールなど、URL パラメーターにリクエスト全体のデフォルト値を指定したい場合があります。 これを実現するには、[`URL::defaults` メソッド](/docs/{{version}}/urls#default-values) を使用できます。
+> 現在のロケールなど、URL パラメータにリクエスト全体のデフォルト値を指定したい場合があります。これを実現するには、[`URL::defaults` メソッド](/docs/{{version}}/urls#default-values) を使用できます。
 
-<a name="現在のルートの検査"></a>
+<a name="inspecting-the-current-route"></a>
 #### 現在のルートの検査
 
-現在のリクエストが指定された名前付きルートにルーティングされたかどうかを確認したい場合は、Route インスタンスで `named` メソッドを使用できます。 たとえば、ルート ミドルウェアから現在のルート名を確認できます。
+現在のリクエストが指定された名前付きルートにルーティングされたかどうかを確認したい場合は、Route インスタンスで `named` メソッドを使用してください。たとえば、ルートミドルウェアから現在のルート名を確認できます。
 
-     クロージャを使用します。
-     Illuminate\Http\Request を使用します。
-     Symfony\Component\HttpFoundation\Response を使用します。
+    use Closure;
+    use Illuminate\Http\Request;
+    use Symfony\Component\HttpFoundation\Response;
 
-     /**
-      * 受信リクエストを処理します。
-      *
-      * @param \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response) $next
-      */
-     パブリック関数ハンドル(リクエスト $request, クロージャ $next): レスポンス
-     {
-         if ($request->route()->named('profile')) {
-             // ...
-         }
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     */
+    public function handle(Request $request, Closure $next): Response
+    {
+        if ($request->route()->named('profile')) {
+            // ...
+        }
 
-         $next($request) を返します。
-     }
+        return $next($request);
+    }
 
-<a name="ルートグループ"></a>
-## ルート グループ
+<a name="route-groups"></a>
+## ルートグループ
 
-ルート グループを使用すると、個別のルートごとにミドルウェアなどのルート属性を定義することなく、多数のルート間でルート属性を共有できます。
+ルートグループを使用すると、個別のルートごとにミドルウェアなどのルート属性を定義することなく、多数のルート間でルート属性を共有できます。
 
-ネストされたグループは、属性をその親グループとインテリジェントに「マージ」しようとします。 ミドルウェアと「where」条件はマージされ、名前と接頭辞が追加されます。 名前空間の区切り文字と URI 接頭辞のスラッシュは、必要に応じて自動的に追加されます。
+ネストされたグループは、属性を親グループとインテリジェントに「マージ」しようとします。 ミドルウェアと `where` 条件はマージされ、名前とプレフィックス（接頭辞）が追加されます。 名前空間の区切り文字と URI プレフィックスのスラッシュは、必要に応じて自動的に追加されます。
 
 <a name="route-group-middleware"></a>
 ### ミドルウェア
