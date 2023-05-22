@@ -387,87 +387,87 @@ Laravel ルーティングコンポーネントでは、`/` を除くすべて�
         Route::post('/orders', 'store');
     });
 
-<a name="ルートグループ-サブドメイン-ルーティング"></a>
+<a name="route-group-subdomain-routing"></a>
 ### サブドメインルーティング
 
-ルート グループは、サブドメイン ルーティングを処理するために使用することもできます。 サブドメインには、ルート URI と同様にルート パラメーターを割り当てることができ、ルートまたはコントローラーで使用するためにサブドメインの一部をキャプチャできるようになります。 サブドメインは、グループを定義する前に「domain」メソッドを呼び出すことで指定できます。
+ルートグループは、サブドメインルーティングを処理するためにも使用できます。サブドメインには、ルート URI のようにルートパラメータを割り当てることができます。これにより、ルートやコントローラでサブドメインの一部をキャプチャできます。`domain` メソッドを呼び出してグループを定義する前にサブドメインを指定します。
 
-     Route::domain('{account}.example.com')->group(function () {
-         Route::get('user/{id}', function (string $account, string $id) {
-             // ...
-         });
-     });
+    Route::domain('{account}.example.com')->group(function () {
+        Route::get('user/{id}', function (string $account, string $id) {
+            // ...
+        });
+    });
 
 > **警告**
-> サブドメイン ルートに確実に到達できるようにするには、ルート ドメイン ルートを登録する前にサブドメイン ルートを登録する必要があります。 これにより、ルート ドメイン ルートが同じ URI パスを持つサブドメイン ルートを上書きすることがなくなります。
+> サブドメインルートに確実に到達できるようにするには、ドメインルートを登録する前にサブドメインルートを登録する必要があります。これにより、ドメインルートが同じ URI パスを持つサブドメインルートを上書きすることがなくなります。
 
-<a name="ルートグループプレフィックス"></a>
+<a name="route-group-prefixes"></a>
 ### ルートプレフィックス
 
-「prefix」メソッドを使用すると、グループ内の各ルートに特定の URI をプレフィックスとして付けることができます。 たとえば、グループ内のすべてのルート URI に「admin」というプレフィックスを付けることができます。
+`prefix` メソッドは、グループ内の各ルートに指定された URI をプレフィックスとして追加するために使用できます。たとえば、グループ内のすべてのルート URI に `admin` をプレフィックスとして追加することができます。
 
-     Route::prefix('admin')->group(function () {
-         Route::get('/users', function () {
-             // 「/admin/users」URL と一致します
-         });
-     });
+    Route::prefix('admin')->group(function () {
+        Route::get('/users', function () {
+            // Matches The "/admin/users" URL
+        });
+    });
 
-<a name="ルートグループ名プレフィックス"></a>
+<a name="route-group-name-prefixes"></a>
 ### ルート名のプレフィックス
 
-`name` メソッドを使用すると、グループ内の各ルート名に特定の文字列をプレフィックスとして付けることができます。 たとえば、グループ内のすべてのルートの名前に「admin」というプレフィックスを付けることができます。 指定された文字列は、指定されたとおりにルート名にプレフィックスとして付けられるため、プレフィックスの末尾に `.` 文字を必ず指定します。
+`name` メソッドを使用すると、グループ内の各ルート名に特定の文字列をプレフィックスとして付けることができます。 たとえば、グループ内のすべてのルートの名前に `admin` というプレフィックスを付けることができます。指定された文字列は、指定されたとおりにルート名にプレフィックスとして付けられるため、プレフィックスの末尾に `.` 文字を必ず指定してください。
 
-     Route::name('admin.')->group(function () {
-         Route::get('/users', function () {
-             // ルートに割り当てられた名前「admin.users」...
-         })->name('ユーザー');
-     });
+    Route::name('admin.')->group(function () {
+        Route::get('/users', function () {
+            // Route assigned name "admin.users"...
+        })->name('users');
+    });
 
 <a name="route-model-binding"></a>
-## ルートモデルバインディング
+## ルートモデル結合
 
-モデル ID をルートまたはコントローラー アクションに挿入する場合、多くの場合、データベースにクエリを実行して、その ID に対応するモデルを取得します。 Laravel ルート モデル バインディングは、モデル インスタンスをルートに直接自動的に挿入する便利な方法を提供します。 たとえば、ユーザーの ID を注入する代わりに、指定された ID に一致する「User」モデル インスタンス全体を注入できます。
+モデル ID をルートまたはコントローラアクションに挿入する場合、多くの場合、データベースにクエリを実行して、その ID に対応するモデルを取得します。 Laravel ルートモデル 結合では、モデルインスタンスをルートに直接自動的に注入する便利な方法を提供します。 たとえば、ユーザーの ID を注入する代わりに、指定された ID に一致する `User` モデルインスタンス全体を注入できます。
 
 <a name="implicit-binding"></a>
-### 暗黙的なバインディング
+### 暗黙的な結合
 
-Laravel は、タイプヒンテッド変数名がルートセグメント名と一致するルートまたはコントローラーアクションで定義された Eloquent モデルを自動的に解決します。 例えば：
+Laravel は、ルートセグメント名と一致する型付けされた変数名を持つルート、またはコントローラアクションで定義された Eloquent モデルを自動的に解決します。以下のような例があります。
 
-     App\Models\User を使用します。
+    use App\Models\User;
 
-     Route::get('/users/{user}', function (User $user) {
-         $user->email を返します。
-     });
+    Route::get('/users/{user}', function (User $user) {
+        return $user->email;
+    });
 
-`$user` 変数は `App\Models\User` Eloquent モデルとしてタイプヒントされており、変数名は `{user}` URI セグメントと一致するため、Laravel は対応する ID と一致するモデル インスタンスを自動的に挿入します。 リクエスト URI の値。 一致するモデル インスタンスがデータベース内に見つからない場合、404 HTTP 応答が自動的に生成されます。
+`$user` 変数は `App\Models\User` Eloquent モデルとして型付けされています。変数名は `{user}` セグメントと一致するため、Laravel は自動的に、リクエスト URI からの対応する値に一致する ID を持つモデルインスタンスを注入します。一致するモデルインスタンスがデータベース内に見つからない場合、404 HTTP 応答が自動的に生成されます。
 
-もちろん、コントローラー メソッドを使用する場合は、暗黙的なバインディングも可能です。 もう一度、`{user}` URI セグメントが、`App\Models\User` タイプヒントを含むコントローラーの `$user` 変数と一致することに注意してください。
+もちろん、コントローラメソッドを使用する場合は、暗黙的なバインディングも可能です。 再度、`{user}` URI セグメントが、`App\Models\User` タイプヒントを含むコントローラの `$user` 変数と一致することに注意してください。
 
-     App\Http\Controllers\UserController を使用します。
-     App\Models\User を使用します。
+    use App\Http\Controllers\UserController;
+    use App\Models\User;
 
-     // ルート定義...
-     Route::get('/users/{user}', [UserController::class, 'show']);
+    // Route definition...
+    Route::get('/users/{user}', [UserController::class, 'show']);
 
-     // コントローラーのメソッド定義...
-     パブリック関数 show(User $user)
-     {
-         return view('user.profile', ['user' => $user]);
-     }
+    // Controller method definition...
+    public function show(User $user)
+    {
+        return view('user.profile', ['user' => $user]);
+    }
 
 <a name="implicit-soft-deleted-models"></a>
-#### ソフト削除されたモデル
+#### ソフトデリートされたモデル
 
-通常、暗黙的なモデル バインディングでは、[ソフト削除](/docs/{{version}}/eloquent#soft-deleting) されたモデルは取得されません。 ただし、ルートの定義に `withTrashed` メソッドをチェーンすることで、これらのモデルを取得するように暗黙的なバインディングに指示できます。
+通常、暗黙的な結合では、[ソフトデリート](/docs/{{version}}/eloquent#soft-deleting) されたモデルは取得されません。ただし、ルートの定義に `withTrashed` メソッドをチェーンすることで、暗黙的な結合であったとしても、ソフトデリート済みの情報を含むモデルを取得するできるようになります。
 
-     App\Models\User を使用します。
+    use App\Models\User;
 
-     Route::get('/users/{user}', function (User $user) {
-         $user->email を返します。
-     })->withTrashed();
+    Route::get('/users/{user}', function (User $user) {
+        return $user->email;
+    })->withTrashed();
 
-<a name="キーのカスタマイズ"></a>
-<a name="デフォルトのキー名のカスタマイズ"></a>
+<a name="customizing-the-key"></a>
+<a name="customizing-the-default-key-name"></a>
 #### キーのカスタマイズ
 
 場合によっては、「id」以外の列を使用して Eloquent モデルを解決したい場合があります。 これを行うには、ルート パラメーター定義で列を指定できます。
