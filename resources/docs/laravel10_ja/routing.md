@@ -470,92 +470,92 @@ Laravel は、ルートセグメント名と一致する型付けされた変数
 <a name="customizing-the-default-key-name"></a>
 #### キーのカスタマイズ
 
-場合によっては、「id」以外の列を使用して Eloquent モデルを解決したい場合があります。 これを行うには、ルート パラメーター定義で列を指定できます。
+`id` 以外のカラムでEloquent モデルを解決したい場合があります。その場合、ルートパラメータ定義でカラムを指定できます。
 
-     App\Models\Post を使用します。
+    use App\Models\Post;
 
-     Route::get('/posts/{post:slug}', function (Post $post) {
-         $post を返します。
-     });
+    Route::get('/posts/{post:slug}', function (Post $post) {
+        return $post;
+    });
 
-特定のモデル クラスを取得するときに、モデル バインディングで常に「id」以外のデータベース列を使用するようにしたい場合は、Eloquent モデルの「getRouteKeyName」メソッドをオーバーライドできます。
+特定のモデル クラスを取得するときに、モデル結合で常に `id` 以外のデータベースカラムを使用するようにしたい場合は、Eloquent モデルの `getRouteKeyName` メソッドをオーバーライドできます。
 
-     /**
-      ※モデルのルートキーを取得します。
-      */
-     パブリック関数 getRouteKeyName(): 文字列
-     {
-         「ナメクジ」を返します。
-     }
+    /**
+     * Get the route key for the model.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
 
 <a name="implicit-model-binding-scoping"></a>
 #### カスタムキーとスコープ
 
-単一のルート定義で複数の Eloquent モデルを暗黙的にバインドする場合、前の Eloquent モデルの子である必要があるように 2 番目の Eloquent モデルのスコープを設定したい場合があります。 たとえば、特定のユーザーのスラッグによってブログ投稿を取得する次のルート定義について考えてみましょう。
+単一のルート定義で複数の Eloquent モデルを暗黙的に結合する場合、前の Eloquent モデルの子である必要があるように 2 番目の Eloquent モデルのスコープを設定したい場合があります。たとえば、特定のユーザーのブログ投稿のスラッグによってを取得する次のルート定義について考えてみましょう。
 
-     App\Models\Post を使用します。
-     App\Models\User を使用します。
+    use App\Models\Post;
+    use App\Models\User;
 
-     Route::get('/users/{user}/posts/{post:slug}', function (User $user, Post $post) {
-         $post を返します。
-     });
+    Route::get('/users/{user}/posts/{post:slug}', function (User $user, Post $post) {
+        return $post;
+    });
 
-カスタムのキー付き暗黙的バインディングをネストされたルートパラメーターとして使用する場合、Laravel は、親の関係名を推測する規則を使用して、親によってネストされたモデルを取得するためにクエリのスコープを自動的に設定します。 この場合、「User」モデルには、「Post」モデルを取得するために使用できる「posts」（ルート パラメータ名の複数形）という名前のリレーションシップがあると想定されます。
+カスタムキー付きの暗黙的な結合をネストしたルートパラメータとして使用する場合、Laravel は親の関連名を推測するための規約を使用して、親からネストされたモデルを取得するためのクエリを自動的にスコープします。この場合、`User` モデルには、`Post` モデルを取得するために使用できる `posts`（ルートパラメータ名の複数形）という名前のリレーションシップがあると想定されます。
 
 必要に応じて、カスタムキーが提供されていない場合でも、Laravel に「子」バインディングのスコープを設定するように指示できます。 これを行うには、ルートを定義するときに `scopeBindings` メソッドを呼び出します。
 
-     App\Models\Post を使用します。
-     App\Models\User を使用します。
+    use App\Models\Post;
+    use App\Models\User;
 
-     Route::get('/users/{user}/posts/{post}', function (User $user, Post $post) {
-         $post を返します。
-     })->scopeBindings();
+    Route::get('/users/{user}/posts/{post}', function (User $user, Post $post) {
+        return $post;
+    })->scopeBindings();
 
-または、ルート定義のグループ全体にスコープ付きバインディングを使用するように指示することもできます。
+または、グループのルート定義全体にスコープ付きバインディングを使用するように指示することもできます。
 
-     Route::scopeBindings()->group(function () {
-         Route::get('/users/{user}/posts/{post}', function (User $user, Post $post) {
-             $post を返します。
-         });
-     });
+    Route::scopeBindings()->group(function () {
+        Route::get('/users/{user}/posts/{post}', function (User $user, Post $post) {
+            return $post;
+        });
+    });
 
-同様に、`withoutScopedBindings` メソッドを呼び出すことで、バインディングをスコープしないように Laravel に明示的に指示することもできます。
+同様に、`withoutScopedBindings` メソッドを呼び出すことで、Laravel に明示的にバインディングをスコープしないように指示することもできます
 
-     Route::get('/users/{user}/posts/{post:slug}', function (User $user, Post $post) {
-         $post を返します。
-     })->withoutScopedBindings();
+    Route::get('/users/{user}/posts/{post:slug}', function (User $user, Post $post) {
+        return $post;
+    })->withoutScopedBindings();
 
-<a name="カスタマイズ-欠落モデルの動作"></a>
-#### 欠落モデルの動作のカスタマイズ
+<a name="customizing-missing-model-behavior"></a>
+#### モデルが見つからない場合の振る舞いのカスタマイズ
 
-通常、暗黙的にバインドされたモデルが見つからない場合は、404 HTTP 応答が生成されます。 ただし、ルートを定義するときに「missing」メソッドを呼び出すことで、この動作をカスタマイズできます。 「missing」メソッドは、暗黙的にバインドされたモデルが見つからない場合に呼び出されるクロージャを受け入れます。
+通常、暗黙的に結合されたモデルが見つからない場合は、404 HTTP レスポンスが生成されます。ただし、ルートを定義するときに `missing` メソッドを呼び出すことで、この動作をカスタマイズできます。 `missing` メソッドは、暗黙的に結合されたモデルが見つからない場合に呼び出されるクロージャを引数に取ります。
 
-     App\Http\Controllers\LocationsController を使用します。
-     Illuminate\Http\Request を使用します。
-     Illuminate\Support\Facades\Redirect を使用します。
+    use App\Http\Controllers\LocationsController;
+    use Illuminate\Http\Request;
+    use Illuminate\Support\Facades\Redirect;
 
-     Route::get('/locations/{location:slug}', [LocationsController::class, 'show'])
-             ->name('locations.view')
-             ->missing(関数 (リクエスト $request) {
-                 return Redirect::route('locations.index');
-             });
+    Route::get('/locations/{location:slug}', [LocationsController::class, 'show'])
+            ->name('locations.view')
+            ->missing(function (Request $request) {
+                return Redirect::route('locations.index');
+            });
 
 <a name="implicit-enum-binding"></a>
-### 暗黙的な列挙型バインディング
+### 暗黙的な列挙型（Enum）のバインディング
 
-PHP 8.1 では、[Enums](https://www.php.net/manual/en/ language.enumerations.backed.php) のサポートが導入されました。 この機能を補完するために、Laravel ではルート定義で [string-backed Enum](https://www.php.net/manual/en/ language.enumerations.backed.php) をタイプヒントで指定できます。 ルート セグメントが有効な Enum 値に対応する場合、ルートを呼び出します。 それ以外の場合は、404 HTTP 応答が自動的に返されます。 たとえば、次の列挙型があるとします。
+PHP 8.1 では、[Enums](https://www.php.net/manual/en/ language.enumerations.backed.php) のサポートが導入されました。この機能を補完するために、Laravel ではルート定義で [値に依存した列挙型](https://www.php.net/manual/en/language.enumerations.backed.php) をタイプヒントで指定できます。ルートセグメントが有効な Enum 値に対応する場合、ルートを呼び出します。それ以外の場合は、404 HTTP レスポンスが自動的に返されます。たとえば、次の列挙型があるとします。
 
 ```php
 <?php
 
-名前空間 App\Enums;
+namespace App\Enums;
 
-列挙型カテゴリ: 文字列
+enum Category: string
 {
-     case Fruits = 'フルーツ';
-     case People = '人々';
+    case Fruits = 'fruits';
+    case People = 'people';
 }
-「」
+```
 
 `{category}` ルート セグメントが `fruits` または `people` の場合にのみ呼び出されるルートを定義できます。 それ以外の場合、Laravel は 404 HTTP 応答を返します。
 
