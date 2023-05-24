@@ -557,42 +557,42 @@ enum Category: string
 }
 ```
 
-`{category}` ルート セグメントが `fruits` または `people` の場合にのみ呼び出されるルートを定義できます。 それ以外の場合、Laravel は 404 HTTP 応答を返します。
+この場合、`{category}` ルートセグメントが `fruits` または `people` である場合にのみ呼び出されるルートを定義できます。それ以外の場合は、Laravel が 404 HTTP レスポンスを返します
 
 ```php
-App\Enums\Category を使用します。
-Illuminate\Support\Facades\Route を使用します。
+use App\Enums\Category;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/categories/{category}', function (Category $category) {
-     $カテゴリ->値を返します;
+    return $category->value;
 });
-「」
+```
 
 <a name="explicit-binding"></a>
 ### 明示的なバインディング
 
 モデルバインディングを使用するために、Laravel の暗黙的な規約ベースのモデル解決を使用する必要はありません。 ルート パラメーターがモデルにどのように対応するかを明示的に定義することもできます。 明示的なバインディングを登録するには、ルーターの「model」メソッドを使用して、特定のパラメーターのクラスを指定します。 `RouteServiceProvider` クラスの `boot` メソッドの先頭で明示的なモデル バインディングを定義する必要があります。
 
-     App\Models\User を使用します。
-     Illuminate\Support\Facades\Route を使用します。
+    use App\Models\User;
+    use Illuminate\Support\Facades\Route;
 
-     /**
-      * ルート モデル バインディング、パターン フィルターなどを定義します。
-      */
-     パブリック関数 boot(): void
-     {
-         Route::model('ユーザー', ユーザー::クラス);
+    /**
+     * Define your route model bindings, pattern filters, etc.
+     */
+    public function boot(): void
+    {
+        Route::model('user', User::class);
 
-         // ...
-     }
+        // ...
+    }
 
 次に、「{user}」パラメータを含むルートを定義します。
 
-     App\Models\User を使用します。
+    use App\Models\User;
 
-     Route::get('/users/{user}', function (User $user) {
-         // ...
-     });
+    Route::get('/users/{user}', function (User $user) {
+        // ...
+    });
 
 すべての `{user}` パラメータを `App\Models\User` モデルにバインドしているため、そのクラスのインスタンスがルートに挿入されます。 したがって、たとえば、`users/1` へのリクエストは、ID が `1` であるデータベースから `User` インスタンスを挿入します。
 
@@ -603,58 +603,58 @@ Route::get('/categories/{category}', function (Category $category) {
 
 独自のモデル バインディング解決ロジックを定義したい場合は、`Route::bind` メソッドを使用できます。 「bind」メソッドに渡すクロージャは、URI セグメントの値を受け取り、ルートに挿入されるクラスのインスタンスを返す必要があります。 繰り返しますが、このカスタマイズはアプリケーションの `RouteServiceProvider` の `boot` メソッドで行う必要があります。
 
-     App\Models\User を使用します。
-     Illuminate\Support\Facades\Route を使用します。
+    use App\Models\User;
+    use Illuminate\Support\Facades\Route;
 
-     /**
-      * ルート モデル バインディング、パターン フィルターなどを定義します。
-      */
-     パブリック関数 boot(): void
-     {
-         Route::bind('user', function (string $value) {
-             return User::where('name', $value)->firstOrFail();
-         });
+    /**
+     * Define your route model bindings, pattern filters, etc.
+     */
+    public function boot(): void
+    {
+        Route::bind('user', function (string $value) {
+            return User::where('name', $value)->firstOrFail();
+        });
 
-         // ...
-     }
+        // ...
+    }
 
 あるいは、Eloquent モデルの `resolveRouteBinding` メソッドをオーバーライドすることもできます。 このメソッドは URI セグメントの値を受け取り、ルートに挿入されるクラスのインスタンスを返す必要があります。
 
-     /**
-      * 境界値のモデルを取得します。
-      *
-      * @param 混合 $value
-      * @param 文字列|null $field
-      * @return \Illuminate\Database\Eloquent\Model|null
-      */
-     パブリック関数solveRouteBinding($value, $field = null)
-     {
-         return $this->where('name', $value)->firstOrFail();
-     }
+    /**
+     * Retrieve the model for a bound value.
+     *
+     * @param  mixed  $value
+     * @param  string|null  $field
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
+    public function resolveRouteBinding($value, $field = null)
+    {
+        return $this->where('name', $value)->firstOrFail();
+    }
 
 ルートが [暗黙的なバインディング スコープ](#implicit-model-binding-scoping) を利用している場合、親モデルの子バインディングを解決するために `resolveChildRouteBinding` メソッドが使用されます。
 
-     /**
-      * 境界値の子モデルを取得します。
-      *
-      * @param string $childType
-      * @param 混合 $value
-      * @param 文字列|null $field
-      * @return \Illuminate\Database\Eloquent\Model|null
-      */
-     パブリック関数solveChildRouteBinding($childType, $value, $field)
-     {
-         returnparent::resolveChildRouteBinding($childType, $value, $field);
-     }
+    /**
+     * Retrieve the child model for a bound value.
+     *
+     * @param  string  $childType
+     * @param  mixed  $value
+     * @param  string|null  $field
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
+    public function resolveChildRouteBinding($childType, $value, $field)
+    {
+        return parent::resolveChildRouteBinding($childType, $value, $field);
+    }
 
 <a name="fallback-routes"></a>
 ## フォールバック ルート
 
 「Route::fallback」メソッドを使用すると、受信リクエストに一致するルートが他にない場合に実行されるルートを定義できます。 通常、未処理のリクエストは、アプリケーションの例外ハンドラーを介して自動的に「404」ページをレンダリングします。 ただし、通常は「routes/web.php」ファイル内で「フォールバック」ルートを定義するため、「web」ミドルウェア グループ内のすべてのミドルウェアがルートに適用されます。 必要に応じて、このルートにミドルウェアを自由に追加できます。
 
-     Route::fallback(function () {
-         // ...
-     });
+    Route::fallback(function () {
+        // ...
+    });
 
 > **警告**
 > フォールバック ルートは常に、アプリケーションによって登録された最後のルートである必要があります。
@@ -668,125 +668,131 @@ Route::get('/categories/{category}', function (Category $category) {
 Laravel には、特定のルートまたはルートのグループのトラフィック量を制限するために利用できる、強力でカスタマイズ可能なレート制限サービスが含まれています。 まず、アプリケーションのニーズを満たすレート リミッター構成を定義する必要があります。 通常、これはアプリケーションの `App\Providers\RouteServiceProvider` クラスの `configureRateLimiting` メソッド内で行う必要があります。このメソッドには、アプリケーションの `routes/api.php` ファイル内のルートに適用されるレート リミッタ定義がすでに含まれています。
 
 ```php
-Illuminate\Cache\RateLimiting\Limit を使用します。
-Illuminate\Http\Request を使用します。
-Illuminate\Support\Facades\RateLimiter を使用します。
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\RateLimiter;
 
 /**
-  * アプリケーションのレート リミッターを構成します。
-  */
-保護された関数configureRateLimiting(): void
+ * Configure the rate limiters for the application.
+ */
+protected function configureRateLimiting(): void
 {
-     RateLimiter::for('api', function (Request $request) {
-         return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
-     });
+    RateLimiter::for('api', function (Request $request) {
+        return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
+    });
 }
-「」
+```
 
 レート リミッターは、「RateLimiter」ファサードの「for」メソッドを使用して定義されます。 「for」メソッドは、レート リミッタ名と、レート リミッタに割り当てられたルートに適用される制限設定を返すクロージャを受け入れます。 制限設定は、「Illuminate\Cache\RateLimiting\Limit」クラスのインスタンスです。 このクラスには、制限をすばやく定義できるようにする便利な「ビルダー」メソッドが含まれています。 レート リミッタ名には、任意の文字列を指定できます。
 
-     Illuminate\Cache\RateLimiting\Limit を使用します。
-     Illuminate\Http\Request を使用します。
-     Illuminate\Support\Facades\RateLimiter を使用します。
+    use Illuminate\Cache\RateLimiting\Limit;
+    use Illuminate\Http\Request;
+    use Illuminate\Support\Facades\RateLimiter;
 
-     /**
-      * アプリケーションのレート リミッターを構成します。
-      */
-     保護された関数configureRateLimiting(): void
-     {
-         RateLimiter::for('global', function (Request $request) {
-             制限::毎分(1000)を返します;
-         });
-     }
+    /**
+     * Configure the rate limiters for the application.
+     */
+    protected function configureRateLimiting(): void
+    {
+        RateLimiter::for('global', function (Request $request) {
+            return Limit::perMinute(1000);
+        });
+    }
 
 受信リクエストが指定されたレート制限を超える場合、429 HTTP ステータス コードを含むレスポンスが Laravel によって自動的に返されます。 レート制限によって返される独自の応答を定義したい場合は、「response」メソッドを使用できます。
 
-     RateLimiter::for('global', function (Request $request) {
-         return Limit::perMinute(1000)->response(function (Request $request, array $headers) {
-             return response('カスタム応答...', 429, $headers);
-         });
-     });
+    RateLimiter::for('global', function (Request $request) {
+        return Limit::perMinute(1000)->response(function (Request $request, array $headers) {
+            return response('Custom response...', 429, $headers);
+        });
+    });
+
+    RateLimiter::for('uploads', function (Request $request) {
+        return $request->user()->vipCustomer()
+                    ? Limit::none()
+                    : Limit::perMinute(100);
+    });
 
 <a name="segmenting-rate-limits"></a>
 #### セグメント化レート制限
 
 場合によっては、レート制限を任意の値で分割したい場合があります。 たとえば、ユーザーが IP アドレスごとに 1 分あたり 100 回、特定のルートにアクセスできるようにしたい場合があります。 これを実現するには、レート制限を構築するときに「by」メソッドを使用できます。
 
-     RateLimiter::for('アップロード', function (Request $request) {
-         $request->user()->vipCustomer() を返す
-                     ? 制限::なし()
-                     : 制限::perMinute(100)->by($request->ip());
-     });
+    RateLimiter::for('uploads', function (Request $request) {
+        return $request->user()->vipCustomer()
+                    ? Limit::none()
+                    : Limit::perMinute(100)->by($request->ip());
+    });
 
 別の例を使用してこの機能を説明すると、ルートへのアクセスを、認証されたユーザー ID ごとに 1 分あたり 100 回、またはゲストの IP アドレスごとに 1 分あたり 10 回に制限できます。
 
-     RateLimiter::for('アップロード', function (Request $request) {
-         $request->user() を返す
-                     ? Limit::perMinute(100)->by($request->user()->id)
-                     : Limit::perMinute(10)->by($request->ip());
-     });
+    RateLimiter::for('uploads', function (Request $request) {
+        return $request->user()
+                    ? Limit::perMinute(100)->by($request->user()->id)
+                    : Limit::perMinute(10)->by($request->ip());
+    });
 
 <a name="multiple-rate-limits"></a>
 #### 複数のレート制限
 
 必要に応じて、特定のレート リミッター構成のレート制限の配列を返すことができます。 各レート制限は、配列内に配置された順序に基づいてルートに対して評価されます。
 
-     RateLimiter::for('login', function (Request $request) {
-         戻る [
-             制限::毎分(500)、
-             Limit::perMinute(3)->by($request->input('email')),
-         ];
-     });
+    RateLimiter::for('login', function (Request $request) {
+        return [
+            Limit::perMinute(500),
+            Limit::perMinute(3)->by($request->input('email')),
+        ];
+    });
 
 <a name="ルートへのレートリミッターの接続"></a>
 ### ルートにレート リミッターを適用する
 
 レート リミッターは、「throttle」[ミドルウェア](/docs/{{version}}/middleware) を使用してルートまたはルート グループにアタッチできます。 スロットル ミドルウェアは、ルートに割り当てるレート リミッターの名前を受け入れます。
 
-     Route::middleware(['throttle:uploads'])->group(function () {
-         Route::post('/audio', function () {
-             // ...
-         });
+    Route::middleware(['throttle:uploads'])->group(function () {
+        Route::post('/audio', function () {
+            // ...
+        });
 
-         Route::post('/video', function () {
-             // ...
-         });
-     });
+        Route::post('/video', function () {
+            // ...
+        });
+    });
 
 <a name="throttling-with-redis"></a>
 #### Redis を使用したスロットリング
 
 通常、「throttle」ミドルウェアは「Illuminate\Routing\Middleware\ThrottleRequests」クラスにマップされます。 このマッピングは、アプリケーションの HTTP カーネル (`App\Http\Kernel`) で定義されます。 ただし、アプリケーションのキャッシュ ドライバーとして Redis を使用している場合は、「Illuminate\Routing\Middleware\ThrottleRequestsWithRedis」クラスを使用するようにこのマッピングを変更することができます。 このクラスは、Redis を使用したレート制限の管理においてより効率的です。
 
-     'throttle' => \Illuminate\Routing\Middleware\ThrottleRequestsWithRedis::class,
+    'throttle' => \Illuminate\Routing\Middleware\ThrottleRequestsWithRedis::class,
 
 <a name="form-method-spoofing"></a>
 ## フォームメソッドのスプーフィング
 
 HTML フォームは、`PUT`、`PATCH`、または `DELETE` アクションをサポートしません。 したがって、HTML フォームから呼び出される `PUT`、`PATCH`、または `DELETE` ルートを定義する場合は、非表示の `_method` フィールドをフォームに追加する必要があります。 `_method` フィールドで送信された値は、HTTP リクエスト メソッドとして使用されます。
 
-     <フォームアクション="/example"メソッド="POST">
-         <input type="hidden" name="_method" value="PUT">
-         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-     </form>
+    <form action="/example" method="POST">
+        <input type="hidden" name="_method" value="PUT">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+    </form>
 
 便宜上、`@method` [Blade ディレクティブ](/docs/{{version}}/blade) を使用して、`_method` 入力フィールドを生成できます。
 
-     <フォームアクション="/example"メソッド="POST">
-         @メソッド('PUT')
-         @csrf
-     </form>
+    <form action="/example" method="POST">
+        @method('PUT')
+        @csrf
+    </form>
 
 <a name="現在のルートへのアクセス"></a>
 ## 現在のルートへのアクセス
 
 「Route」ファサードで「current」、「currentRouteName」、および「currentRouteAction」メソッドを使用して、受信リクエストを処理するルートに関する情報にアクセスできます。
 
-     Illuminate\Support\Facades\Route を使用します。
+    use Illuminate\Support\Facades\Route;
 
-     $route = ルート::現在(); // イルミネーション\ルーティング\ルート
-     $name = ルート::現在のルート名(); // 弦
-     $action = Route::currentRouteAction(); // 弦
+    $route = Route::current(); // Illuminate\Routing\Route
+    $name = Route::currentRouteName(); // string
+    $action = Route::currentRouteAction(); // string
 
 [Route ファサードの基礎となるクラス](https://laravel.com/api/{{version}}/Illuminate/Routing/Router.html) と [Route インスタンス](https ://laravel.com/api/{{version}}/Illuminate/Routing/Route.html) を参照して、ルーターおよびルート クラスで使用できるすべてのメソッドを確認します。
 
@@ -803,14 +809,14 @@ Laravel は、設定した値を使用して CORS `OPTIONS` HTTP リクエスト
 
 アプリケーションを運用環境にデプロイするときは、Laravel のルート キャッシュを利用する必要があります。 ルート キャッシュを使用すると、アプリケーションのすべてのルートを登録するのにかかる時間が大幅に短縮されます。 ルート キャッシュを生成するには、「route:cache」アーティザン コマンドを実行します。
 
-```シェル
-php 職人ルート:キャッシュ
-「」
+```shell
+php artisan route:cache
+```
 
 このコマンドを実行すると、キャッシュされたルート ファイルがリクエストごとにロードされます。 新しいルートを追加する場合は、新しいルート キャッシュを生成する必要があることに注意してください。 このため、「route:cache」コマンドはプロジェクトのデプロイメント中にのみ実行する必要があります。
 
 「route:clear」コマンドを使用してルート キャッシュをクリアできます。
 
-```シェル
-php職人ルート:クリア
-「」
+```shell
+php artisan route:clear
+```
