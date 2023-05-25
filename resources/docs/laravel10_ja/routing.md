@@ -441,7 +441,7 @@ Laravel は、ルートセグメント名と一致する型付けされた変数
 
 `$user` 変数は `App\Models\User` Eloquent モデルとして型付けされています。変数名は `{user}` セグメントと一致するため、Laravel は自動的に、リクエスト URI からの対応する値に一致する ID を持つモデルインスタンスを注入します。一致するモデルインスタンスがデータベース内に見つからない場合、404 HTTP 応答が自動的に生成されます。
 
-もちろん、コントローラメソッドを使用する場合は、暗黙的なバインディングも可能です。 再度、`{user}` URI セグメントが、`App\Models\User` タイプヒントを含むコントローラの `$user` 変数と一致することに注意してください。
+もちろん、コントローラメソッドを使用する場合は、暗黙的な結合も可能です。 再度、`{user}` URI セグメントが、`App\Models\User` タイプヒントを含むコントローラの `$user` 変数と一致することに注意してください。
 
     use App\Http\Controllers\UserController;
     use App\Models\User;
@@ -502,7 +502,7 @@ Laravel は、ルートセグメント名と一致する型付けされた変数
 
 カスタムキー付きの暗黙的な結合をネストしたルートパラメータとして使用する場合、Laravel は親の関連名を推測するための規約を使用して、親からネストされたモデルを取得するためのクエリを自動的にスコープします。この場合、`User` モデルには、`Post` モデルを取得するために使用できる `posts`（ルートパラメータ名の複数形）という名前のリレーションシップがあると想定されます。
 
-必要に応じて、カスタムキーが提供されていない場合でも、Laravel に「子」バインディングのスコープを設定するように指示できます。 これを行うには、ルートを定義するときに `scopeBindings` メソッドを呼び出します。
+必要に応じて、カスタムキーが提供されていない場合でも、Laravel に「子」結合のスコープを設定するように指示できます。 これを行うには、ルートを定義するときに `scopeBindings` メソッドを呼び出します。
 
     use App\Models\Post;
     use App\Models\User;
@@ -511,7 +511,7 @@ Laravel は、ルートセグメント名と一致する型付けされた変数
         return $post;
     })->scopeBindings();
 
-または、グループのルート定義全体にスコープ付きバインディングを使用するように指示することもできます。
+または、グループのルート定義全体にスコープ付きの結合を使用するように指示することもできます。
 
     Route::scopeBindings()->group(function () {
         Route::get('/users/{user}/posts/{post}', function (User $user, Post $post) {
@@ -519,7 +519,7 @@ Laravel は、ルートセグメント名と一致する型付けされた変数
         });
     });
 
-同様に、`withoutScopedBindings` メソッドを呼び出すことで、Laravel に明示的にバインディングをスコープしないように指示することもできます
+同様に、`withoutScopedBindings` メソッドを呼び出すことで、Laravel に明示的な結合をスコープしないように指示することもできます
 
     Route::get('/users/{user}/posts/{post:slug}', function (User $user, Post $post) {
         return $post;
@@ -541,7 +541,7 @@ Laravel は、ルートセグメント名と一致する型付けされた変数
             });
 
 <a name="implicit-enum-binding"></a>
-### 暗黙的な列挙型（Enum）のバインディング
+### 暗黙的な列挙型（Enum）結合
 
 PHP 8.1 では、[Enums](https://www.php.net/manual/en/ language.enumerations.backed.php) のサポートが導入されました。この機能を補完するために、Laravel ではルート定義で [値に依存した列挙型](https://www.php.net/manual/en/language.enumerations.backed.php) をタイプヒントで指定できます。ルートセグメントが有効な Enum 値に対応する場合、ルートを呼び出します。それ以外の場合は、404 HTTP レスポンスが自動的に返されます。たとえば、次の列挙型があるとします。
 
@@ -569,9 +569,9 @@ Route::get('/categories/{category}', function (Category $category) {
 ```
 
 <a name="explicit-binding"></a>
-### 明示的なバインディング
+### 明示的な結合
 
-モデルバインディングを使用するために、Laravel の暗黙的な規約ベースのモデル解決を使用する必要はありません。 ルート パラメーターがモデルにどのように対応するかを明示的に定義することもできます。 明示的なバインディングを登録するには、ルーターの「model」メソッドを使用して、特定のパラメーターのクラスを指定します。 `RouteServiceProvider` クラスの `boot` メソッドの先頭で明示的なモデル バインディングを定義する必要があります。
+モデル結合を活用するために、Laravel の暗黙的な規約ベースのモデル解決を使用する必要はありません。ルートパラメーターがモデルにどのように対応するかを明示的に定義することもできます。明示的な結合を登録するには、ルーターの `model` メソッドを使用して、特定のパラメーターのクラスを指定します。`RouteServiceProvider`  クラスの `boot` メソッドの先頭で明示的なモデル結合を定義する必要があります。
 
     use App\Models\User;
     use Illuminate\Support\Facades\Route;
@@ -586,7 +586,7 @@ Route::get('/categories/{category}', function (Category $category) {
         // ...
     }
 
-次に、「{user}」パラメータを含むルートを定義します。
+次に `{user}` パラメータを含むルートを定義します。
 
     use App\Models\User;
 
@@ -594,14 +594,14 @@ Route::get('/categories/{category}', function (Category $category) {
         // ...
     });
 
-すべての `{user}` パラメータを `App\Models\User` モデルにバインドしているため、そのクラスのインスタンスがルートに挿入されます。 したがって、たとえば、`users/1` へのリクエストは、ID が `1` であるデータベースから `User` インスタンスを挿入します。
+すべての `{user}` パラメータを `App\Models\User` モデルに結合しているため、そのクラスのインスタンスがルートに注入されます。たとえば、`users/1` へのリクエストは、ID が `1` であるデータベースから `User` インスタンスを注入します。
 
-一致するモデル インスタンスがデータベース内に見つからない場合、404 HTTP 応答が自動的に生成されます。
+一致するモデルインスタンスがデータベース内に見つからない場合、404 HTTP レスポンスが自動的に生成されます。
 
-<a name="解像度ロジックのカスタマイズ"></a>
-#### 解決ロジックのカスタマイズ
+<a name="customizing-the-resolution-logic"></a>
+#### モデル結合の解決ロジックのカスタマイズ
 
-独自のモデル バインディング解決ロジックを定義したい場合は、`Route::bind` メソッドを使用できます。 「bind」メソッドに渡すクロージャは、URI セグメントの値を受け取り、ルートに挿入されるクラスのインスタンスを返す必要があります。 繰り返しますが、このカスタマイズはアプリケーションの `RouteServiceProvider` の `boot` メソッドで行う必要があります。
+独自のモデル結合の解決ロジックを定義したい場合は、`Route::bind` メソッドを使用できます。`bind` メソッドに渡すクロージャは、URI セグメントの値を受け取り、ルートに注入されるクラスのインスタンスを返す必要があります。繰り返しますが、このカスタマイズはアプリケーションの `RouteServiceProvider` の `boot` メソッドで行う必要があります。
 
     use App\Models\User;
     use Illuminate\Support\Facades\Route;
@@ -618,7 +618,7 @@ Route::get('/categories/{category}', function (Category $category) {
         // ...
     }
 
-あるいは、Eloquent モデルの `resolveRouteBinding` メソッドをオーバーライドすることもできます。 このメソッドは URI セグメントの値を受け取り、ルートに挿入されるクラスのインスタンスを返す必要があります。
+あるいは、Eloquent モデルの `resolveRouteBinding` メソッドをオーバーライドする方法もあります。このメソッドは URI セグメントの値を受け取り、ルートに注入されるクラスのインスタンスを返す必要があります。
 
     /**
      * Retrieve the model for a bound value.
@@ -632,7 +632,7 @@ Route::get('/categories/{category}', function (Category $category) {
         return $this->where('name', $value)->firstOrFail();
     }
 
-ルートが [暗黙的なバインディング スコープ](#implicit-model-binding-scoping) を利用している場合、親モデルの子バインディングを解決するために `resolveChildRouteBinding` メソッドが使用されます。
+ルートが [暗黙的な結合のスコープ](#implicit-model-binding-scoping) を利用している場合、親モデルの子結合を解決するために `resolveChildRouteBinding` メソッドを使用することができます。
 
     /**
      * Retrieve the child model for a bound value.
@@ -648,24 +648,24 @@ Route::get('/categories/{category}', function (Category $category) {
     }
 
 <a name="fallback-routes"></a>
-## フォールバック ルート
+## フォールバックルート
 
-「Route::fallback」メソッドを使用すると、受信リクエストに一致するルートが他にない場合に実行されるルートを定義できます。 通常、未処理のリクエストは、アプリケーションの例外ハンドラーを介して自動的に「404」ページをレンダリングします。 ただし、通常は「routes/web.php」ファイル内で「フォールバック」ルートを定義するため、「web」ミドルウェア グループ内のすべてのミドルウェアがルートに適用されます。 必要に応じて、このルートにミドルウェアを自由に追加できます。
+`Route::fallback` メソッドを使用すると、受信リクエストに一致するルートが他にない場合に実行されるルートを定義できます。通常、未処理のリクエストは、アプリケーションの例外ハンドラを介して自動的に「404」ページをレンダリングします。ただし、通常は `routes/web.php` ファイル内で `fallback` ルートを定義するため `web` ミドルウェアグループ内のすべてのミドルウェアがルートに適用されます。必要に応じて、このルートにミドルウェアを自由に追加できます。
 
     Route::fallback(function () {
         // ...
     });
 
-> **警告**
-> フォールバック ルートは常に、アプリケーションによって登録された最後のルートである必要があります。
+> **Warning**
+> フォールバックルートは常にアプリケーションで最後に登録されるルートである必要があります。
 
-<a name="レート制限"></a>
+<a name="rate-limiting"></a>
 ## レート制限
 
-<a name="レートリミッターの定義"></a>
-### レートリミッターの定義
+<a name="defining-rate-limiters"></a>
+### レート制限の定義
 
-Laravel には、特定のルートまたはルートのグループのトラフィック量を制限するために利用できる、強力でカスタマイズ可能なレート制限サービスが含まれています。 まず、アプリケーションのニーズを満たすレート リミッター構成を定義する必要があります。 通常、これはアプリケーションの `App\Providers\RouteServiceProvider` クラスの `configureRateLimiting` メソッド内で行う必要があります。このメソッドには、アプリケーションの `routes/api.php` ファイル内のルートに適用されるレート リミッタ定義がすでに含まれています。
+Laravel には、特定のルートまたはルートのグループのトラフィック量を制限するために利用できる、強力でカスタマイズ可能なレート制限サービスが含まれています。まず、アプリケーションのニーズを満たすレート制限の設定を定義する必要があります。 通常、これはアプリケーションの `App\Providers\RouteServiceProvider` クラスの `configureRateLimiting` メソッド内で行う必要があります。このメソッドには、アプリケーションの `routes/api.php` ファイル内のルートに適用されるレート制限定義がすでに含まれています。
 
 ```php
 use Illuminate\Cache\RateLimiting\Limit;
