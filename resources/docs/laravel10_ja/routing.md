@@ -17,7 +17,7 @@
     - [ルート名プレフィックス](#route-group-name-prefixes)
 - [ルートモデル結合](#route-model-binding)
     - [暗黙的な結合](#implicit-binding)
-    - [暗黙的な列挙型（Enum）バインディング](#implicit-enum-binding)
+    - [暗黙的な列挙型（Enum）結合](#implicit-enum-binding)
     - [明示的な結合](#explicit-binding)
 - [フォールバックルート](#fallback-routes)
 - [レート制限](#rate-limiting)
@@ -683,7 +683,7 @@ protected function configureRateLimiting(): void
 }
 ```
 
-レート リミッターは、「RateLimiter」ファサードの「for」メソッドを使用して定義されます。 「for」メソッドは、レート リミッタ名と、レート リミッタに割り当てられたルートに適用される制限設定を返すクロージャを受け入れます。 制限設定は、「Illuminate\Cache\RateLimiting\Limit」クラスのインスタンスです。 このクラスには、制限をすばやく定義できるようにする便利な「ビルダー」メソッドが含まれています。 レート リミッタ名には、任意の文字列を指定できます。
+レート制限は、`RateLimiter` ファサードの `for` メソッドを使用して定義されます。`for` メソッドは、レート制限名と、レート制限に割り当てられたルートに適用される制限設定を返すクロージャを引数に受け入れます。制限設定は、`Illuminate\Cache\RateLimiting\Limit` クラスのインスタンスです。このクラスには、制限をすばやく定義できる便利な「ビルダ」メソッドが含まれています。レート制限名には、任意の文字列を指定できます。
 
     use Illuminate\Cache\RateLimiting\Limit;
     use Illuminate\Http\Request;
@@ -699,13 +699,15 @@ protected function configureRateLimiting(): void
         });
     }
 
-受信リクエストが指定されたレート制限を超える場合、429 HTTP ステータス コードを含むレスポンスが Laravel によって自動的に返されます。 レート制限によって返される独自の応答を定義したい場合は、「response」メソッドを使用できます。
+受信リクエストが指定したレート制限を超える場合、Laravel は自動的に 429 のHTTP ステータスコードのレスポンスを返します。レート制限によって返す独自のレスポンスを定義したい場合は、`response` メソッドを使用できます
 
     RateLimiter::for('global', function (Request $request) {
         return Limit::perMinute(1000)->response(function (Request $request, array $headers) {
             return response('Custom response...', 429, $headers);
         });
     });
+
+レート制限コールバックは受信 HTTP リクエストインスタンスを受け取るため、受信リクエストや認証済みのユーザに基づいて適切なレート制限を動的に構築できます。
 
     RateLimiter::for('uploads', function (Request $request) {
         return $request->user()->vipCustomer()
@@ -714,9 +716,9 @@ protected function configureRateLimiting(): void
     });
 
 <a name="segmenting-rate-limits"></a>
-#### セグメント化レート制限
+#### レート制限のセグメント化
 
-場合によっては、レート制限を任意の値で分割したい場合があります。 たとえば、ユーザーが IP アドレスごとに 1 分あたり 100 回、特定のルートにアクセスできるようにしたい場合があります。 これを実現するには、レート制限を構築するときに「by」メソッドを使用できます。
+場合によっては、レート制限を任意の値で分割したい場合があります。たとえば、ユーザーが IP アドレスごとに 1 分あたり 100 回、特定のルートにアクセスできるようにしたい場合、これを実現するには、レート制限を構築するときに `by` メソッドを使用できます。
 
     RateLimiter::for('uploads', function (Request $request) {
         return $request->user()->vipCustomer()
@@ -724,7 +726,7 @@ protected function configureRateLimiting(): void
                     : Limit::perMinute(100)->by($request->ip());
     });
 
-別の例を使用してこの機能を説明すると、ルートへのアクセスを、認証されたユーザー ID ごとに 1 分あたり 100 回、またはゲストの IP アドレスごとに 1 分あたり 10 回に制限できます。
+この機能を別の例で説明すると、認証済みユーザー ID ごとに 1 分間に 100 回、またはゲストの IP アドレスごとに 1 分間に 10 回、ルートへのアクセスを制限することができます
 
     RateLimiter::for('uploads', function (Request $request) {
         return $request->user()
@@ -735,7 +737,7 @@ protected function configureRateLimiting(): void
 <a name="multiple-rate-limits"></a>
 #### 複数のレート制限
 
-必要に応じて、特定のレート リミッター構成のレート制限の配列を返すことができます。 各レート制限は、配列内に配置された順序に基づいてルートに対して評価されます。
+必要に応じて、特定のレート制限設定のレート制限の配列を返すことができます。各レート制限は、配列内に配置された順序に基づいてルートに対して評価されます。
 
     RateLimiter::for('login', function (Request $request) {
         return [
@@ -744,10 +746,10 @@ protected function configureRateLimiting(): void
         ];
     });
 
-<a name="ルートへのレートリミッターの接続"></a>
-### ルートにレート リミッターを適用する
+<a name="attaching-rate-limiters-to-routes"></a>
+### レート制限をルートに付加する
 
-レート リミッターは、「throttle」[ミドルウェア](/docs/{{version}}/middleware) を使用してルートまたはルート グループにアタッチできます。 スロットル ミドルウェアは、ルートに割り当てるレート リミッターの名前を受け入れます。
+レート制限は、`throttle` [ミドルウェア](/docs/{{version}}/middleware) を使用してルートまたはルートグループに付加できます。スロットルミドルウェアは、ルートに割り当てるレート制限名を引数に受け入れます。
 
     Route::middleware(['throttle:uploads'])->group(function () {
         Route::post('/audio', function () {
@@ -762,14 +764,14 @@ protected function configureRateLimiting(): void
 <a name="throttling-with-redis"></a>
 #### Redis を使用したスロットリング
 
-通常、「throttle」ミドルウェアは「Illuminate\Routing\Middleware\ThrottleRequests」クラスにマップされます。 このマッピングは、アプリケーションの HTTP カーネル (`App\Http\Kernel`) で定義されます。 ただし、アプリケーションのキャッシュ ドライバーとして Redis を使用している場合は、「Illuminate\Routing\Middleware\ThrottleRequestsWithRedis」クラスを使用するようにこのマッピングを変更することができます。 このクラスは、Redis を使用したレート制限の管理においてより効率的です。
+通常、`throttle` ミドルウェアは`Illuminate\Routing\Middleware\ThrottleRequests` クラスにマップされます。このマッピングは、アプリケーションの HTTP カーネル (`App\Http\Kernel`) で定義されます。ただし、アプリケーションのキャッシュドライバーとして Redis を使用している場合は、`Illuminate\Routing\Middleware\ThrottleRequestsWithRedis` クラスを使用するように変更することをお勧めします。このクラスは、Redis を使用したレート制限の管理においてより効率的です。
 
     'throttle' => \Illuminate\Routing\Middleware\ThrottleRequestsWithRedis::class,
 
 <a name="form-method-spoofing"></a>
-## フォームメソッドのスプーフィング
+## 疑似フォームメソッド
 
-HTML フォームは、`PUT`、`PATCH`、または `DELETE` アクションをサポートしません。 したがって、HTML フォームから呼び出される `PUT`、`PATCH`、または `DELETE` ルートを定義する場合は、非表示の `_method` フィールドをフォームに追加する必要があります。 `_method` フィールドで送信された値は、HTTP リクエスト メソッドとして使用されます。
+HTML フォームは、`PUT`、`PATCH`、`DELETE` アクションをサポートしていません。したがって、HTML フォームから呼び出される `PUT`、`PATCH`、または `DELETE` ルートを定義する場合は、非表示の `_method` フィールドをフォームに追加する必要があります。`_method` フィールドで送信された値は、HTTP リクエストメソッドとして使用されます。
 
     <form action="/example" method="POST">
         <input type="hidden" name="_method" value="PUT">
@@ -783,10 +785,10 @@ HTML フォームは、`PUT`、`PATCH`、または `DELETE` アクションを�
         @csrf
     </form>
 
-<a name="現在のルートへのアクセス"></a>
+<a name="accessing-the-current-route"></a>
 ## 現在のルートへのアクセス
 
-「Route」ファサードで「current」、「currentRouteName」、および「currentRouteAction」メソッドを使用して、受信リクエストを処理するルートに関する情報にアクセスできます。
+`Route` ファサードで`current`、`currentRouteName`、`urrentRouteAction`メソッドを使用して、受信リクエストを処理するルートに関する情報にアクセスできます。
 
     use Illuminate\Support\Facades\Route;
 
@@ -794,28 +796,28 @@ HTML フォームは、`PUT`、`PATCH`、または `DELETE` アクションを�
     $name = Route::currentRouteName(); // string
     $action = Route::currentRouteAction(); // string
 
-[Route ファサードの基礎となるクラス](https://laravel.com/api/{{version}}/Illuminate/Routing/Router.html) と [Route インスタンス](https ://laravel.com/api/{{version}}/Illuminate/Routing/Route.html) を参照して、ルーターおよびルート クラスで使用できるすべてのメソッドを確認します。
+ルートとルートクラスで利用可能なすべてのメソッドについては、[Route ファサードの基礎となるクラス](https://laravel.com/api/{{version}}/Illuminate/Routing/Router.html) と [Route インスタンス](https ://laravel.com/api/{{version}}/Illuminate/Routing/Route.html) のAPI ドキュメントを参照してください。
 
 <a name="cors"></a>
 ## クロスオリジンリソース共有 (CORS)
 
-Laravel は、設定した値を使用して CORS `OPTIONS` HTTP リクエストに自動的に応答できます。 すべての CORS 設定は、アプリケーションの `config/cors.php` 構成ファイルで構成できます。 `OPTIONS` リクエストは、グローバル ミドルウェア スタックにデフォルトで含まれている `HandleCors` [ミドルウェア](/docs/{{version}}/middleware) によって自動的に処理されます。 グローバル ミドルウェア スタックは、アプリケーションの HTTP カーネル (`App\Http\Kernel`) にあります。
+Laravel は、設定した値に基づいて CORS `OPTIONS` HTTP リクエストに自動的に応答できます。すべての CORS 設定は、アプリケーションの `config/cors.php` ファイルで設定できます。`OPTIONS` リクエストは、グローバルミドルウェアスタックにデフォルトで含まれている `HandleCors` [ミドルウェア](/docs/{{version}}/middleware) によって自動的に処理されます。グローバルミドルウェアスタックは、アプリケーションの HTTP カーネル (`App\Http\Kernel`) にあります。
 
-> **注意**
-> CORS および CORS ヘッダーの詳細については、[CORS に関する MDN Web ドキュメント](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#The_HTTP_response_headers) を参照してください。
+> **Note**
+> CORS および CORS ヘッダの詳細については、[CORS に関する MDN Web ドキュメント](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#The_HTTP_response_headers) を参照してください。
 
 <a name="route-caching"></a>
 ## ルートのキャッシュ
 
-アプリケーションを運用環境にデプロイするときは、Laravel のルート キャッシュを利用する必要があります。 ルート キャッシュを使用すると、アプリケーションのすべてのルートを登録するのにかかる時間が大幅に短縮されます。 ルート キャッシュを生成するには、「route:cache」アーティザン コマンドを実行します。
+アプリケーションを運用環境にデプロイするときは、Laravel のルートキャッシュを利用すると良いでしょう。ルートキャッシュを使用すると、アプリケーションのすべてのルートを登録するのにかかる時間が大幅に短縮されます。ルート キャッシュを生成するには、`route:cache` Artisan コマンドを実行します。
 
 ```shell
 php artisan route:cache
 ```
 
-このコマンドを実行すると、キャッシュされたルート ファイルがリクエストごとにロードされます。 新しいルートを追加する場合は、新しいルート キャッシュを生成する必要があることに注意してください。 このため、「route:cache」コマンドはプロジェクトのデプロイメント中にのみ実行する必要があります。
+このコマンドを実行すると、キャッシュされたルートファイルはすべてのリクエストで読み込まれます。新しいルートを追加すると、新しいルートキャッシュを生成する必要があります。このため、`route:cache` コマンドはプロジェクトのデプロイメント中にのみ実行する必要があります。
 
-「route:clear」コマンドを使用してルート キャッシュをクリアできます。
+`route:clear` コマンドを使用してルートキャッシュをクリアできます。
 
 ```shell
 php artisan route:clear
