@@ -1,32 +1,32 @@
-# Middleware
+# ミドルウェア
 
-- [Introduction](#introduction)
-- [Defining Middleware](#defining-middleware)
-- [Registering Middleware](#registering-middleware)
-    - [Global Middleware](#global-middleware)
-    - [Assigning Middleware To Routes](#assigning-middleware-to-routes)
-    - [Middleware Groups](#middleware-groups)
-    - [Sorting Middleware](#sorting-middleware)
-- [Middleware Parameters](#middleware-parameters)
-- [Terminable Middleware](#terminable-middleware)
+- [はじめに](#introduction)
+- [ミドルウェアの定義](#defining-middleware)
+- [ミドルウェアの登録](#registering-middleware)
+    - [グローバルミドルウェア](#global-middleware)
+    - [ルートへのミドルウェアの割り当て](#assigning-middleware-to-routes)
+    - [ミドルウェアグループ](#middleware-groups)
+    - [ミドルウェアの並び替え](#sorting-middleware)
+- [ミドルウェアのパラメータ](#middleware-parameters)
+- [ミドルウェアの修了処理](#terminable-middleware)
 
 <a name="introduction"></a>
-## Introduction
+##  はじめに
 
-Middleware provide a convenient mechanism for inspecting and filtering HTTP requests entering your application. For example, Laravel includes a middleware that verifies the user of your application is authenticated. If the user is not authenticated, the middleware will redirect the user to your application's login screen. However, if the user is authenticated, the middleware will allow the request to proceed further into the application.
+ミドルウェアは、アプリケーションに入る HTTP リクエストを検査およびフィルタリングするための便利なメカニズムを提供します。たとえば、Laravel には、アプリケーションのユーザーが認証されていることを確認するミドルウェアが含まれています。ユーザーが認証されていない場合、ミドルウェアはユーザーをアプリケーションのログイン画面にリダイレクトします。ただし、ユーザーが認証されている場合、ミドルウェアはリクエストがアプリケーション内にさらに進むことを許可します。
 
-Additional middleware can be written to perform a variety of tasks besides authentication. For example, a logging middleware might log all incoming requests to your application. There are several middleware included in the Laravel framework, including middleware for authentication and CSRF protection. All of these middleware are located in the `app/Http/Middleware` directory.
+追加のミドルウェアを作成して、認証以外のさまざまなタスクを実行できます。たとえば、ログミドルウェアは、アプリケーションが受信したすべてのリクエストをログに記録できるようになります。Laravel フレームワークには、認証や CSRF 保護用のミドルウェアなど、いくつかのミドルウェアが含まれています。これらのミドルウェアはすべて `app/Http/Middleware` ディレクトリにあります。
 
 <a name="defining-middleware"></a>
-## Defining Middleware
+## ミドルウェアの定義
 
-To create a new middleware, use the `make:middleware` Artisan command:
+新しいミドルウェアを作成するには、`make:middleware` Artisan コマンドを使用します。
 
 ```shell
 php artisan make:middleware EnsureTokenIsValid
 ```
 
-This command will place a new `EnsureTokenIsValid` class within your `app/Http/Middleware` directory. In this middleware, we will only allow access to the route if the supplied `token` input matches a specified value. Otherwise, we will redirect the users back to the `home` URI:
+このコマンドは、新しい `EnsureTokenIsValid` クラスを `app/Http/Middleware` ディレクトリ内に配置します。このミドルウェアでは、指定された `token` 入力が指定された値と一致する場合にのみ、ルートへのアクセスを許可します。 それ以外の場合は、ユーザーを `home` URI にリダイレクトさせます。
 
     <?php
 
@@ -53,18 +53,18 @@ This command will place a new `EnsureTokenIsValid` class within your `app/Http/M
         }
     }
 
-As you can see, if the given `token` does not match our secret token, the middleware will return an HTTP redirect to the client; otherwise, the request will be passed further into the application. To pass the request deeper into the application (allowing the middleware to "pass"), you should call the `$next` callback with the `$request`.
+ご覧のとおり、指定された `token` がシークレットトークンと一致しない場合、ミドルウェアはクライアントに HTTP リダイレクトを返します。それ以外の場合、リクエストはさらにアプリケーションに渡されます。リクエストをアプリケーションのさらに奥深くに渡すには (ミドルウェアが「渡す」ことができるように)、`$request` を使用して `$next` コールバックを呼び出す必要があります。
 
-It's best to envision middleware as a series of "layers" HTTP requests must pass through before they hit your application. Each layer can examine the request and even reject it entirely.
+ミドルウェアは、HTTP リクエストがアプリケーションに到達する前に通過する必要がある一連の「レイヤー」であると考えるのが最善です。各層はリクエストを検査したり、完全に拒否したりすることもできます。
 
 > **Note**  
-> All middleware are resolved via the [service container](/docs/{{version}}/container), so you may type-hint any dependencies you need within a middleware's constructor.
+> すべてのミドルウェアは [サービスコンテナ](/docs/{{version}}/container) を介して解決されるため、ミドルウェアのコンストラクタ内で必要な依存関係をタイプヒントで指定できます。
 
 <a name="before-after-middleware"></a>
 <a name="middleware-and-responses"></a>
-#### Middleware & Responses
+#### ミドルウェアとレスポンス
 
-Of course, a middleware can perform tasks before or after passing the request deeper into the application. For example, the following middleware would perform some task **before** the request is handled by the application:
+ミドルウェアは、リクエストをアプリケーションの奥深くに渡す前、または後にタスクを実行できます。たとえば、次のミドルウェアは、アプリケーションによってリクエストが処理される **前に** 何らかのタスクを実行します。
 
     <?php
 
@@ -84,7 +84,7 @@ Of course, a middleware can perform tasks before or after passing the request de
         }
     }
 
-However, this middleware would perform its task **after** the request is handled by the application:
+一方で、以下のミドルウェアは、リクエストがアプリケーションによって処理された **後** にタスクを実行します。
 
     <?php
 
@@ -107,17 +107,17 @@ However, this middleware would perform its task **after** the request is handled
     }
 
 <a name="registering-middleware"></a>
-## Registering Middleware
+## ミドルウェアの登録
 
 <a name="global-middleware"></a>
-### Global Middleware
+### グローバルミドルウェア
 
-If you want a middleware to run during every HTTP request to your application, list the middleware class in the `$middleware` property of your `app/Http/Kernel.php` class.
+アプリケーションへのすべての HTTP リクエスト中にミドルウェアを実行したい場合は、`app/Http/Kernel.php` クラスの `$middleware` プロパティにミドルウェアクラスを登録します。
 
 <a name="assigning-middleware-to-routes"></a>
-### Assigning Middleware To Routes
+### ルートへのミドルウェアの割り当て
 
-If you would like to assign middleware to specific routes, you may invoke the `middleware` method when defining the route:
+ミドルウェアを特定のルートに割り当てたい場合は、ルートを定義するときに `middleware` メソッドを呼び出してください。
 
     use App\Http\Middleware\Authenticate;
 
@@ -125,13 +125,13 @@ If you would like to assign middleware to specific routes, you may invoke the `m
         // ...
     })->middleware(Authenticate::class);
 
-You may assign multiple middleware to the route by passing an array of middleware names to the `middleware` method:
+ミドルウェア名の配列を `middleware` メソッドに渡すことで、複数のミドルウェアをルートに割り当てることができます。
 
     Route::get('/', function () {
         // ...
     })->middleware([First::class, Second::class]);
 
-For convenience, you may assign aliases to middleware in your application's `app/Http/Kernel.php` file. By default, the `$middlewareAliases` property of this class contains entries for the middleware included with Laravel. You may add your own middleware to this list and assign it an alias of your choosing:
+便宜上、アプリケーションの `app/Http/Kernel.php` ファイル内のミドルウェアにエイリアスを割り当てることができます。デフォルトでは、このクラスの `$middlewareAliases` プロパティには、Laravel に含まれるミドルウェアのエントリが含まれています。独自のミドルウェアをこのリストに追加し、好きな別名を割り当てることができます。
 
     // Within App\Http\Kernel class...
 
