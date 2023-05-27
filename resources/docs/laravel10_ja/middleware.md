@@ -6,7 +6,7 @@
     - [グローバルミドルウェア](#global-middleware)
     - [ルートへのミドルウェアの割り当て](#assigning-middleware-to-routes)
     - [ミドルウェアグループ](#middleware-groups)
-    - [ミドルウェアの並び替え](#sorting-middleware)
+    - [ミドルウェアの順序](#sorting-middleware)
 - [ミドルウェアのパラメータ](#middleware-parameters)
 - [ミドルウェアの修了処理](#terminable-middleware)
 
@@ -147,16 +147,16 @@ php artisan make:middleware EnsureTokenIsValid
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
     ];
 
-Once the middleware alias has been defined in the HTTP kernel, you may use the alias when assigning middleware to routes:
+ミドルウェアのエイリアスを HTTP カーネルで定義されたら、ミドルウェアをルートに割り当てるときにそのエイリアスを使用できます。
 
     Route::get('/profile', function () {
         // ...
     })->middleware('auth');
 
 <a name="excluding-middleware"></a>
-#### Excluding Middleware
+#### ミドルウェアの除外
 
-When assigning middleware to a group of routes, you may occasionally need to prevent the middleware from being applied to an individual route within the group. You may accomplish this using the `withoutMiddleware` method:
+ルートグループにミドルウェアを割り当てる場合、グループ内の個々のルートに、指定したミドルウェアを適用しないようにするには、`withoutMiddleware` メソッドを使用してください。
 
     use App\Http\Middleware\EnsureTokenIsValid;
 
@@ -170,7 +170,7 @@ When assigning middleware to a group of routes, you may occasionally need to pre
         })->withoutMiddleware([EnsureTokenIsValid::class]);
     });
 
-You may also exclude a given set of middleware from an entire [group](/docs/{{version}}/routing#route-groups) of route definitions:
+また、特定のミドルウェアのセットをルート定義の [グループ](/docs/{{version}}/routing#route-groups) 全体から除外することもできます。
 
     use App\Http\Middleware\EnsureTokenIsValid;
 
@@ -180,14 +180,14 @@ You may also exclude a given set of middleware from an entire [group](/docs/{{ve
         });
     });
 
-The `withoutMiddleware` method can only remove route middleware and does not apply to [global middleware](#global-middleware).
+`withoutMiddleware` メソッドはルートミドルウェアのみを削除でき、[グローバルミドルウェア](#global-middleware) には適用されません。
 
 <a name="middleware-groups"></a>
-### Middleware Groups
+### ミドルウェアグループ
 
-Sometimes you may want to group several middleware under a single key to make them easier to assign to routes. You may accomplish this using the `$middlewareGroups` property of your HTTP kernel.
+ルートへの割り当てを容易にするために、複数のミドルウェアを 1 つのキーの下にグループ化したい場合があります。これは、HTTP カーネルの `$middlewareGroups` プロパティを使用して実現できます。
 
-Laravel includes predefined `web` and `api` middleware groups that contain common middleware you may want to apply to your web and API routes. Remember, these middleware groups are automatically applied by your application's `App\Providers\RouteServiceProvider` service provider to routes within your corresponding `web` and `api` route files:
+Laravel では、Web および API ルートに適用できるミドルウェアは `web` および `api` ミドルウェアグループとして予め事前定義されています。これらのミドルウェアグループは、アプリケーションの `App\Providers\RouteServiceProvider` サービスプロバイダによって、対応する `web` および `api` ルート ファイル内のルートに自動的に適用されることに注意してください。
 
     /**
      * The application's route middleware groups.
@@ -210,7 +210,7 @@ Laravel includes predefined `web` and `api` middleware groups that contain commo
         ],
     ];
 
-Middleware groups may be assigned to routes and controller actions using the same syntax as individual middleware. Again, middleware groups make it more convenient to assign many middleware to a route at once:
+ミドルウェアグループは、個々のミドルウェアと同じ構文を使用してルートとコントローラ アクションに割り当てることができます。繰り返しになりますが、ミドルウェアグループを使用すると、多くのミドルウェアを一度にルートに割り当てることができ、より便利になります。
 
     Route::get('/', function () {
         // ...
@@ -221,12 +221,12 @@ Middleware groups may be assigned to routes and controller actions using the sam
     });
 
 > **Note**  
-> Out of the box, the `web` and `api` middleware groups are automatically applied to your application's corresponding `routes/web.php` and `routes/api.php` files by the `App\Providers\RouteServiceProvider`.
+> デフォルトで `web` と `api` ミドルウェアグループは、`App\Providers\RouteServiceProvider` によってアプリケーションの対応する `routes/web.php` および `routes/api.php` ファイルに自動的に適用されています。
 
 <a name="sorting-middleware"></a>
-### Sorting Middleware
+### ミドルウェアの順序
 
-Rarely, you may need your middleware to execute in a specific order but not have control over their order when they are assigned to the route. In this case, you may specify your middleware priority using the `$middlewarePriority` property of your `app/Http/Kernel.php` file. This property may not exist in your HTTP kernel by default. If it does not exist, you may copy its default definition below:
+ミドルウェアを特定の順序で実行する必要がある場合、ルートに割り当てられたときに、その順序を制御できないことがあります。この場合、`app/Http/Kernel.php` ファイルの `$middlewarePriority` プロパティを使用してミドルウェアの優先順位を指定できます。 このプロパティは、デフォルトでは HTTP カーネルに存在しないかもしれません。もし存在しない場合は、以下のデフォルトの定義をコピーしてください。
 
     /**
      * The priority-sorted list of middleware.
@@ -249,11 +249,11 @@ Rarely, you may need your middleware to execute in a specific order but not have
     ];
 
 <a name="middleware-parameters"></a>
-## Middleware Parameters
+## ミドルウェアのパラメータ
 
-Middleware can also receive additional parameters. For example, if your application needs to verify that the authenticated user has a given "role" before performing a given action, you could create an `EnsureUserHasRole` middleware that receives a role name as an additional argument.
+ミドルウェアは追加のパラメータを受け取ることもできます。 たとえば、特定のアクションを実行する前に、認証されたユーザーが特定の「役割り（ロール）」を持っていることをアプリケーションで確認する必要がある場合、追加の引数としてロール名を受け取る `EnsureUserHasRole` ミドルウェアを作成できます。
 
-Additional middleware parameters will be passed to the middleware after the `$next` argument:
+追加のミドルウェアパラメータは、`$next` 引数の後にミドルウェアに渡されます。
 
     <?php
 
@@ -281,16 +281,16 @@ Additional middleware parameters will be passed to the middleware after the `$ne
 
     }
 
-Middleware parameters may be specified when defining the route by separating the middleware name and parameters with a `:`. Multiple parameters should be delimited by commas:
+ミドルウェアのパラメータは、ルートを定義するときにミドルウェア名とパラメータを「:」で区切って指定できます。複数のパラメータはカンマで区切る必要があります。
 
     Route::put('/post/{id}', function (string $id) {
         // ...
     })->middleware('role:editor');
 
 <a name="terminable-middleware"></a>
-## Terminable Middleware
+## ミドルウェアの修了処理
 
-Sometimes a middleware may need to do some work after the HTTP response has been sent to the browser. If you define a `terminate` method on your middleware and your web server is using FastCGI, the `terminate` method will automatically be called after the response is sent to the browser:
+場合によっては、HTTP レスポンスがブラウザに送信された後に、ミドルウェアが何らかの作業を行う必要がある場合があります。ミドルウェアで `terminate` メソッドを定義し、Web サーバーが FastCGI を使用している場合、レスポンスがブラウザに送信された後 `terminate` メソッドが自動的に呼び出されます。
 
     <?php
 
@@ -321,9 +321,9 @@ Sometimes a middleware may need to do some work after the HTTP response has been
         }
     }
 
-The `terminate` method should receive both the request and the response. Once you have defined a terminable middleware, you should add it to the list of routes or global middleware in the `app/Http/Kernel.php` file.
+`terminate` メソッドはリクエストとレスポンスの両方を受信する必要があります。終了処理を行うミドルウェアを定義したら、それを `app/Http/Kernel.php` ファイル内のルートまたはグローバルミドルウェアのリストに追加する必要があります。
 
-When calling the `terminate` method on your middleware, Laravel will resolve a fresh instance of the middleware from the [service container](/docs/{{version}}/container). If you would like to use the same middleware instance when the `handle` and `terminate` methods are called, register the middleware with the container using the container's `singleton` method. Typically this should be done in the `register` method of your `AppServiceProvider`:
+ミドルウェアで `terminate` メソッドを呼び出すと、Laravel は [サービスコンテナ](/docs/{{version}}/container) からミドルウェアの新しいインスタンスを依存性解決します。`handle` メソッドと `terminate` メソッドが呼び出されるときに同じミドルウェアインスタンスを使用したい場合は、コンテナの `singleton` メソッドを使用してミドルウェアをコンテナに登録します。 通常、これは `AppServiceProvider` の `register` メソッドで行う必要があります。
 
     use App\Http\Middleware\TerminatingMiddleware;
 
