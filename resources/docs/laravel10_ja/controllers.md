@@ -1,23 +1,23 @@
-# Controllers
+# コントローラ
 
-- [Introduction](#introduction)
-- [Writing Controllers](#writing-controllers)
-    - [Basic Controllers](#basic-controllers)
-    - [Single Action Controllers](#single-action-controllers)
-- [Controller Middleware](#controller-middleware)
-- [Resource Controllers](#resource-controllers)
-    - [Partial Resource Routes](#restful-partial-resource-routes)
-    - [Nested Resources](#restful-nested-resources)
-    - [Naming Resource Routes](#restful-naming-resource-routes)
-    - [Naming Resource Route Parameters](#restful-naming-resource-route-parameters)
-    - [Scoping Resource Routes](#restful-scoping-resource-routes)
-    - [Localizing Resource URIs](#restful-localizing-resource-uris)
-    - [Supplementing Resource Controllers](#restful-supplementing-resource-controllers)
-    - [Singleton Resource Controllers](#singleton-resource-controllers)
-- [Dependency Injection & Controllers](#dependency-injection-and-controllers)
+- [はじめに](#introduction)
+- [コントローラの記述](#writing-controllers)
+     - [コントローラの基本](#basic-controllers)
+     - [シングルアクションコントローラ](#single-action-controllers)
+- [コントローラミドルウェア](#controller-middleware)
+- [リソースコントローラ](#resource-controllers)
+     - [部分的なリソースルート](#restful-partial-resource-routes)
+     - [ネストされたリソース](#restful-nested-resources)
+     - [リソースルートの命名](#restful-naming-resource-routes)
+     - [リソースルートパラメータの命名](#restful-naming-resource-route-parameters)
+     - [リソースルートのスコープ設定](#restful-scoping-resource-routes)
+     - [リソース URI のローカライズ](#restful-localizing-resource-uris)
+     - [リソース コントローラの補足](#restful-supplementing-resource-controllers)
+     - [シングルトンリソースコントローラ](#singleton-resource-controllers)
+- [依存性注入とコントローラ](#dependency-injection-and-controllers)
 
 <a name="introduction"></a>
-## Introduction
+## はじめに
 
 Instead of defining all of your request handling logic as closures in your route files, you may wish to organize this behavior using "controller" classes. Controllers can group related request handling logic into a single class. For example, a `UserController` class might handle all incoming requests related to users, including showing, creating, updating, and deleting users. By default, controllers are stored in the `app/Http/Controllers` directory.
 
