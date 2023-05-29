@@ -19,21 +19,21 @@
 <a name="introduction"></a>
 ## はじめに
 
-Instead of defining all of your request handling logic as closures in your route files, you may wish to organize this behavior using "controller" classes. Controllers can group related request handling logic into a single class. For example, a `UserController` class might handle all incoming requests related to users, including showing, creating, updating, and deleting users. By default, controllers are stored in the `app/Http/Controllers` directory.
+すべてのリクエスト処理ロジックをルートファイル内のクロージャとして定義する代わりに、「コントローラ」クラスを使用してこの動作を整理することをお勧めします。コントローラは、関連するリクエスト処理ロジックを 1 つのクラスにグループ化できます。 たとえば、`UserController` クラスは、ユーザーの表示、作成、更新、削除など、ユーザーに関連するすべての受信リクエストを処理します。 デフォルトでは、コントローラーは `app/Http/Controllers` ディレクトリに保存されます。
 
 <a name="writing-controllers"></a>
-## Writing Controllers
+## コントローラーの記述
 
 <a name="basic-controllers"></a>
-### Basic Controllers
+### コントローラの基本
 
-To quickly generate a new controller, you may run the `make:controller` Artisan command. By default, all of the controllers for your application are stored in the `app/Http/Controllers` directory:
+新しいコントローラーをすばやく生成するには、`make:controller` Artisan コマンドを実行します。デフォルトでは、アプリケーションのすべてのコントローラは `app/Http/Controllers` ディレクトリに保存されます。
 
 ```shell
 php artisan make:controller UserController
 ```
 
-Let's take a look at an example of a basic controller. A controller may have any number of public methods which will respond to incoming HTTP requests:
+基本的なコントローラの例を見てみましょう。コントローラには、受信した HTTP リクエストに応答するパブリックメソッドをいくつでも持つことができます。
 
     <?php
 
@@ -55,13 +55,13 @@ Let's take a look at an example of a basic controller. A controller may have any
         }
     }
 
-Once you have written a controller class and method, you may define a route to the controller method like so:
+コントローラのクラスとメソッドを作成したら、次のようにコントローラメソッドへのルートを定義できます。
 
     use App\Http\Controllers\UserController;
 
     Route::get('/user/{id}', [UserController::class, 'show']);
 
-When an incoming request matches the specified route URI, the `show` method on the `App\Http\Controllers\UserController` class will be invoked and the route parameters will be passed to the method.
+受信リクエストが指定されたルート URI と一致すると、`App\Http\Controllers\UserController` クラスの `show` メソッドが呼び出され、ルートパラメータがメソッドに渡されます。
 
 > **Note**  
 > Controllers are not **required** to extend a base class. However, you will not have access to convenient features such as the `middleware` and `authorize` methods.
