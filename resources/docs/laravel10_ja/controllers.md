@@ -19,15 +19,15 @@
 <a name="introduction"></a>
 ## はじめに
 
-すべてのリクエスト処理ロジックをルートファイル内のクロージャとして定義する代わりに、「コントローラ」クラスを使用してこの動作を整理することをお勧めします。コントローラは、関連するリクエスト処理ロジックを 1 つのクラスにグループ化できます。 たとえば、`UserController` クラスは、ユーザーの表示、作成、更新、削除など、ユーザーに関連するすべての受信リクエストを処理します。 デフォルトでは、コントローラーは `app/Http/Controllers` ディレクトリに保存されます。
+すべてのリクエスト処理ロジックをルートファイル内のクロージャとして定義する代わりに、「コントローラ」クラスを使用してこの動作を整理することをお勧めします。コントローラは、関連するリクエスト処理ロジックを 1 つのクラスにグループ化できます。 たとえば、`UserController` クラスは、ユーザーの表示、作成、更新、削除など、ユーザーに関連するすべての受信リクエストを処理します。 デフォルトでは、コントローラは `app/Http/Controllers` ディレクトリに保存されます。
 
 <a name="writing-controllers"></a>
-## コントローラーの記述
+## コントローラの記述
 
 <a name="basic-controllers"></a>
 ### コントローラの基本
 
-新しいコントローラーをすばやく生成するには、`make:controller` Artisan コマンドを実行します。デフォルトでは、アプリケーションのすべてのコントローラは `app/Http/Controllers` ディレクトリに保存されます。
+新しいコントローラをすばやく生成するには、`make:controller` Artisan コマンドを実行します。デフォルトでは、アプリケーションのすべてのコントローラは `app/Http/Controllers` ディレクトリに保存されます。
 
 ```shell
 php artisan make:controller UserController
@@ -61,15 +61,15 @@ php artisan make:controller UserController
 
     Route::get('/user/{id}', [UserController::class, 'show']);
 
-受信リクエストが指定されたルート URI と一致すると、`App\Http\Controllers\UserController` クラスの `show` メソッドが呼び出され、ルートパラメータがメソッドに渡されます。
+受信リクエストが指定したルート URI と一致すると、`App\Http\Controllers\UserController` クラスの `show` メソッドが呼び出され、ルートパラメータがメソッドに渡されます。
 
 > **Note**  
-> Controllers are not **required** to extend a base class. However, you will not have access to convenient features such as the `middleware` and `authorize` methods.
+> コントローラは基底クラスを拡張する **必要はありません**。 しかしながら、`middleware` メソッドや `authorize`メソッドなどの便利な機能にはアクセスできません。
 
 <a name="single-action-controllers"></a>
-### Single Action Controllers
+### シングルアクションコントローラ
 
-If a controller action is particularly complex, you might find it convenient to dedicate an entire controller class to that single action. To accomplish this, you may define a single `__invoke` method within the controller:
+コントローラのアクションが特に複雑な場合は、コントローラクラス全体をその 1 つのアクション専用にすると便利な場合があります。これを実現するには、コントローラ内で単一の `__invoke` メソッドを定義します。
 
     <?php
 
@@ -89,20 +89,20 @@ If a controller action is particularly complex, you might find it convenient to 
         }
     }
 
-When registering routes for single action controllers, you do not need to specify a controller method. Instead, you may simply pass the name of the controller to the router:
+シングルアクションコントローラのルートを登録する場合、コントローラメソッドを指定する必要はありません。コントローラの名前をルーターに渡すだけで済みます。
 
     use App\Http\Controllers\ProvisionServer;
 
     Route::post('/server', ProvisionServer::class);
 
-You may generate an invokable controller by using the `--invokable` option of the `make:controller` Artisan command:
+`make:controller` Artisan コマンドの `--invokable` オプションを使用して、呼び出し可能なコントローラを生成できます。
 
 ```shell
 php artisan make:controller ProvisionServer --invokable
 ```
 
 > **Note**  
-> Controller stubs may be customized using [stub publishing](/docs/{{version}}/artisan#stub-customization).
+> コントローラのスタブについては、[スタブの公開](/docs/{{version}}/artisan#stub-customization) をご覧ください。また、スタブのカスタマイズもできます。
 
 <a name="controller-middleware"></a>
 ## Controller Middleware
