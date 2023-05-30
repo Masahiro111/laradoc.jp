@@ -146,15 +146,15 @@ php artisan make:controller ProvisionServer --invokable
 php artisan make:controller PhotoController --resource
 ```
 
-This command will generate a controller at `app/Http/Controllers/PhotoController.php`. The controller will contain a method for each of the available resource operations. Next, you may register a resource route that points to the controller:
+このコマンドは、`app/Http/Controllers/PhotoController.php` にコントローラを生成します。 コントローラには、すぐに使用可能なリソース操作ごとのメソッドが含まれています。 次に、コントローラを指すリソースルートを登録していきます。
 
     use App\Http\Controllers\PhotoController;
 
     Route::resource('photos', PhotoController::class);
 
-This single route declaration creates multiple routes to handle a variety of actions on the resource. The generated controller will already have methods stubbed for each of these actions. Remember, you can always get a quick overview of your application's routes by running the `route:list` Artisan command.
+この 1 つのルート宣言により、リソースに対するさまざまなアクションを処理するための複数のルートが作成されます。生成されたコントローラには、これらのアクションごとにスタブ化されたメソッドがすでに含まれています。`route:list` Artisan コマンドを実行すると、アプリケーションのルートの概要をいつでも簡単に確認できます。
 
-You may even register many resource controllers at once by passing an array to the `resources` method:
+配列を `resources` メソッドに渡すことで、一度に多くのリソースコントローラを登録することもできます。
 
     Route::resources([
         'photos' => PhotoController::class,
@@ -162,9 +162,9 @@ You may even register many resource controllers at once by passing an array to t
     ]);
 
 <a name="actions-handled-by-resource-controller"></a>
-#### Actions Handled By Resource Controller
+#### リソースコントローラによって処理されるアクション
 
-Verb      | URI                    | Action       | Route Name
+動詞 | URI | アクション | ルート名
 ----------|------------------------|--------------|---------------------
 GET       | `/photos`              | index        | photos.index
 GET       | `/photos/create`       | create       | photos.create
@@ -175,9 +175,9 @@ PUT/PATCH | `/photos/{photo}`      | update       | photos.update
 DELETE    | `/photos/{photo}`      | destroy      | photos.destroy
 
 <a name="customizing-missing-model-behavior"></a>
-#### Customizing Missing Model Behavior
+#### モデルが存在しない場合の挙動のカスタマイズ
 
-Typically, a 404 HTTP response will be generated if an implicitly bound resource model is not found. However, you may customize this behavior by calling the `missing` method when defining your resource route. The `missing` method accepts a closure that will be invoked if an implicitly bound model can not be found for any of the resource's routes:
+通常、暗黙的にバインドされたリソースモデルが見つからない場合には、404 の HTTP レスポンスが生成されます。しかし、リソースルートを定義する際に `missing` メソッドを呼び出すことで、この挙動をカスタマイズすることができます。`missing` メソッドは、リソースのいずれかのルートに対して暗黙的にバインドされたモデルが見つからない場合に呼び出されるクロージャを受け入れます。
 
     use App\Http\Controllers\PhotoController;
     use Illuminate\Http\Request;
