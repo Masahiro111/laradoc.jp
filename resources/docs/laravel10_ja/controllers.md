@@ -105,13 +105,13 @@ php artisan make:controller ProvisionServer --invokable
 > コントローラのスタブについては、[スタブの公開](/docs/{{version}}/artisan#stub-customization) をご覧ください。また、スタブのカスタマイズもできます。
 
 <a name="controller-middleware"></a>
-## Controller Middleware
+## コントローラミドルウェア
 
-[Middleware](/docs/{{version}}/middleware) may be assigned to the controller's routes in your route files:
+[ミドルウェア](/docs/{{version}}/middleware) は、ルートファイル内のコントローラのルートに割り当てることができます。
 
     Route::get('profile', [UserController::class, 'show'])->middleware('auth');
 
-Or, you may find it convenient to specify middleware within your controller's constructor. Using the `middleware` method within your controller's constructor, you can assign middleware to the controller's actions:
+または、コントローラのコンストラクタ内でミドルウェアを指定すると便利な場合があります。コントローラのコンストラクタ内で `middleware` メソッドを使用すると、コントローラのアクションにミドルウェアを割り当てることができます。
 
     class UserController extends Controller
     {
@@ -126,7 +126,7 @@ Or, you may find it convenient to specify middleware within your controller's co
         }
     }
 
-Controllers also allow you to register middleware using a closure. This provides a convenient way to define an inline middleware for a single controller without defining an entire middleware class:
+コントローラでは、クロージャを使用してミドルウェアを登録することもできます。これにより、ミドルウェアクラス全体を定義せずに、単一のコントローラのインラインミドルウェアを定義する便利な方法が提供されます。
 
     use Closure;
     use Illuminate\Http\Request;
