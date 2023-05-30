@@ -136,11 +136,11 @@ php artisan make:controller ProvisionServer --invokable
     });
 
 <a name="resource-controllers"></a>
-## Resource Controllers
+## リソースコントローラ
 
-If you think of each Eloquent model in your application as a "resource", it is typical to perform the same sets of actions against each resource in your application. For example, imagine your application contains a `Photo` model and a `Movie` model. It is likely that users can create, read, update, or delete these resources.
+アプリケーション内の各 Eloquent モデルを「リソース」と考えると、アプリケーション内の各リソースに対して同じ一連のアクションを実行するのが一般的です。たとえば、アプリケーションに `Photo` モデルと `Movie` モデルが含まれていると想像してください。ユーザーはこれらのリソースを作成、読み取り、更新、または削除できる可能性があります。
 
-Because of this common use case, Laravel resource routing assigns the typical create, read, update, and delete ("CRUD") routes to a controller with a single line of code. To get started, we can use the `make:controller` Artisan command's `--resource` option to quickly create a controller to handle these actions:
+この一般的なユースケースのため、Laravel リソースルーティングは、1 行のコードで典型的な作成、読み取り、更新、および削除 (「CRUD」) ルートをコントローラに割り当てます。 まず、`make:controller` Artisan コマンドの `--resource` オプションを使用して、これらのアクションを処理するコントローラをすばやく作成できます。
 
 ```shell
 php artisan make:controller PhotoController --resource
