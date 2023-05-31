@@ -189,40 +189,40 @@ DELETE    | `/photos/{photo}`      | destroy      | photos.destroy
             });
 
 <a name="soft-deleted-models"></a>
-#### Soft Deleted Models
+#### ソフトデリートしたモデル
 
-Typically, implicit model binding will not retrieve models that have been [soft deleted](/docs/{{version}}/eloquent#soft-deleting), and will instead return a 404 HTTP response. However, you can instruct the framework to allow soft deleted models by invoking the `withTrashed` method when defining your resource route:
+通常、暗黙的なモデル結合は [ソフトデリート](/docs/{{version}}/eloquent#soft-deleting) したモデルを取得せず、代わりに 404 HTTP レスポンスを返します。しかし、リソースルートを定義するときに `withTrashed` メソッドを呼び出すことで、ソフトデリート済みモデルの操作を許可するようにフレームワークに指示できます。
 
     use App\Http\Controllers\PhotoController;
 
     Route::resource('photos', PhotoController::class)->withTrashed();
 
-Calling `withTrashed` with no arguments will allow soft deleted models for the `show`, `edit`, and `update` resource routes. You may specify a subset of these routes by passing an array to the `withTrashed` method:
+引数なしで `withTrashed` を呼び出すと、`show`、`edit`、`update` リソースルートの論理的に削除されたモデルが許可されます。配列を `withTrashed` メソッドに渡すことで、これらのルートのサブセットを指定できます。
 
     Route::resource('photos', PhotoController::class)->withTrashed(['show']);
 
 <a name="specifying-the-resource-model"></a>
-#### Specifying The Resource Model
+#### リソースモデルの指定
 
-If you are using [route model binding](/docs/{{version}}/routing#route-model-binding) and would like the resource controller's methods to type-hint a model instance, you may use the `--model` option when generating the controller:
+[ルートモデル結合](/docs/{{version}}/routing#route-model-binding) を使用して、リソースコントローラのメソッドでモデルインスタンスをタイプヒントしたい場合は、コントローラ生成の際にオプションで `--model` を付加してください。
 
 ```shell
 php artisan make:controller PhotoController --model=Photo --resource
 ```
 
 <a name="generating-form-requests"></a>
-#### Generating Form Requests
+#### フォームリクエストの生成
 
-You may provide the `--requests` option when generating a resource controller to instruct Artisan to generate [form request classes](/docs/{{version}}/validation#form-request-validation) for the controller's storage and update methods:
+リソースコントローラを生成するときに `--requests` オプションを指定して、コントローラの保存や更新メソッド用の [フォームリクエストクラス](/docs/{{version}}/validation#form-request-validation) を生成するよな Artisan コマンドを活用すると便利です。
 
 ```shell
 php artisan make:controller PhotoController --model=Photo --resource --requests
 ```
 
 <a name="restful-partial-resource-routes"></a>
-### Partial Resource Routes
+### 部分的なリソースルート
 
-When declaring a resource route, you may specify a subset of actions the controller should handle instead of the full set of default actions:
+リソースルートを宣言するとき、初期設定でセットされている完全なアクションの代わりに、コントローラが処理する必要があるアクションのサブセットだけを指定することも可能です。
 
     use App\Http\Controllers\PhotoController;
 
