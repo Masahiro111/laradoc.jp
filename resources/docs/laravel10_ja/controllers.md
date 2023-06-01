@@ -177,7 +177,7 @@ DELETE    | `/photos/{photo}`      | destroy      | photos.destroy
 <a name="customizing-missing-model-behavior"></a>
 #### モデルが存在しない場合の挙動のカスタマイズ
 
-通常、暗黙的にバインドされたリソースモデルが見つからない場合には、404 の HTTP レスポンスが生成されます。しかし、リソースルートを定義する際に `missing` メソッドを呼び出すことで、この挙動をカスタマイズすることができます。`missing` メソッドは、リソースのいずれかのルートに対して暗黙的にバインドされたモデルが見つからない場合に呼び出されるクロージャを受け入れます。
+通常、暗黙的に結合されたリソースモデルが見つからない場合には、404 の HTTP レスポンスが生成されます。しかし、リソースルートを定義する際に `missing` メソッドを呼び出すことで、この挙動をカスタマイズすることができます。`missing` メソッドは、リソースのいずれかのルートに対して暗黙的に結合されたモデルが見つからない場合に呼び出されるクロージャを受け入れます。
 
     use App\Http\Controllers\PhotoController;
     use Illuminate\Http\Request;
@@ -235,15 +235,15 @@ php artisan make:controller PhotoController --model=Photo --resource --requests
     ]);
 
 <a name="api-resource-routes"></a>
-#### API Resource Routes
+#### API リソースルート
 
-When declaring resource routes that will be consumed by APIs, you will commonly want to exclude routes that present HTML templates such as `create` and `edit`. For convenience, you may use the `apiResource` method to automatically exclude these two routes:
+API によって使用されるリソースルートを宣言する際に、通常、`create` や `edit` などの HTML テンプレートを提供するルートを除外したいときがあります。その場合は、 `apiResource` メソッドを使用して、これら 2 つのルートを自動的に除外できます。
 
     use App\Http\Controllers\PhotoController;
 
     Route::apiResource('photos', PhotoController::class);
 
-You may register many API resource controllers at once by passing an array to the `apiResources` method:
+配列を `apiResources` メソッドに渡すことで、多くの API リソースコントローラを一度に登録できます。
 
     use App\Http\Controllers\PhotoController;
     use App\Http\Controllers\PostController;
@@ -253,43 +253,43 @@ You may register many API resource controllers at once by passing an array to th
         'posts' => PostController::class,
     ]);
 
-To quickly generate an API resource controller that does not include the `create` or `edit` methods, use the `--api` switch when executing the `make:controller` command:
+`create` または `edit` メソッドを含まない API リソースコントローラをすばやく生成するには、`make:controller` コマンドを実行するときに `--api` スイッチを使用してみてください。
 
 ```shell
 php artisan make:controller PhotoController --api
 ```
 
 <a name="restful-nested-resources"></a>
-### Nested Resources
+### ネストされたリソース
 
-Sometimes you may need to define routes to a nested resource. For example, a photo resource may have multiple comments that may be attached to the photo. To nest the resource controllers, you may use "dot" notation in your route declaration:
+場合によっては、ネストされたリソースへのルートを定義する必要があるかもしれません。 たとえば、写真リソースには、写真に添付できる複数のコメントがある場合があります。 リソースコントローラをネストするには、ルート宣言で「 `.`（ドット）」表記を使用できます。
 
     use App\Http\Controllers\PhotoCommentController;
 
     Route::resource('photos.comments', PhotoCommentController::class);
 
-This route will register a nested resource that may be accessed with URIs like the following:
+このルートは、次のような URI でアクセスできるネストされたリソースを登録することが可能です。
 
     /photos/{photo}/comments/{comment}
 
 <a name="scoping-nested-resources"></a>
-#### Scoping Nested Resources
+#### ネストされたリソースのスコープ設定
 
-Laravel's [implicit model binding](/docs/{{version}}/routing#implicit-model-binding-scoping) feature can automatically scope nested bindings such that the resolved child model is confirmed to belong to the parent model. By using the `scoped` method when defining your nested resource, you may enable automatic scoping as well as instruct Laravel which field the child resource should be retrieved by. For more information on how to accomplish this, please see the documentation on [scoping resource routes](#restful-scoping-resource-routes).
+Laravel の [暗黙的なモデル結合](/docs/{{version}}/routing#implicit-model-binding-scoping) 機能は、リソースの解決がされた子モデルが親モデルに属していることを確認するように、ネストされた結合を自動的にスコープできます。ネストされたリソースを定義するときに `scoped` メソッドを使用すると、自動スコープを有効にしたり、子リソースを取得するフィールドを Laravel に指示できたりします。これを実現する方法の詳細については、[リソースルートのスコープ設定](#restful-scoping-resource-routes) に関するドキュメントを参照してください。
 
 <a name="shallow-nesting"></a>
-#### Shallow Nesting
+#### Shallow ネスト
 
-Often, it is not entirely necessary to have both the parent and the child IDs within a URI since the child ID is already a unique identifier. When using unique identifiers such as auto-incrementing primary keys to identify your models in URI segments, you may choose to use "shallow nesting":
+多くの場合、子 ID はすでに一意の識別子であるため、URI 内に親 ID と子 ID の両方を含める必要は必ずしもありません。自動インクリメントの主キーなどの一意の識別子を使用して URI セグメント内のモデルを識別する場合は、「Shallow（浅い）ネスト」も活用できます。
 
     use App\Http\Controllers\CommentController;
 
     Route::resource('photos.comments', CommentController::class)->shallow();
 
-This route definition will define the following routes:
+このルート定義では、次のルートが定義されます。
 
-Verb      | URI                               | Action       | Route Name
-----------|-----------------------------------|--------------|---------------------
+動詞 | URI | アクション | ルート名
+----------|------------------------------|--- -----------|---------------------
 GET       | `/photos/{photo}/comments`        | index        | photos.comments.index
 GET       | `/photos/{photo}/comments/create` | create       | photos.comments.create
 POST      | `/photos/{photo}/comments`        | store        | photos.comments.store
@@ -299,9 +299,9 @@ PUT/PATCH | `/comments/{comment}`             | update       | comments.update
 DELETE    | `/comments/{comment}`             | destroy      | comments.destroy
 
 <a name="restful-naming-resource-routes"></a>
-### Naming Resource Routes
+### リソースルートの命名
 
-By default, all resource controller actions have a route name; however, you can override these names by passing a `names` array with your desired route names:
+すべてのリソースコントローラアクションには、初期設定でルート名が付いています。ただし、`names` 配列に「希望のルート名」を渡すことで、これらの名前をオーバーライドできます。
 
     use App\Http\Controllers\PhotoController;
 
@@ -310,9 +310,9 @@ By default, all resource controller actions have a route name; however, you can 
     ]);
 
 <a name="restful-naming-resource-route-parameters"></a>
-### Naming Resource Route Parameters
+### リソースルートパラメータの命名
 
-By default, `Route::resource` will create the route parameters for your resource routes based on the "singularized" version of the resource name. You can easily override this on a per resource basis using the `parameters` method. The array passed into the `parameters` method should be an associative array of resource names and parameter names:
+`Route::resource` はデフォルトで、リソース名の「単数形」バージョンに基づいてリソースルートのルートパラメータを作成します。`parameters` メソッドを使用すると、リソースごとに簡単にオーバーライドできます。`parameters` メソッドに渡される配列は、リソース名とパラメータ名の連想配列である必要があります。
 
     use App\Http\Controllers\AdminUserController;
 
@@ -320,14 +320,14 @@ By default, `Route::resource` will create the route parameters for your resource
         'users' => 'admin_user'
     ]);
 
- The example above generates the following URI for the resource's `show` route:
+  上の例では、リソースの `show` ルートに対して次の URI を生成します。
 
     /users/{admin_user}
 
 <a name="restful-scoping-resource-routes"></a>
-### Scoping Resource Routes
+### リソースルートのスコープ
 
-Laravel's [scoped implicit model binding](/docs/{{version}}/routing#implicit-model-binding-scoping) feature can automatically scope nested bindings such that the resolved child model is confirmed to belong to the parent model. By using the `scoped` method when defining your nested resource, you may enable automatic scoping as well as instruct Laravel which field the child resource should be retrieved by:
+Laravel の [スコープ付き暗黙的なモデル結合](/docs/{{version}}/routing#implicit-model-binding-scoping) 機能は、解決された子モデルが親モデルに属していることが確認されるように、ネストされた結合を自動的にスコープできます。ネストされたリソースを定義するときに `scoped` メソッドを使用すると、自動スコープを有効にしたり、子リソースを取得するフィールドを Laravel に指示したりできます。
 
     use App\Http\Controllers\PhotoCommentController;
 
@@ -335,16 +335,16 @@ Laravel's [scoped implicit model binding](/docs/{{version}}/routing#implicit-mod
         'comment' => 'slug',
     ]);
 
-This route will register a scoped nested resource that may be accessed with URIs like the following:
+上記のような、スコープ付きのネストされたリソースが登録されている場合は、以下のような URI でアクセスできます。
 
     /photos/{photo}/comments/{comment:slug}
 
-When using a custom keyed implicit binding as a nested route parameter, Laravel will automatically scope the query to retrieve the nested model by its parent using conventions to guess the relationship name on the parent. In this case, it will be assumed that the `Photo` model has a relationship named `comments` (the plural of the route parameter name) which can be used to retrieve the `Comment` model.
+カスタムキー付きの暗黙的な結合を、ネストされたルートパラメータとして使用する場合、Laravel は、親のリレーション名を推測する規則を活用して、親によってネストされたモデルを取得するためにクエリのスコープを自動的に設定します。この場合、`Photo` モデルには、`Comment` モデルを取得するために使用できる `comments`（ルートパラメータ名の複数形）という名前のリレーションがあると想定されます。
 
 <a name="restful-localizing-resource-uris"></a>
-### Localizing Resource URIs
+### リソース URI のローカライズ
 
-By default, `Route::resource` will create resource URIs using English verbs and plural rules. If you need to localize the `create` and `edit` action verbs, you may use the `Route::resourceVerbs` method. This may be done at the beginning of the `boot` method within your application's `App\Providers\RouteServiceProvider`:
+デフォルトでは、`Route::resource` は英語の動詞と複数形の規則を使用してリソース URI を作成します。`create` および `edit` アクション動詞をローカライズする必要がある場合は、`Route::resourceVerbs` メソッドを使用できます。これは、アプリケーションの  `App\Providers\RouteServiceProvider` 内の `boot` メソッドの先頭で、以下のように記述することができます。
 
     /**
      * Define your route model bindings, pattern filters, etc.
