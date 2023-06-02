@@ -359,16 +359,16 @@ Laravel の [スコープ付き暗黙的なモデル結合](/docs/{{version}}/ro
         // ...
     }
 
-Laravel's pluralizer supports [several different languages which you may configure based on your needs](/docs/{{version}}/localization#pluralization-language). Once the verbs and pluralization language have been customized, a resource route registration such as `Route::resource('publicacion', PublicacionController::class)` will produce the following URIs:
+Laravel の 複数形化機能は、[ニーズに基づいて構成できるいくつかの異なる言語](/docs/{{version}}/localization#pluralization-language) をサポートしています。動詞と複数形化言語をカスタマイズしたら、`Route::resource('publicacion', PublicacionController::class)` などのリソースルート登録により、次のような URI を生成します。
 
     /publicacion/crear
 
     /publicacion/{publicaciones}/editar
 
 <a name="restful-supplementing-resource-controllers"></a>
-### Supplementing Resource Controllers
+### リソースコントローラの補足
 
-If you need to add additional routes to a resource controller beyond the default set of resource routes, you should define those routes before your call to the `Route::resource` method; otherwise, the routes defined by the `resource` method may unintentionally take precedence over your supplemental routes:
+リソースルートのデフォルトセット以外の追加ルートをリソースコントローラに追加したい場合は、`Route::resource` メソッドを呼び出す前にそれらのルートを定義する必要があります。そうしないと、`resource` メソッドで定義されたルートが意図せずに補足ルートよりも優先される可能性があります。
 
     use App\Http\Controller\PhotoController;
 
@@ -376,12 +376,12 @@ If you need to add additional routes to a resource controller beyond the default
     Route::resource('photos', PhotoController::class);
 
 > **Note**  
-> Remember to keep your controllers focused. If you find yourself routinely needing methods outside of the typical set of resource actions, consider splitting your controller into two, smaller controllers.
+> コントローラに集中することを忘れないでください。通常のリソースアクションのセットの以外で頻繁にメソッドを必要とする場合は、コントローラを 2 つの小さなコントローラに分割することを検討してください。
 
 <a name="singleton-resource-controllers"></a>
-### Singleton Resource Controllers
+### シングルトンリソースコントローラ
 
-Sometimes, your application will have resources that may only have a single instance. For example, a user's "profile" can be edited or updated, but a user may not have more than one "profile". Likewise, an image may have a single "thumbnail". These resources are called "singleton resources", meaning one and only one instance of the resource may exist. In these scenarios, you may register a "singleton" resource controller:
+アプリケーションにインスタンスが 1 つしかないリソースが存在することがあります。たとえば、ユーザーの「プロフィール」は編集や更新ができますが、ユーザーは複数の「プロフィール」を持つことはできません。同様に、画像には 1 つの「サムネイル」が含まれる場合があります。これらのリソースは「シングルトンリソース」と呼ばれます。これは、リソースのインスタンスが 1 つだけ存在できることを意味します。 これらのシナリオでは、「シングルトン」リソースコントローラを登録できます。
 
 ```php
 use App\Http\Controllers\ProfileController;
@@ -390,15 +390,15 @@ use Illuminate\Support\Facades\Route;
 Route::singleton('profile', ProfileController::class);
 ```
 
-The singleton resource definition above will register the following routes. As you can see, "creation" routes are not registered for singleton resources, and the registered routes do not accept an identifier since only one instance of the resource may exist:
+上記のシングルトンリソース定義により、次のルートが登録されます。ご覧のとおり、プロフィールを作成するルートはシングルトンリソースには登録されておらず、リソースのインスタンスは 1 つしか存在しないため、登録されたルートは識別子を受け入れません。
 
-Verb      | URI                               | Action       | Route Name
-----------|-----------------------------------|--------------|---------------------
+動詞 | URI | アクション | ルート名
+----------|------------------------------|--- -----------|---------------------
 GET       | `/profile`                        | show         | profile.show
 GET       | `/profile/edit`                   | edit         | profile.edit
 PUT/PATCH | `/profile`                        | update       | profile.update
 
-Singleton resources may also be nested within a standard resource:
+シングルトンリソースは、標準リソース内にネストすることもできます。
 
 ```php
 Route::singleton('photos.thumbnail', ThumbnailController::class);
@@ -406,8 +406,8 @@ Route::singleton('photos.thumbnail', ThumbnailController::class);
 
 In this example, the `photos` resource would receive all of the [standard resource routes](#actions-handled-by-resource-controller); however, the `thumbnail` resource would be a singleton resource with the following routes:
 
-| Verb      | URI                              | Action  | Route Name               |
-|-----------|----------------------------------|---------|--------------------------|
+| 動詞 | URI | アクション | ルート名 |
+|-----------|-----------------------------|-- -------|--------------------------|
 | GET       | `/photos/{photo}/thumbnail`      | show    | photos.thumbnail.show    |
 | GET       | `/photos/{photo}/thumbnail/edit` | edit    | photos.thumbnail.edit    |
 | PUT/PATCH | `/photos/{photo}/thumbnail`      | update  | photos.thumbnail.update  |
@@ -423,8 +423,8 @@ Route::singleton('photos.thumbnail', ThumbnailController::class)->creatable();
 
 In this example, the following routes will be registered. As you can see, a `DELETE` route will also be registered for creatable singleton resources:
 
-| Verb      | URI                                | Action  | Route Name               |
-|-----------|------------------------------------|---------|--------------------------|
+| 動詞 | URI | アクション | ルート名 |
+|-----------|-----------------------------| --------|--------------------------|
 | GET       | `/photos/{photo}/thumbnail/create` | create  | photos.thumbnail.create  |
 | POST      | `/photos/{photo}/thumbnail`        | store   | photos.thumbnail.store   |
 | GET       | `/photos/{photo}/thumbnail`        | show    | photos.thumbnail.show    |
@@ -510,7 +510,7 @@ If your controller method is also expecting input from a route parameter, list y
 
     Route::put('/user/{id}', [UserController::class, 'update']);
 
-You may still type-hint the `Illuminate\Http\Request` and access your `id` parameter by defining your controller method as follows:
+次のようなコントローラメソッドを定義することで、`Illuminate\Http\Request` をタイプヒントし、`id` パラメータにアクセスすることもできます。
 
     <?php
 
