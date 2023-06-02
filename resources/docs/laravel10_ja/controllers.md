@@ -12,7 +12,7 @@
      - [リソースルートパラメータの命名](#restful-naming-resource-route-parameters)
      - [リソースルートのスコープ設定](#restful-scoping-resource-routes)
      - [リソース URI のローカライズ](#restful-localizing-resource-uris)
-     - [リソース コントローラの補足](#restful-supplementing-resource-controllers)
+     - [リソースコントローラの補足](#restful-supplementing-resource-controllers)
      - [シングルトンリソースコントローラ](#singleton-resource-controllers)
 - [依存性注入とコントローラ](#dependency-injection-and-controllers)
 
@@ -404,7 +404,7 @@ PUT/PATCH | `/profile`                        | update       | profile.update
 Route::singleton('photos.thumbnail', ThumbnailController::class);
 ```
 
-In this example, the `photos` resource would receive all of the [standard resource routes](#actions-handled-by-resource-controller); however, the `thumbnail` resource would be a singleton resource with the following routes:
+この例では、`photos` リソースはすべての [標準リソース ルート](#actions-handled-by-resource-controller) を受け取ります。ただし `thumbnail` リソースは、次のルートを持つシングルトンリソースになります。
 
 | 動詞 | URI | アクション | ルート名 |
 |-----------|-----------------------------|-- -------|--------------------------|
@@ -413,15 +413,15 @@ In this example, the `photos` resource would receive all of the [standard resour
 | PUT/PATCH | `/photos/{photo}/thumbnail`      | update  | photos.thumbnail.update  |
 
 <a name="creatable-singleton-resources"></a>
-#### Creatable Singleton Resources
+#### シングルトンリソースの作成
 
-Occasionally, you may want to define creation and storage routes for a singleton resource. To accomplish this, you may invoke the `creatable` method when registering the singleton resource route:
+シングルトンリソースの「作成」ルートと「保存」ルートを定義したい際は、シングルトンリソースルートを登録するときに `creatable` メソッドを呼び出します。
 
 ```php
 Route::singleton('photos.thumbnail', ThumbnailController::class)->creatable();
 ```
 
-In this example, the following routes will be registered. As you can see, a `DELETE` route will also be registered for creatable singleton resources:
+この例では、以下のルートが登録されます。ご覧のとおり、作成可能なシングルトンリソースに対して `DELETE` ルートも登録されます。
 
 | 動詞 | URI | アクション | ルート名 |
 |-----------|-----------------------------| --------|--------------------------|
@@ -432,34 +432,34 @@ In this example, the following routes will be registered. As you can see, a `DEL
 | PUT/PATCH | `/photos/{photo}/thumbnail`        | update  | photos.thumbnail.update  |
 | DELETE    | `/photos/{photo}/thumbnail`        | destroy | photos.thumbnail.destroy |
 
-If you would like Laravel to register the `DELETE` route for a singleton resource but not register the creation or storage routes, you may utilize the `destroyable` method:
+Laravel にシングルトンリソースの `DELETE` ルートを登録させて、「作成」ルートや「保存」ルートは登録したくない場合は、 `destroyable` メソッドを利用できます。
 
 ```php
 Route::singleton(...)->destroyable();
 ```
 
 <a name="api-singleton-resources"></a>
-#### API Singleton Resources
+#### API シングルトンリソース
 
-The `apiSingleton` method may be used to register a singleton resource that will be manipulated via an API, thus rendering the `create` and `edit` routes unnecessary:
+`apiSingleton` メソッドは、API 経由で操作されるシングルトンリソースを登録することができます。これにより、`create` および `edit` ルートが不要になります。
 
 ```php
 Route::apiSingleton('profile', ProfileController::class);
 ```
 
-Of course, API singleton resources may also be `creatable`, which will register `store` and `destroy` routes for the resource:
+もちろん、API シングルトン リソースも `creatable` にすることができ、これによりリソースの `store` ルートと `destroy` ルートが登録されます。
 
 ```php
 Route::apiSingleton('photos.thumbnail', ProfileController::class)->creatable();
 ```
 
 <a name="dependency-injection-and-controllers"></a>
-## Dependency Injection & Controllers
+## 依存性注入とコントローラ
 
 <a name="constructor-injection"></a>
-#### Constructor Injection
+#### コンストラクタへの依存性注入
 
-The Laravel [service container](/docs/{{version}}/container) is used to resolve all Laravel controllers. As a result, you are able to type-hint any dependencies your controller may need in its constructor. The declared dependencies will automatically be resolved and injected into the controller instance:
+Laravel [サービスコンテナ](/docs/{{version}}/container) は、すべてのコントローラの依存性を解決するために使用されます。その結果、コントローラがコンストラクタで必要とする依存関係をタイプヒントで指定できるようになります。宣言された依存関係は自動的に解決され、コントローラにインスタンスが注入されます。
 
     <?php
 
@@ -478,9 +478,9 @@ The Laravel [service container](/docs/{{version}}/container) is used to resolve 
     }
 
 <a name="method-injection"></a>
-#### Method Injection
+#### メソッドインジェクション
 
-In addition to constructor injection, you may also type-hint dependencies on your controller's methods. A common use-case for method injection is injecting the `Illuminate\Http\Request` instance into your controller methods:
+コンストラクタへの依存性注入に加え、コントローラのメソッドにタイプヒントの依存関係を指定することもできます。メソッドインジェクションの一般的な使用例は、コントローラメソッドに `Illuminate\Http\Request` インスタンスを注入することです。
 
     <?php
 
@@ -504,13 +504,13 @@ In addition to constructor injection, you may also type-hint dependencies on you
         }
     }
 
-If your controller method is also expecting input from a route parameter, list your route arguments after your other dependencies. For example, if your route is defined like so:
+コントローラメソッドがルートパラメータからの入力も期待している場合は、他の依存関係の後にルート引数を指定します。たとえば、ルートが次のように定義されているとします。
 
     use App\Http\Controllers\UserController;
 
     Route::put('/user/{id}', [UserController::class, 'update']);
 
-次のようなコントローラメソッドを定義することで、`Illuminate\Http\Request` をタイプヒントし、`id` パラメータにアクセスすることもできます。
+上記の際、下記のようにコントローラメソッドを定義することで、`Illuminate\Http\Request` をタイプヒントし、`id` パラメータにアクセスすることもできます。
 
     <?php
 
