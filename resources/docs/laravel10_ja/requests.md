@@ -1,30 +1,30 @@
-# HTTP Requests
+# HTTP リクエスト
 
-- [Introduction](#introduction)
-- [Interacting With The Request](#interacting-with-the-request)
-    - [Accessing The Request](#accessing-the-request)
-    - [Request Path, Host, & Method](#request-path-and-method)
-    - [Request Headers](#request-headers)
-    - [Request IP Address](#request-ip-address)
-    - [Content Negotiation](#content-negotiation)
-    - [PSR-7 Requests](#psr7-requests)
-- [Input](#input)
-    - [Retrieving Input](#retrieving-input)
-    - [Determining If Input Is Present](#determining-if-input-is-present)
-    - [Merging Additional Input](#merging-additional-input)
-    - [Old Input](#old-input)
-    - [Cookies](#cookies)
-    - [Input Trimming & Normalization](#input-trimming-and-normalization)
-- [Files](#files)
-    - [Retrieving Uploaded Files](#retrieving-uploaded-files)
-    - [Storing Uploaded Files](#storing-uploaded-files)
-- [Configuring Trusted Proxies](#configuring-trusted-proxies)
-- [Configuring Trusted Hosts](#configuring-trusted-hosts)
+- [はじめに](#introduction)
+- [リクエストの操作](#interacting-with-the-request)
+    - [リクエストへのアクセス](#accessing-the-request)
+    - [リクエストのパス、ホスト、メソッド](#request-path-and-method)
+    - [リクエストヘッダ](#request-headers)
+    - [リクエスト IP アドレス](#request-ip-address)
+    - [コンテンツネゴシエーション](#content-negotiation)
+    - [PSR-7 リクエスト](#psr7-requests)
+- [入力](#input)
+    - [入力の取得](#retrieving-input)
+    - [入力の存在判定](#determining-if-input-is-present)
+    - [追加入力のマージ](#merging-additional-input)
+    - [直前の入力](#old-input)
+    - [クッキー](#cookies)
+    - [入力のトリミングと正規化](#input-trimming-and-normalization)
+- [ファイル](#files)
+    - [アップロードされたファイルの取得](#retrieving-uploaded-files)
+    - [アップロードされたファイルの保存](#storing-uploaded-files)
+- [信頼するプロキシの設定](#cconfigured-trusted-proxies)
+- [信頼するホストの設定](#cconfigured-trusted-hosts)
 
 <a name="introduction"></a>
-## Introduction
+## はじめに
 
-Laravel's `Illuminate\Http\Request` class provides an object-oriented way to interact with the current HTTP request being handled by your application as well as retrieve the input, cookies, and files that were submitted with the request.
+Laravel の `Illuminate\Http\Request` クラスは、アプリケーションで処理されている現在の HTTP リクエストを操作し、リクエストとともに送信された入力、クッキー、およびファイルを取得するオブジェクト指向の方法を提供します。
 
 <a name="interacting-with-the-request"></a>
 ## Interacting With The Request
