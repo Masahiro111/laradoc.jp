@@ -27,12 +27,12 @@
 Laravel の `Illuminate\Http\Request` クラスは、アプリケーションで処理されている現在の HTTP リクエストを操作し、リクエストとともに送信された入力、クッキー、およびファイルを取得するオブジェクト指向の方法を提供します。
 
 <a name="interacting-with-the-request"></a>
-## Interacting With The Request
+## リクエストの操作
 
 <a name="accessing-the-request"></a>
-### Accessing The Request
+### リクエストへのアクセス
 
-To obtain an instance of the current HTTP request via dependency injection, you should type-hint the `Illuminate\Http\Request` class on your route closure or controller method. The incoming request instance will automatically be injected by the Laravel [service container](/docs/{{version}}/container):
+現在の HTTP リクエストのインスタンスを取得するには、ルートクロージャ、またはコントローラメソッドで `Illuminate\Http\Request` クラスをタイプヒントする必要があります。受信したリクエストのインスタンスは、Laravel [サービスコンテナ](/docs/{{version}}/container) によって自動的に依存性注入されます。
 
     <?php
 
@@ -56,7 +56,7 @@ To obtain an instance of the current HTTP request via dependency injection, you 
         }
     }
 
-As mentioned, you may also type-hint the `Illuminate\Http\Request` class on a route closure. The service container will automatically inject the incoming request into the closure when it is executed:
+前述したように、ルートクロージャで `Illuminate\Http\Request` クラスをタイプヒントで指定することもできます。サービス コンテナは、実行時に受信リクエストを自動的にクロージャに依存性注入します。
 
     use Illuminate\Http\Request;
 
@@ -65,15 +65,15 @@ As mentioned, you may also type-hint the `Illuminate\Http\Request` class on a ro
     });
 
 <a name="dependency-injection-route-parameters"></a>
-#### Dependency Injection & Route Parameters
+#### 依存性注入とルートパラメータ
 
-If your controller method is also expecting input from a route parameter you should list your route parameters after your other dependencies. For example, if your route is defined like so:
+コントローラメソッドがルート パラメータからの入力も期待している場合は、他の依存関係の後にルートパラメータをリストする必要があります。たとえば、ルートが次のように定義されているとします。
 
     use App\Http\Controllers\UserController;
 
     Route::put('/user/{id}', [UserController::class, 'update']);
 
-You may still type-hint the `Illuminate\Http\Request` and access your `id` route parameter by defining your controller method as follows:
+以下のようにコントローラメソッドを定義することで、`Illuminate\Http\Request` をタイプヒントし、`id` ルートパラメータにアクセスできます。
 
     <?php
 
@@ -96,14 +96,14 @@ You may still type-hint the `Illuminate\Http\Request` and access your `id` route
     }
 
 <a name="request-path-and-method"></a>
-### Request Path, Host, & Method
+### リクエストのパス、ホスト、およびメソッド
 
-The `Illuminate\Http\Request` instance provides a variety of methods for examining the incoming HTTP request and extends the `Symfony\Component\HttpFoundation\Request` class. We will discuss a few of the most important methods below.
+`Illuminate\Http\Request` インスタンスは、`Symfony\Component\HttpFoundation\Request` クラスを拡張し、受信 HTTP リクエストを調査するためのさまざまなメソッドを提供します。以下では、最も重要な調査方法のいくつかを説明します。
 
 <a name="retrieving-the-request-path"></a>
-#### Retrieving The Request Path
+#### リクエストパスの取得
 
-The `path` method returns the request's path information. So, if the incoming request is targeted at `http://example.com/foo/bar`, the `path` method will return `foo/bar`:
+`path` メソッドはリクエストのパス情報を返します。したがって、受信リクエストが `http://example.com/foo/bar` をターゲットにしている場合、`path` メソッドは `foo/bar` を返します。
 
     $uri = $request->path();
 
