@@ -175,20 +175,20 @@ Laravel の `Illuminate\Http\Request` クラスは、アプリケーションで
     $token = $request->bearerToken();
 
 <a name="request-ip-address"></a>
-### Request IP Address
+### リクエスト IP アドレス
 
-The `ip` method may be used to retrieve the IP address of the client that made the request to your application:
+`ip` メソッドは、アプリケーションにリクエストしたクライアントの IP アドレスを取得できます。
 
     $ipAddress = $request->ip();
 
 <a name="content-negotiation"></a>
-### Content Negotiation
+### コンテンツネゴシエーション
 
-Laravel provides several methods for inspecting the incoming request's requested content types via the `Accept` header. First, the `getAcceptableContentTypes` method will return an array containing all of the content types accepted by the request:
+Laravel は、`Accept` ヘッダを介して受信リクエストのリクエストされたコンテンツタイプを検査するためのメソッドをいくつか提供しています。まず、`getAcceptableContentTypes` メソッドは、リクエストによって受け入れられたすべてのコンテンツタイプを含む配列を返します。
 
     $contentTypes = $request->getAcceptableContentTypes();
 
-The `accepts` method accepts an array of content types and returns `true` if any of the content types are accepted by the request. Otherwise, `false` will be returned:
+`accepts` メソッドは、コンテンツタイプの配列を受け入れ、いずれかのコンテンツタイプがリクエストによって受け入れられた場合は `true` を返します。それ以外の場合は、`false` が返されます。
 
     if ($request->accepts(['text/html', 'application/json'])) {
         // ...
