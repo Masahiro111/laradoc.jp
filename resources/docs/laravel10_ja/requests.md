@@ -108,24 +108,24 @@ Laravel の `Illuminate\Http\Request` クラスは、アプリケーションで
     $uri = $request->path();
 
 <a name="inspecting-the-request-path"></a>
-#### Inspecting The Request Path / Route
+#### リクエストのパス / ルートの検査
 
-The `is` method allows you to verify that the incoming request path matches a given pattern. You may use the `*` character as a wildcard when utilizing this method:
+`is` メソッドを使用すると、受信リクエストのパスが指定されたパターンと一致するかどうかを検証できます。このメソッドは、`*` 文字をワイルドカードとして使用できます。
 
     if ($request->is('admin/*')) {
         // ...
     }
 
-Using the `routeIs` method, you may determine if the incoming request has matched a [named route](/docs/{{version}}/routing#named-routes):
+`routeIs` メソッドでは、受信リクエストが [名前付きルート](/docs/{{version}}/routing#named-routes) と一致したかどうかを判定できます。
 
     if ($request->routeIs('admin.*')) {
         // ...
     }
 
 <a name="retrieving-the-request-url"></a>
-#### Retrieving The Request URL
+#### リクエスト URL の取得
 
-To retrieve the full URL for the incoming request you may use the `url` or `fullUrl` methods. The `url` method will return the URL without the query string, while the `fullUrl` method includes the query string:
+受信リクエストの完全な URL を取得するには、`url` メソッドか `fullUrl` メソッドを使用します。`url` メソッドはクエリ文字列なしで URL を返しますが、`fullUrl` メソッドでは、クエリ文字列が含まれます。
 
     $url = $request->url();
 
