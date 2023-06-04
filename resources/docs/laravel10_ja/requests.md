@@ -131,23 +131,23 @@ Laravel の `Illuminate\Http\Request` クラスは、アプリケーションで
 
     $urlWithQueryString = $request->fullUrl();
 
-If you would like to append query string data to the current URL, you may call the `fullUrlWithQuery` method. This method merges the given array of query string variables with the current query string:
+現在の URL にクエリ文字列データを追加したい場合は、`fullUrlWithQuery` メソッドを呼び出します。このメソッドは、指定されたクエリ文字列変数の配列を現在のクエリ文字列とマージします。
 
     $request->fullUrlWithQuery(['type' => 'phone']);
 
 <a name="retrieving-the-request-host"></a>
-#### Retrieving The Request Host
+#### リクエストホストの取得
 
-You may retrieve the "host" of the incoming request via the `host`, `httpHost`, and `schemeAndHttpHost` methods:
+`host`、`httpHost`、`schemeAndHttpHost` メソッドを使用して、受信リクエストの「ホスト」を取得できます。
 
     $request->host();
     $request->httpHost();
     $request->schemeAndHttpHost();
 
 <a name="retrieving-the-request-method"></a>
-#### Retrieving The Request Method
+#### リクエストメソッドの取得
 
-The `method` method will return the HTTP verb for the request. You may use the `isMethod` method to verify that the HTTP verb matches a given string:
+`method` メソッドはリクエストの HTTP 動詞を返します。`isMethod` メソッドを使用すると、HTTP 動詞が指定された文字列と一致するかを判定できます。
 
     $method = $request->method();
 
@@ -156,21 +156,21 @@ The `method` method will return the HTTP verb for the request. You may use the `
     }
 
 <a name="request-headers"></a>
-### Request Headers
+### リクエストヘッダ
 
-You may retrieve a request header from the `Illuminate\Http\Request` instance using the `header` method. If the header is not present on the request, `null` will be returned. However, the `header` method accepts an optional second argument that will be returned if the header is not present on the request:
+`header` メソッドを使用して、`Illuminate\Http\Request` インスタンスからリクエストヘッダを取得できます。リクエストにヘッダが存在しない場合は、`null` が返されます。また `header` メソッドではオプションで、リクエストにヘッダが存在しない場合に返される値を  2 番目の引数で指定できます。
 
     $value = $request->header('X-Header-Name');
 
     $value = $request->header('X-Header-Name', 'default');
 
-The `hasHeader` method may be used to determine if the request contains a given header:
+`hasHeader` メソッドは、リクエストに特定のヘッダが含まれているかどうかを判定するために使用できます。
 
     if ($request->hasHeader('X-Header-Name')) {
         // ...
     }
 
-For convenience, the `bearerToken` method may be used to retrieve a bearer token from the `Authorization` header. If no such header is present, an empty string will be returned:
+便宜上、`bearerToken` メソッドを使用して、`Authorization` ヘッダからベアラートークンを取得できます。そのようなヘッダーが存在しない場合は、空の文字列が返されます。
 
     $token = $request->bearerToken();
 
