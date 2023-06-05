@@ -194,7 +194,7 @@ Laravel は、`Accept` ヘッダを介して受信リクエストのリクエス
         // ...
     }
 
-You may use the `prefers` method to determine which content type out of a given array of content types is most preferred by the request. If none of the provided content types are accepted by the request, `null` will be returned:
+`prefers` メソッドを使用すると、指定したコンテンツタイプの配列の中から、どのコンテンツタイプがリクエストで最も優先されるかを判断できます。提供されたコンテンツタイプがリクエスト内にない場合は、`null` が返されます。
 
     $preferred = $request->prefers(['text/html', 'application/json']);
 
