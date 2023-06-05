@@ -198,23 +198,23 @@ Laravel は、`Accept` ヘッダを介して受信リクエストのリクエス
 
     $preferred = $request->prefers(['text/html', 'application/json']);
 
-Since many applications only serve HTML or JSON, you may use the `expectsJson` method to quickly determine if the incoming request expects a JSON response:
+多くのアプリケーションは HTML または JSON のみを提供するため、`expectsJson` メソッドを使用して、受信リクエストが JSON リクエストを期待しているかどうかを素早く判定できます。
 
     if ($request->expectsJson()) {
         // ...
     }
 
 <a name="psr7-requests"></a>
-### PSR-7 Requests
+### PSR-7 リクエスト
 
-The [PSR-7 standard](https://www.php-fig.org/psr/psr-7/) specifies interfaces for HTTP messages, including requests and responses. If you would like to obtain an instance of a PSR-7 request instead of a Laravel request, you will first need to install a few libraries. Laravel uses the *Symfony HTTP Message Bridge* component to convert typical Laravel requests and responses into PSR-7 compatible implementations:
+[PSR-7 標準](https://www.php-fig.org/psr/psr-7/) は、リクエストとレスポンスを含む HTTP メッセージのインターフェイスを指定します。Laravel リクエストではなく PSR-7 リクエストのインスタンスを取得したい場合は、まずいくつかのライブラリをインストールする必要があります。Laravel は *Symfony HTTP Message Bridge* コンポーネントを使用して、一般的な Laravel リクエストとレスポンスを PSR-7 互換の実装に変換します。
 
 ```shell
 composer require symfony/psr-http-message-bridge
 composer require nyholm/psr7
 ```
 
-Once you have installed these libraries, you may obtain a PSR-7 request by type-hinting the request interface on your route closure or controller method:
+これらのライブラリをインストールしたら、ルートクロージャかコントローラメソッドでリクエストインターフェイスをタイプヒントすることで PSR-7 リクエストを取得できます。
 
     use Psr\Http\Message\ServerRequestInterface;
 
@@ -223,64 +223,64 @@ Once you have installed these libraries, you may obtain a PSR-7 request by type-
     });
 
 > **Note**  
-> If you return a PSR-7 response instance from a route or controller, it will automatically be converted back to a Laravel response instance and be displayed by the framework.
+> ルートまたはコントローラから PSR-7 レスポンスインスタンスを返すと、自動的に Laravel レスポンスインスタンスに変換され、フレームワークによって表示されます。
 
 <a name="input"></a>
-## Input
+## 入力
 
 <a name="retrieving-input"></a>
-### Retrieving Input
+### 入力の取得
 
-<a name="retrieving-all-input-data"></a>
-#### Retrieving All Input Data
+<a name="retrieving-input"></a>
+#### 全入力データの取得
 
-You may retrieve all of the incoming request's input data as an `array` using the `all` method. This method may be used regardless of whether the incoming request is from an HTML form or is an XHR request:
+`all` メソッドを使用すると、受信リクエストのすべての入力データを `array` として取得できます。このメソッドは、受信リクエストが HTML フォームからのものであるか、XHR リクエストであるかに関係なく使用できます。
 
     $input = $request->all();
 
-Using the `collect` method, you may retrieve all of the incoming request's input data as a [collection](/docs/{{version}}/collections):
+`collect` メソッドを使用すると、受信リクエストのすべての入力データを [コレクション](/docs/{{version}}/collections) として取得できます。
 
     $input = $request->collect();
 
-The `collect` method also allows you to retrieve a subset of the incoming request's input as a collection:
+加えて `collect` は受信リクエストの入力のサブセットをコレクションとして取得することもできます。
 
     $request->collect('users')->each(function (string $user) {
         // ...
     });
 
 <a name="retrieving-an-input-value"></a>
-#### Retrieving An Input Value
+#### 入力値の取得
 
-Using a few simple methods, you may access all of the user input from your `Illuminate\Http\Request` instance without worrying about which HTTP verb was used for the request. Regardless of the HTTP verb, the `input` method may be used to retrieve user input:
+いくつかの簡単な方法を使用すると、リクエストにどの HTTP 動詞が使用されたかを気にすることなく、`Illuminate\Http\Request` インスタンスからのすべてのユーザー入力にアクセスできます。HTTP 動詞に関係なく、`input` メソッドを使用してユーザー入力を取得できます。
 
     $name = $request->input('name');
 
-You may pass a default value as the second argument to the `input` method. This value will be returned if the requested input value is not present on the request:
+`input` メソッドの 2 番目の引数にデフォルト値を渡すことができます。１番目に指定した入力値がリクエストに存在しない場合、この値が返されます。
 
     $name = $request->input('name', 'Sally');
 
-When working with forms that contain array inputs, use "dot" notation to access the arrays:
+配列入力を含むフォームを操作する場合は、「ドット」表記を使用して配列にアクセスします。
 
     $name = $request->input('products.0.name');
 
     $names = $request->input('products.*.name');
 
-You may call the `input` method without any arguments in order to retrieve all of the input values as an associative array:
+すべての入力値を連想配列として取得するには、引数なしで `input` メソッドを呼び出す方法があります。
 
     $input = $request->input();
 
 <a name="retrieving-input-from-the-query-string"></a>
-#### Retrieving Input From The Query String
+#### クエリ文字列から入力を取得
 
-While the `input` method retrieves values from the entire request payload (including the query string), the `query` method will only retrieve values from the query string:
+`input` メソッドはリクエストペイロード全体 (クエリ文字列を含む) から値を取得しますが、`query` メソッドはクエリ文字列からのみ値を取得します。
 
     $name = $request->query('name');
 
-If the requested query string value data is not present, the second argument to this method will be returned:
+指定したクエリ文字列の値データが存在しない場合、このメソッドの 2 番目の引数が返されます。
 
     $name = $request->query('name', 'Helen');
 
-You may call the `query` method without any arguments in order to retrieve all of the query string values as an associative array:
+すべてのクエリ文字列の値を連想配列として取得するには、引数なしで `query` メソッドを呼び出すことができます。
 
     $query = $request->query();
 
