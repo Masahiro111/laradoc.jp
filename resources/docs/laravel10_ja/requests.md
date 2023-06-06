@@ -285,30 +285,30 @@ composer require nyholm/psr7
     $query = $request->query();
 
 <a name="retrieving-json-input-values"></a>
-#### Retrieving JSON Input Values
+#### JSON 入力値の取得
 
-When sending JSON requests to your application, you may access the JSON data via the `input` method as long as the `Content-Type` header of the request is properly set to `application/json`. You may even use "dot" syntax to retrieve values that are nested within JSON arrays / objects:
+JSON リクエストをアプリケーションに送信する際は、リクエストの `Content-Type` ヘッダが `application/json` に適切に設定されている限り、`input` メソッド経由で JSON データにアクセスできます。「ドット」構文を使用して、JSON 配列 / オブジェクト内にネストされた値を取得することもできます。
 
     $name = $request->input('user.name');
 
 <a name="retrieving-stringable-input-values"></a>
-#### Retrieving Stringable Input Values
+#### Stringable 入力値の取得
 
-Instead of retrieving the request's input data as a primitive `string`, you may use the `string` method to retrieve the request data as an instance of [`Illuminate\Support\Stringable`](/docs/{{version}}/helpers#fluent-strings):
+リクエストの入力データをプリミティブな `string` として取得する代わりに、`string` メソッドを使用してリクエスト データを [`Illuminate\Support\Stringable`](/docs/{{version}}/helpers#fluent-strings) のインスタンスとして取得することもできます。
 
     $name = $request->string('name')->trim();
 
 <a name="retrieving-boolean-input-values"></a>
-#### Retrieving Boolean Input Values
+#### 論理入力値の取得
 
-When dealing with HTML elements like checkboxes, your application may receive "truthy" values that are actually strings. For example, "true" or "on". For convenience, you may use the `boolean` method to retrieve these values as booleans. The `boolean` method returns `true` for 1, "1", true, "true", "on", and "yes". All other values will return `false`:
+チェックボックスなどの HTML 要素を処理する場合、アプリケーションは文字列である「真」の値を受け取ることがあります。たとえば 「true」または「on」です。 便宜上、`boolean` メソッドを使用してこれらの値をブール値として取得できます。`boolean` メソッドは、1、"1"、true、"true"、"on"、"yes" の場合は `true` を返します。他のすべての値は `false` を返します。
 
     $archived = $request->boolean('archived');
 
 <a name="retrieving-date-input-values"></a>
-#### Retrieving Date Input Values
+#### 日付入力値の取得
 
-For convenience, input values containing dates / times may be retrieved as Carbon instances using the `date` method. If the request does not contain an input value with the given name, `null` will be returned:
+便宜上、日付や時刻を含む入力値は、`date` メソッドを使用して Carbon インスタンスとして取得できます。リクエストに指定された名前の入力値が含まれていない場合は、`null` が返されます。
 
     $birthday = $request->date('birthday');
 
