@@ -374,7 +374,7 @@ JSON リクエストをアプリケーションに送信する際は、リクエ
         // ...
     });
 
-A second closure may be passed to the `whenHas` method that will be executed if the specified value is not present on the request:
+加えて `whenHas` メソッドには、指定された値がリクエストに存在しない場合に実行される処理を２番目のクロージャとして渡すことができます。
 
     $request->whenHas('name', function (string $input) {
         // The "name" value is present...
@@ -382,7 +382,7 @@ A second closure may be passed to the `whenHas` method that will be executed if 
         // The "name" value is not present...
     });
 
-The `hasAny` method returns `true` if any of the specified values are present:
+指定した値のいずれかが存在する場合、`hasAny` メソッドは `true` を返します。
 
     if ($request->hasAny(['name', 'email'])) {
         // ...
