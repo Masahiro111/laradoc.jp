@@ -312,34 +312,35 @@ JSON リクエストをアプリケーションに送信する際は、リクエ
 
     $birthday = $request->date('birthday');
 
-The second and third arguments accepted by the `date` method may be used to specify the date's format and timezone, respectively:
+`date` メソッドで受け取る２
+番目と３番目の引数は、それぞれ日付の形式とタイムゾーンを指定するために使用できます。
 
     $elapsed = $request->date('elapsed', '!H:i', 'Europe/Madrid');
 
-If the input value is present but has an invalid format, an `InvalidArgumentException` will be thrown; therefore, it is recommended that you validate the input before invoking the `date` method.
+入力値が存在しても無効な形式の場合、`InvalidArgumentException` がスローされます。 したがって、`date` メソッドを呼び出す前に入力値を検証することをお勧めします。
 
 <a name="retrieving-enum-input-values"></a>
-#### Retrieving Enum Input Values
+#### 列挙型（Enum）入力値の取得
 
-Input values that correspond to [PHP enums](https://www.php.net/manual/en/language.types.enumerations.php) may also be retrieved from the request. If the request does not contain an input value with the given name or the enum does not have a backing value that matches the input value, `null` will be returned. The `enum` method accepts the name of the input value and the enum class as its first and second arguments:
+[PHP enums](https://www.php.net/manual/en/language.types.enumerations.php) に対応する入力値もリクエストから取得できます。リクエストに指定した名前の入力値が含まれていない場合、または列挙型に入力値と一致するバッキング値がない場合は、`null` が返されます。`enum` メソッドは、入力値の名前と enum クラスを１番目と２番目の引数として受け取ります。
 
     use App\Enums\Status;
 
     $status = $request->enum('status', Status::class);
 
 <a name="retrieving-input-via-dynamic-properties"></a>
-#### Retrieving Input Via Dynamic Properties
+#### 動的プロパティを介した入力の取得
 
-You may also access user input using dynamic properties on the `Illuminate\Http\Request` instance. For example, if one of your application's forms contains a `name` field, you may access the value of the field like so:
+`Illuminate\Http\Request` インスタンスの動的プロパティを使用してユーザー入力にアクセスすることもできます。たとえば、アプリケーションのフォームの １つに `name` フィールドが含まれている場合、次のようにフィールドの値にアクセスできます。
 
     $name = $request->name;
 
-When using dynamic properties, Laravel will first look for the parameter's value in the request payload. If it is not present, Laravel will search for the field in the matched route's parameters.
+動的プロパティを使用する場合、Laravel は最初にリクエストペイロード内のパラメータの値を探します。存在しない場合、Laravel は一致したルートのパラメータ内のフィールドを検索します。
 
 <a name="retrieving-a-portion-of-the-input-data"></a>
-#### Retrieving A Portion Of The Input Data
+#### 入力データの一部の取得
 
-If you need to retrieve a subset of the input data, you may use the `only` and `except` methods. Both of these methods accept a single `array` or a dynamic list of arguments:
+入力データのサブセットを取得する必要がある場合は、`only` メソッドと `except` メソッドを使用できます。これらのメソッドは両方とも、単一の「配列」または引数の動的なリストを受け取ります。
 
     $input = $request->only(['username', 'password']);
 
@@ -350,24 +351,24 @@ If you need to retrieve a subset of the input data, you may use the `only` and `
     $input = $request->except('credit_card');
 
 > **Warning**  
-> The `only` method returns all of the key / value pairs that you request; however, it will not return key / value pairs that are not present on the request.
+> `only` メソッドは、指定したすべてのキーと値のペアを返します。ただし、リクエストに存在しないキーと値のペアは返されません。
 
 <a name="determining-if-input-is-present"></a>
-### Determining If Input Is Present
+### 入力値の存在を判定
 
-You may use the `has` method to determine if a value is present on the request. The `has` method returns `true` if the value is present on the request:
+`has` メソッドを使用して、リクエストに値が存在するかどうかを確認できます。値がリクエストに存在する場合、`has` メソッドは `true` を返します。
 
     if ($request->has('name')) {
         // ...
     }
 
-When given an array, the `has` method will determine if all of the specified values are present:
+`has` メソッドに配列を与え、その配列に指定された値がリクエストにすべて存在するかどうかを判定します。
 
     if ($request->has(['name', 'email'])) {
         // ...
     }
 
-The `whenHas` method will execute the given closure if a value is present on the request:
+リクエストに指定した値が存在する場合、`whenHas` メソッドは指定されたクロージャを実行します。
 
     $request->whenHas('name', function (string $input) {
         // ...
