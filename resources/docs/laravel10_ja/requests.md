@@ -388,19 +388,19 @@ JSON リクエストをアプリケーションに送信する際は、リクエ
         // ...
     }
 
-If you would like to determine if a value is present on the request and is not an empty string, you may use the `filled` method:
+値がリクエストに存在し、空の文字列でないかを確認したい場合は、`filled` メソッドを使用できます。
 
     if ($request->filled('name')) {
         // ...
     }
 
-The `whenFilled` method will execute the given closure if a value is present on the request and is not an empty string:
+`whenFilled` メソッドは、リクエストに値が存在し、空の文字列ではない場合に、指定されたクロージャを実行します。
 
     $request->whenFilled('name', function (string $input) {
         // ...
     });
 
-A second closure may be passed to the `whenFilled` method that will be executed if the specified value is not "filled":
+`whenFilled` メソッドには、指定された値が空だった場合に実行される２つ目のクロージャを設定することができます。
 
     $request->whenFilled('name', function (string $input) {
         // The "name" value is filled...
@@ -408,7 +408,7 @@ A second closure may be passed to the `whenFilled` method that will be executed 
         // The "name" value is not filled...
     });
 
-To determine if a given key is absent from the request, you may use the `missing` and `whenMissing` methods:
+指定されたキーがリクエストに存在しないかどうかを確認するには、`missing` メソッドと `whenMissing` メソッドを使用できます。
 
     if ($request->missing('name')) {
         // ...
