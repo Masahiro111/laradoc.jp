@@ -421,38 +421,38 @@ JSON リクエストをアプリケーションに送信する際は、リクエ
     });
 
 <a name="merging-additional-input"></a>
-### Merging Additional Input
+### 追加入力のマージ
 
-Sometimes you may need to manually merge additional input into the request's existing input data. To accomplish this, you may use the `merge` method. If a given input key already exists on the request, it will be overwritten by the data provided to the `merge` method:
+追加の入力をリクエストの既存の入力データに手動でマージするには `merge` メソッドを使用します。指定した入力キーがリクエストにすでに存在する場合は、`merge` メソッドに提供されたデータで上書きされます。
 
     $request->merge(['votes' => 0]);
 
-The `mergeIfMissing` method may be used to merge input into the request if the corresponding keys do not already exist within the request's input data:
+対応するキーがリクエストの入力データ内に存在しない場合に、`mergeIfMissing` メソッドを使用して入力をリクエストにマージできます。
 
     $request->mergeIfMissing(['votes' => 0]);
 
 <a name="old-input"></a>
-### Old Input
+### 直前の入力
 
-Laravel allows you to keep input from one request during the next request. This feature is particularly useful for re-populating forms after detecting validation errors. However, if you are using Laravel's included [validation features](/docs/{{version}}/validation), it is possible that you will not need to manually use these session input flashing methods directly, as some of Laravel's built-in validation facilities will call them automatically.
+現在のリクエストでの入力情報を、次のリクエストまで保持することができます。この機能は、バリデーションエラーを検出した後にフォームを再入力する場合に役立ちます。ただし、Laravel の [バリデーション機能](/docs/{{version}}/validation) を使用している場合は、Laravel の組み込みメソッドの一部のように、これらのセッション入力一時保存メソッドを手動で直接使用する必要がない可能性があります。バリデーション機能はそれらの一時保存機能を自動的に呼び出すからです。
 
 <a name="flashing-input-to-the-session"></a>
-#### Flashing Input To The Session
+#### 入力をセッションに一時保存
 
-The `flash` method on the `Illuminate\Http\Request` class will flash the current input to the [session](/docs/{{version}}/session) so that it is available during the user's next request to the application:
+`Illuminate\Http\Request` クラスの `flash` メソッドは、現在の入力を [セッション](/docs/{{version}}/session) に一時保存し、ユーザーがアプリケーションに対し、次回のリクエストをする際に利用できます。
 
     $request->flash();
 
-You may also use the `flashOnly` and `flashExcept` methods to flash a subset of the request data to the session. These methods are useful for keeping sensitive information such as passwords out of the session:
+`flashOnly` メソッドと `flashExcept` メソッドを使用して、リクエストデータのサブセットをセッションに一時保存することも可能です。これらの方法は、パスワードなどの機密情報をセッションから除外させるのに役立ちます。
 
     $request->flashOnly(['username', 'email']);
 
     $request->flashExcept('password');
 
 <a name="flashing-input-then-redirecting"></a>
-#### Flashing Input Then Redirecting
+#### 入力を一時保存してリダイレクト
 
-Since you often will want to flash input to the session and then redirect to the previous page, you may easily chain input flashing onto a redirect using the `withInput` method:
+入力情報をセッションへ一時保存して別ページにリダイレクトさせたい場合、`withInput` メソッドをリダイレクトインスタンスにチェーンさせて、入力の際の一時保存情報をリダイレクト先で簡単に受け取ることができます。
 
     return redirect('form')->withInput();
 
@@ -463,36 +463,36 @@ Since you often will want to flash input to the session and then redirect to the
     );
 
 <a name="retrieving-old-input"></a>
-#### Retrieving Old Input
+#### 直前の入力の取得
 
-To retrieve flashed input from the previous request, invoke the `old` method on an instance of `Illuminate\Http\Request`. The `old` method will pull the previously flashed input data from the [session](/docs/{{version}}/session):
+前のリクエストから一時保存された入力情報を取得するには、`Illuminate\Http\Request` インスタンスで `old` メソッドを呼び出します。`old` メソッドは、以前に一時保存された入力データを [セッション](/docs/{{version}}/session) から取得します。
 
     $username = $request->old('username');
 
-Laravel also provides a global `old` helper. If you are displaying old input within a [Blade template](/docs/{{version}}/blade), it is more convenient to use the `old` helper to repopulate the form. If no old input exists for the given field, `null` will be returned:
+Laravel はグローバルな `old` ヘルパも提供します。[Blade テンプレート](/docs/{{version}}/blade) 内で古い入力を表示する場合は、`old` ヘルパを使用してフォームに再入力する方が便利です。指定されたフィールドに古い入力が存在しない場合は、`null` が返されます。
 
     <input type="text" name="username" value="{{ old('username') }}">
 
 <a name="cookies"></a>
-### Cookies
+＃＃＃ クッキー
 
 <a name="retrieving-cookies-from-requests"></a>
-#### Retrieving Cookies From Requests
+#### リクエストからクッキーを取得
 
-All cookies created by the Laravel framework are encrypted and signed with an authentication code, meaning they will be considered invalid if they have been changed by the client. To retrieve a cookie value from the request, use the `cookie` method on an `Illuminate\Http\Request` instance:
+Laravel よって作成されたすべてのクッキーは暗号化され、認証コードで署名されます。つまり、クライアントによって変更された場合は無効とみなされます。リクエストからクッキー 値を取得するには、`Illuminate\Http\Request` インスタンスで `cookie` メソッドを使用します。
 
     $value = $request->cookie('name');
 
 <a name="input-trimming-and-normalization"></a>
-## Input Trimming & Normalization
+## 入力のトリミングと正規化
 
-By default, Laravel includes the `App\Http\Middleware\TrimStrings` and `Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull` middleware in your application's global middleware stack. These middleware are listed in the global middleware stack by the `App\Http\Kernel` class. These middleware will automatically trim all incoming string fields on the request, as well as convert any empty string fields to `null`. This allows you to not have to worry about these normalization concerns in your routes and controllers.
+Laravel にはアプリケーションのグローバルミドルウェアスタックに `App\Http\Middleware\TrimStrings` と `Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull` ミドルウェアが含まれています。これらのミドルウェアは、グローバルミドルウェアスタックの `App\Http\Kernel` クラスによって登録されています。これらのミドルウェアは、リクエストの受信文字列フィールドをすべて自動的にトリミングし、空の文字列フィールドを `null` に変換します。これにより、ルートとコントローラにおけるこれらの正規化の問題を心配する必要がなくなります。
 
-#### Disabling Input Normalization
+#### 入力の正規化の無効化
 
-If you would like to disable this behavior for all requests, you may remove the two middleware from your application's middleware stack by removing them from the `$middleware` property of your `App\Http\Kernel` class.
+すべてのリクエストで、上記にて説明した入力の正規化を無効にしたい場合は、`App\Http\Kernel` クラスの `$middleware` プロパティから２つのミドルウェアを削除することで、アプリケーションのミドルウェアスタックから削除できます。
 
-If you would like to disable string trimming and empty string conversion for a subset of requests to your application, you may use the `skipWhen` method offered by both middleware. This method accepts a closure which should return `true` or `false` to indicate if input normalization should be skipped. Typically, the `skipWhen` method should be invoked in the `boot` method of your application's `AppServiceProvider`.
+アプリケーションへのリクエストのサブセットに対して、文字列のトリミングと空の文字列の変換を無効にしたい場合は、両方のミドルウェアが提供する `skipWhen` メソッドを使用できます。このメソッドは、入力の正規化をスキップするかどうかを `true` または `false` を返すクロージャを受け取ります。通常、`skipWhen` メソッドは、アプリケーションの `AppServiceProvider` の `boot` メソッドで呼び出す必要があります。
 
 ```php
 use App\Http\Middleware\TrimStrings;
@@ -515,34 +515,34 @@ public function boot(): void
 ```
 
 <a name="files"></a>
-## Files
+## ファイル
 
 <a name="retrieving-uploaded-files"></a>
-### Retrieving Uploaded Files
+### アップロードしたファイルの取得
 
-You may retrieve uploaded files from an `Illuminate\Http\Request` instance using the `file` method or using dynamic properties. The `file` method returns an instance of the `Illuminate\Http\UploadedFile` class, which extends the PHP `SplFileInfo` class and provides a variety of methods for interacting with the file:
+`file` メソッド、または動的プロパティを使用して、`Illuminate\Http\Request` インスタンスからアップロードされたファイルを取得できます。`file` メソッドは、`Illuminate\Http\UploadedFile` クラスのインスタンスを返します。このクラスは、PHP の `SplFileInfo` クラスを拡張し、ファイルと対話するためのさまざまなメソッドを提供します。
 
     $file = $request->file('photo');
 
     $file = $request->photo;
 
-You may determine if a file is present on the request using the `hasFile` method:
+`hasFile` メソッドを使用して、リクエストにファイルが存在するかどうかを確認できます。
 
     if ($request->hasFile('photo')) {
         // ...
     }
 
 <a name="validating-successful-uploads"></a>
-#### Validating Successful Uploads
+#### 成功したアップロードのバリデーション
 
-In addition to checking if the file is present, you may verify that there were no problems uploading the file via the `isValid` method:
+ファイルが存在するかどうかを確認するだけでなく、`isValid` メソッドを使用してファイルのアップロードに問題がなかったことを確認することもできます。
 
     if ($request->file('photo')->isValid()) {
         // ...
     }
 
 <a name="file-paths-extensions"></a>
-#### File Paths & Extensions
+#### ファイルパスと拡張子
 
 The `UploadedFile` class also contains methods for accessing the file's fully-qualified path and its extension. The `extension` method will attempt to guess the file's extension based on its contents. This extension may be different from the extension that was supplied by the client:
 
