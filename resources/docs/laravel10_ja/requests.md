@@ -544,45 +544,45 @@ public function boot(): void
 <a name="file-paths-extensions"></a>
 #### ファイルパスと拡張子
 
-The `UploadedFile` class also contains methods for accessing the file's fully-qualified path and its extension. The `extension` method will attempt to guess the file's extension based on its contents. This extension may be different from the extension that was supplied by the client:
+`UploadedFile` クラスには、ファイルの完全修飾パスとその拡張子にアクセスするためのメソッドも含まれています。`extension` メソッドは、ファイルの内容に基づいてファイルの拡張子を推測しようとします。この拡張子は、クライアントによって提供された拡張子とは異なる場合があります。
 
     $path = $request->photo->path();
 
     $extension = $request->photo->extension();
 
 <a name="other-file-methods"></a>
-#### Other File Methods
+#### 他のファイルメソッド
 
-There are a variety of other methods available on `UploadedFile` instances. Check out the [API documentation for the class](https://github.com/symfony/symfony/blob/6.0/src/Symfony/Component/HttpFoundation/File/UploadedFile.php) for more information regarding these methods.
+`UploadedFile` インスタンスではさまざまなメソッドが利用できます。 これらのメソッドの詳細については、[クラスの API ドキュメント](https://github.com/symfony/symfony/blob/6.0/src/Symfony/Component/HttpFoundation/File/UploadedFile.php) を確認してください。
 
 <a name="storing-uploaded-files"></a>
-### Storing Uploaded Files
+### アップロードしたファイルの保存
 
-To store an uploaded file, you will typically use one of your configured [filesystems](/docs/{{version}}/filesystem). The `UploadedFile` class has a `store` method that will move an uploaded file to one of your disks, which may be a location on your local filesystem or a cloud storage location like Amazon S3.
+アップロードしたファイルを保存するには、通常、設定済みの [ファイルシステム](/docs/{{version}}/filesystem) の 1 つを使用します。`UploadedFile` クラスには、アップロードしたファイルをディスクの１つに移動する `store` メソッドがあります。ディスクは、ローカルファイルシステム上の場所または Amazon S3 などのクラウドストレージの場所である可能性があります。
 
-The `store` method accepts the path where the file should be stored relative to the filesystem's configured root directory. This path should not contain a filename, since a unique ID will automatically be generated to serve as the filename.
+`store` メソッドは、ファイルシステムの設定されたルート ディレクトリを基準にしてファイルを保存するパスを引数に取ります。ファイル名として機能する一意の ID が自動的に生成されるため、このパスにはファイル名を含めないでください。
 
-The `store` method also accepts an optional second argument for the name of the disk that should be used to store the file. The method will return the path of the file relative to the disk's root:
+`store` メソッドは、ファイルの保存に使用するディスクの名前をオプションとして第２引数に取ることができます。このメソッドは、ディスクのルートを基準としたファイルの相対パスを返します。
 
     $path = $request->photo->store('images');
 
     $path = $request->photo->store('images', 's3');
 
-If you do not want a filename to be automatically generated, you may use the `storeAs` method, which accepts the path, filename, and disk name as its arguments:
+ファイル名を自動的に生成したくない場合は、パス、ファイル名、ディスク名を引数として受け取る `storeAs` メソッドを使用できます。
 
     $path = $request->photo->storeAs('images', 'filename.jpg');
 
     $path = $request->photo->storeAs('images', 'filename.jpg', 's3');
 
 > **Note**  
-> For more information about file storage in Laravel, check out the complete [file storage documentation](/docs/{{version}}/filesystem).
+> Laravel のファイルストレージの詳細については、完全な [ファイルストレージドキュメント](/docs/{{version}}/filesystem) を確認してください。
 
 <a name="configuring-trusted-proxies"></a>
-## Configuring Trusted Proxies
+## 信頼できるプロキシの設定
 
-When running your applications behind a load balancer that terminates TLS / SSL certificates, you may notice your application sometimes does not generate HTTPS links when using the `url` helper. Typically this is because your application is being forwarded traffic from your load balancer on port 80 and does not know it should generate secure links.
+TLS / SSL 証明書を末端とするロードバランサの背後でアプリケーションを実行する場合、`url` ヘルパの使用時にアプリケーションが HTTPS リンクを生成しないことがあります。通常、これはアプリケーションがポート 80 上のロードバランサからトラフィックを転送されており、安全なリンクを生成する必要があることを認識していないことが理由です。
 
-To solve this, you may use the `App\Http\Middleware\TrustProxies` middleware that is included in your Laravel application, which allows you to quickly customize the load balancers or proxies that should be trusted by your application. Your trusted proxies should be listed as an array on the `$proxies` property of this middleware. In addition to configuring the trusted proxies, you may configure the proxy `$headers` that should be trusted:
+これを解決するには、`App\Http\Middleware\TrustProxies` ミドルウェアを使用します。これにより、アプリケーションが信頼するロードバランサまたはプロキシをすばやくカスタマイズできます。信頼するプロキシは、このミドルウェアの `$proxies` プロパティに配列として登録する必要があります。信頼できるプロキシの設定に加えて、信頼すべきプロキシ `$headers` を設定することもできます。
 
     <?php
 
@@ -612,12 +612,12 @@ To solve this, you may use the `App\Http\Middleware\TrustProxies` middleware tha
     }
 
 > **Note**  
-> If you are using AWS Elastic Load Balancing, your `$headers` value should be `Request::HEADER_X_FORWARDED_AWS_ELB`. For more information on the constants that may be used in the `$headers` property, check out Symfony's documentation on [trusting proxies](https://symfony.com/doc/current/deployment/proxies.html).
+> AWS Elastic Load Balancing を使用している場合、`$headers` の値は `Request::HEADER_X_FORWARDED_AWS_ELB` である必要があります。`$headers` プロパティで使用できる定数の詳細については、[信頼するプロキシ] に関する Symfony のドキュメント (https://symfony.com/doc/current/deployment/proxies.html) を参照してください。
 
 <a name="trusting-all-proxies"></a>
-#### Trusting All Proxies
+#### すべてのプロキシを信頼する
 
-If you are using Amazon AWS or another "cloud" load balancer provider, you may not know the IP addresses of your actual balancers. In this case, you may use `*` to trust all proxies:
+Amazon AWS または別の「クラウド」ロードバランサプロバイダを使用している場合は、実際のバランサの IP アドレスがわからない可能性があります。この場合、`*` を使用してすべてのプロキシを信頼します。
 
     /**
      * The trusted proxies for this application.
@@ -627,9 +627,9 @@ If you are using Amazon AWS or another "cloud" load balancer provider, you may n
     protected $proxies = '*';
 
 <a name="configuring-trusted-hosts"></a>
-## Configuring Trusted Hosts
+## 信頼するホストの設定
 
-By default, Laravel will respond to all requests it receives regardless of the content of the HTTP request's `Host` header. In addition, the `Host` header's value will be used when generating absolute URLs to your application during a web request.
+デフォルトでは、Laravel は HTTP リクエストの `Host` ヘッダの内容に関係なく、受信したすべてのリクエストに応答します。さらに、`Host` ヘッダの値は、Web リクエスト中にアプリケーションへの絶対 URL を生成するときに使用されます。
 
 Typically, you should configure your web server, such as Nginx or Apache, to only send requests to your application that match a given host name. However, if you do not have the ability to customize your web server directly and need to instruct Laravel to only respond to certain host names, you may do so by enabling the `App\Http\Middleware\TrustHosts` middleware for your application.
 
