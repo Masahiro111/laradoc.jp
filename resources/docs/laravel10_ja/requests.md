@@ -16,8 +16,8 @@
     - [クッキー](#cookies)
     - [入力のトリミングと正規化](#input-trimming-and-normalization)
 - [ファイル](#files)
-    - [アップロードされたファイルの取得](#retrieving-uploaded-files)
-    - [アップロードされたファイルの保存](#storing-uploaded-files)
+    - [アップロードしたファイルの取得](#retrieving-uploaded-files)
+    - [アップロードしたファイルの保存](#storing-uploaded-files)
 - [信頼するプロキシの設定](#cconfigured-trusted-proxies)
 - [信頼するホストの設定](#cconfigured-trusted-hosts)
 
@@ -631,9 +631,9 @@ Amazon AWS または別の「クラウド」ロードバランサプロバイダ
 
 デフォルトでは、Laravel は HTTP リクエストの `Host` ヘッダの内容に関係なく、受信したすべてのリクエストに応答します。さらに、`Host` ヘッダの値は、Web リクエスト中にアプリケーションへの絶対 URL を生成するときに使用されます。
 
-Typically, you should configure your web server, such as Nginx or Apache, to only send requests to your application that match a given host name. However, if you do not have the ability to customize your web server directly and need to instruct Laravel to only respond to certain host names, you may do so by enabling the `App\Http\Middleware\TrustHosts` middleware for your application.
+通常、指定されたホスト名に一致するリクエストのみをアプリケーションに送信するように、Nginx や Apache などの Web サーバーを設定する必要があります。ただし、Web サーバーを直接カスタマイズする機能がなく、特定のホスト名にのみ応答するように Laravel に指示する必要がある場合は、アプリケーションの `App\Http\Middleware\TrustHosts` ミドルウェアを有効にしましょう。
 
-The `TrustHosts` middleware is already included in the `$middleware` stack of your application; however, you should uncomment it so that it becomes active. Within this middleware's `hosts` method, you may specify the host names that your application should respond to. Incoming requests with other `Host` value headers will be rejected:
+`TrustHosts`ミドルウェアは、アプリケーションの `$middleware` スタックにすでに含まれています。ただし、アクティブになるようにコメントを解除する必要があります。このミドルウェアの `hosts` メソッド内で、アプリケーションが応答するホスト名を指定できます。他の `Host` の値ヘッダを持つ受信リクエストは拒否されます。
 
     /**
      * Get the host patterns that should be trusted.
@@ -648,4 +648,4 @@ The `TrustHosts` middleware is already included in the `$middleware` stack of yo
         ];
     }
 
-The `allSubdomainsOfApplicationUrl` helper method will return a regular expression matching all subdomains of your application's `app.url` configuration value. This helper method provides a convenient way to allow all of your application's subdomains when building an application that utilizes wildcard subdomains.
+`allSubdomainsOfApplicationUrl` ヘルパメソッドは、アプリケーションの `app.url` 設定値のすべてのサブドメインに一致する正規表現を返します。このヘルパメソッドは、ワイルドカードのサブドメインを使用するアプリケーションを構築するときに、アプリケーションのすべてのサブドメインを許可する便利な方法を提供します。
