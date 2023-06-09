@@ -1,20 +1,20 @@
-# HTTP Responses
+# HTTP レスポンス
 
-- [Creating Responses](#creating-responses)
-    - [Attaching Headers To Responses](#attaching-headers-to-responses)
-    - [Attaching Cookies To Responses](#attaching-cookies-to-responses)
-    - [Cookies & Encryption](#cookies-and-encryption)
-- [Redirects](#redirects)
-    - [Redirecting To Named Routes](#redirecting-named-routes)
-    - [Redirecting To Controller Actions](#redirecting-controller-actions)
-    - [Redirecting To External Domains](#redirecting-external-domains)
-    - [Redirecting With Flashed Session Data](#redirecting-with-flashed-session-data)
-- [Other Response Types](#other-response-types)
-    - [View Responses](#view-responses)
-    - [JSON Responses](#json-responses)
-    - [File Downloads](#file-downloads)
-    - [File Responses](#file-responses)
-- [Response Macros](#response-macros)
+- [レスポンスの作成](#creating-responses)
+    - [レスポンスにヘッダを付加](#attaching-headers-to-responses)
+    - [レスポンスにクッキーを付加](#attaching-cookies-to-responses)
+    - [クッキーと暗号化](#cookies-and-encryption)
+- [リダイレクト](#redirects)
+    - [名前付きルートへのリダイレクト](#redirecting-named-routes)
+    - [コントローラアクションへのリダイレクト](#redirecting-controller-actions)
+    - [外部ドメインへのリダイレクト](#redirecting-external-domains)
+    - [一時保存されたセッションデータによるリダイレクト](#redirecting-with-flashed-session-data)
+- [その他のレスポンスタイプ](#other-response-types)
+    - [View レスポンス](#view-responses)
+    - [JSON レスポンス](#json-responses)
+    - [File ダウンロード](#file-downloads)
+    - [File レスポンス](#file-responses)
+- [レスポンスマクロ](#response-macros)
 
 <a name="creating-responses"></a>
 ## Creating Responses
