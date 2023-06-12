@@ -28,14 +28,14 @@
         return 'Hello World';
     });
 
-In addition to returning strings from your routes and controllers, you may also return arrays. The framework will automatically convert the array into a JSON response:
+ルートやコントローラから文字列を返すだけでなく、配列も返すこともできます。フレームワークは配列を JSON レスポンスに自動的に変換します。
 
     Route::get('/', function () {
         return [1, 2, 3];
     });
 
 > **Note**  
-> Did you know you can also return [Eloquent collections](/docs/{{version}}/eloquent-collections) from your routes or controllers? They will automatically be converted to JSON. Give it a shot!
+> ルートまたはコントローラから [Eloquent collections](/docs/{{version}}/eloquent-collections) を返すこともできることをご存知ですか？これらは自動的に JSON に変換されます。試してみてくださいね！
 
 <a name="response-objects"></a>
 #### Response Objects
