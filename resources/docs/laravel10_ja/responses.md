@@ -17,12 +17,12 @@
 - [レスポンスマクロ](#response-macros)
 
 <a name="creating-responses"></a>
-## Creating Responses
+## レスポンスの作成
 
 <a name="strings-arrays"></a>
-#### Strings & Arrays
+#### 文字列と配列
 
-All routes and controllers should return a response to be sent back to the user's browser. Laravel provides several different ways to return responses. The most basic response is returning a string from a route or controller. The framework will automatically convert the string into a full HTTP response:
+すべてのルートとコントローラは、ユーザーのブラウザにレスポンスを送り返す必要があります。Laravel では、レスポンスを返す方法がいくつか提供されています。最も基本的なレスポンスは、ルートまたはコントローラから文字列を返すことです。フレームワークは、文字列を完全な HTTP レスポンスに自動的に変換します。
 
     Route::get('/', function () {
         return 'Hello World';
