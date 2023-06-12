@@ -38,11 +38,11 @@
 > ルートまたはコントローラから [Eloquent collections](/docs/{{version}}/eloquent-collections) を返すこともできることをご存知ですか？これらは自動的に JSON に変換されます。試してみてくださいね！
 
 <a name="response-objects"></a>
-#### Response Objects
+#### レスポンスオブジェクト
 
-Typically, you won't just be returning simple strings or arrays from your route actions. Instead, you will be returning full `Illuminate\Http\Response` instances or [views](/docs/{{version}}/views).
+通常、ルートアクションから単純な文字列や配列を返すだけではありません。たとえば、完全な `Illuminate\Http\Response` インスタンス、または [ビュー](/docs/{{version}}/views) を返したりもします。
 
-Returning a full `Response` instance allows you to customize the response's HTTP status code and headers. A `Response` instance inherits from the `Symfony\Component\HttpFoundation\Response` class, which provides a variety of methods for building HTTP responses:
+完全な `Response` インスタンスを返すと、レスポンスの HTTP ステータスコードとヘッダをカスタマイズできます。 `Response` インスタンスは、HTTP レスポンスを構築するためのさまざまなメソッドを提供する `Symfony\Component\HttpFoundation\Response` クラスを継承しています。
 
     Route::get('/home', function () {
         return response('Hello World', 200)
