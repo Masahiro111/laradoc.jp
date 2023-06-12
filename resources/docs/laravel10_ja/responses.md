@@ -50,9 +50,9 @@
     });
 
 <a name="eloquent-models-and-collections"></a>
-#### Eloquent Models & Collections
+#### Eloquent モデルとコレクション
 
-You may also return [Eloquent ORM](/docs/{{version}}/eloquent) models and collections directly from your routes and controllers. When you do, Laravel will automatically convert the models and collections to JSON responses while respecting the model's [hidden attributes](/docs/{{version}}/eloquent-serialization#hiding-attributes-from-json):
+[Eloquent ORM](/docs/{{version}}/eloquent) モデルとコレクションをルートとコントローラから直接返すこともできます。これを行うと、Laravel はモデルの [非表示属性](/docs/{{version}}/eloquent-serialization#hiding-attributes-from-json) を尊重しながら、モデルとコレクションを JSON レスポンスに自動変換します。
 
     use App\Models\User;
 
@@ -61,16 +61,16 @@ You may also return [Eloquent ORM](/docs/{{version}}/eloquent) models and collec
     });
 
 <a name="attaching-headers-to-responses"></a>
-### Attaching Headers To Responses
+### レスポンスにヘッダを付加
 
-Keep in mind that most response methods are chainable, allowing for the fluent construction of response instances. For example, you may use the `header` method to add a series of headers to the response before sending it back to the user:
+大体のレスポンスメソッドはチェーン可能であり、レスポンスインスタンスをスムーズに構築できます。たとえば、`header` メソッドを使用して、レスポンスをユーザーに送り返す前に一連のヘッダを追加することもできます。
 
     return response($content)
                 ->header('Content-Type', $type)
                 ->header('X-Header-One', 'Header Value')
                 ->header('X-Header-Two', 'Header Value');
 
-Or, you may use the `withHeaders` method to specify an array of headers to be added to the response:
+または、`withHeaders` メソッドを使用して、レスポンスに追加するヘッダの配列を指定することもできます。
 
     return response($content)
                 ->withHeaders([
@@ -80,9 +80,9 @@ Or, you may use the `withHeaders` method to specify an array of headers to be ad
                 ]);
 
 <a name="cache-control-middleware"></a>
-#### Cache Control Middleware
+#### キャッシュ制御ミドルウェア
 
-Laravel includes a `cache.headers` middleware, which may be used to quickly set the `Cache-Control` header for a group of routes. Directives should be provided using the "snake case" equivalent of the corresponding cache-control directive and should be separated by a semicolon. If `etag` is specified in the list of directives, an MD5 hash of the response content will automatically be set as the ETag identifier:
+Laravel には `cache.headers` ミドルウェアが含まれており、ルートグループに `Cache-Control` ヘッダをすばやく設定するために使用できます。ディレクティブは、対応する cache-control ディレクティブと同等の「スネーク ケース」を使用し、セミコロンで区切ってください。ディレクティブのリストに `etag` が指定されている場合、レスポンスコンテンツの MD5 ハッシュが ETag 識別子として自動的に設定されます。
 
     Route::middleware('cache.headers:public;max_age=2628000;etag')->group(function () {
         Route::get('/privacy', function () {
@@ -95,15 +95,15 @@ Laravel includes a `cache.headers` middleware, which may be used to quickly set 
     });
 
 <a name="attaching-cookies-to-responses"></a>
-### Attaching Cookies To Responses
+### レスポンスにクッキーを付加
 
-You may attach a cookie to an outgoing `Illuminate\Http\Response` instance using the `cookie` method. You should pass the name, value, and the number of minutes the cookie should be considered valid to this method:
+`cookie` メソッドを使用して、送信する `Illuminate\Http\Response` インスタンスにクッキーを付加できます。クッキーが有効であるとみなされる、名前、値、分数をこのメソッドに渡す必要があります。
 
     return response('Hello World')->cookie(
         'name', 'value', $minutes
     );
 
-The `cookie` method also accepts a few more arguments which are used less frequently. Generally, these arguments have the same purpose and meaning as the arguments that would be given to PHP's native [setcookie](https://secure.php.net/manual/en/function.setcookie.php) method:
+`cookie` メソッドは、使用頻度は低いですが、いくつかの引数も受け入れます。一般に、これらの引数は、PHP のネイティブ [setcookie](https://secure.php.net/manual/en/function.setcookie.php) メソッドに与える引数と同じ目的と意味を持っています。
 
     return response('Hello World')->cookie(
         'name', 'value', $minutes, $path, $domain, $secure, $httpOnly
