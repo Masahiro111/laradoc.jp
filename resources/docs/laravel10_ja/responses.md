@@ -109,16 +109,16 @@ Laravel には `cache.headers` ミドルウェアが含まれており、ルー�
         'name', 'value', $minutes, $path, $domain, $secure, $httpOnly
     );
 
-If you would like to ensure that a cookie is sent with the outgoing response but you do not yet have an instance of that response, you can use the `Cookie` facade to "queue" cookies for attachment to the response when it is sent. The `queue` method accepts the arguments needed to create a cookie instance. These cookies will be attached to the outgoing response before it is sent to the browser:
+送信レスポンスと一緒にクッキーを送信したくても、そのレスポンスのインスタンスがまだない場合は、`Cookie` ファサードを使用して、送信時にレスポンスに付加するクッキーを「キュー」に入れることができます。 `queue` メソッドは、クッキーインスタンスの作成に必要な引数を受け取ります。これらのクッキーは、送信レスポンスがブラウザに送信される前に付加されます。
 
     use Illuminate\Support\Facades\Cookie;
 
     Cookie::queue('name', 'value', $minutes);
 
 <a name="generating-cookie-instances"></a>
-#### Generating Cookie Instances
+#### クッキーインスタンスの生成
 
-If you would like to generate a `Symfony\Component\HttpFoundation\Cookie` instance that can be attached to a response instance at a later time, you may use the global `cookie` helper. This cookie will not be sent back to the client unless it is attached to a response instance:
+後でレスポンスインスタンスにアタッチできる `Symfony\Component\HttpFoundation\Cookie` インスタンスを生成したい場合は、グローバル `cookie` ヘルパを使用できます。このクッキーは、レスポンスインスタンスに付加されない限り、クライアントに返送されません。
 
     $cookie = cookie('name', 'value', $minutes);
 
