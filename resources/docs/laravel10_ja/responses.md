@@ -8,7 +8,7 @@
     - [名前付きルートへのリダイレクト](#redirecting-named-routes)
     - [コントローラアクションへのリダイレクト](#redirecting-controller-actions)
     - [外部ドメインへのリダイレクト](#redirecting-external-domains)
-    - [一時保存されたセッションデータによるリダイレクト](#redirecting-with-flashed-session-data)
+    - [一時保存したセッションデータを含むリダイレクト](#redirecting-with-flashed-session-data)
 - [その他のレスポンスタイプ](#other-response-types)
     - [View レスポンス](#view-responses)
     - [JSON レスポンス](#json-responses)
@@ -279,21 +279,21 @@ JSONP レスポンスを生成したい場合は、`json` メソッドを `withC
                 ->withCallback($request->input('callback'));
 
 <a name="file-downloads"></a>
-### File Downloads
+### File ダウンロード
 
-The `download` method may be used to generate a response that forces the user's browser to download the file at the given path. The `download` method accepts a filename as the second argument to the method, which will determine the filename that is seen by the user downloading the file. Finally, you may pass an array of HTTP headers as the third argument to the method:
+`download` メソッドは、ユーザーのブラウザに、指定したパスのファイルをダウンロードさせるレスポンスを生成します。 `download` メソッドは、メソッドの第２引数にファイル名を指定することができます。これにより、ファイルをダウンロードするユーザーに表示されるファイル名が決まります。最後に、HTTP ヘッダの配列を第３引数としてメソッドに渡すことができます。
 
     return response()->download($pathToFile);
 
     return response()->download($pathToFile, $name, $headers);
 
 > **Warning**  
-> Symfony HttpFoundation, which manages file downloads, requires the file being downloaded to have an ASCII filename.
+> ファイルのダウンロードを管理する Symfony HttpFoundation では、ダウンロードされるファイルに ASCII のファイル名が付いている必要があります。
 
 <a name="streamed-downloads"></a>
-#### Streamed Downloads
+#### ストリームダウンロード
 
-Sometimes you may wish to turn the string response of a given operation into a downloadable response without having to write the contents of the operation to disk. You may use the `streamDownload` method in this scenario. This method accepts a callback, filename, and an optional array of headers as its arguments:
+操作の内容をディスクに書き込むことなく、特定の操作の文字列レスポンスをダウンロード可能なレスポンスに変換したい場合があります。このシナリオでは `streamDownload` メソッドを使用します。このメソッドは、コールバック、ファイル名、およびオプションのヘッダ配列を引数として受け取ります。
 
     use App\Services\GitHub;
 
@@ -304,18 +304,18 @@ Sometimes you may wish to turn the string response of a given operation into a d
     }, 'laravel-readme.md');
 
 <a name="file-responses"></a>
-### File Responses
+### File レスポンス
 
-The `file` method may be used to display a file, such as an image or PDF, directly in the user's browser instead of initiating a download. This method accepts the path to the file as its first argument and an array of headers as its second argument:
+`file` メソッドは、ダウンロードをする代わりに、画像や PDF などのファイルをユーザーのブラウザに直接表示するために使用されます。このメソッドは、ファイルへのパスを第１引数に、ヘッダの配列を第２引数に指定します。
 
     return response()->file($pathToFile);
 
     return response()->file($pathToFile, $headers);
 
 <a name="response-macros"></a>
-## Response Macros
+## レスポンスマクロ
 
-If you would like to define a custom response that you can re-use in a variety of your routes and controllers, you may use the `macro` method on the `Response` facade. Typically, you should call this method from the `boot` method of one of your application's [service providers](/docs/{{version}}/providers), such as the `App\Providers\AppServiceProvider` service provider:
+さまざまなルートやコントローラで再利用できるカスタムレスポンスを定義したい場合は、`Response` ファサードで `macro` メソッドを使用します。通常、このメソッドは、`App\Providers\AppServiceProvider` サービスプロバイダなど、アプリケーションの [サービスプロバイダ](/docs/{{version}}/providers) の１つの `boot` メソッドから呼び出す必要があります。
 
     <?php
 
@@ -337,6 +337,6 @@ If you would like to define a custom response that you can re-use in a variety o
         }
     }
 
-The `macro` function accepts a name as its first argument and a closure as its second argument. The macro's closure will be executed when calling the macro name from a `ResponseFactory` implementation or the `response` helper:
+`macro` 関数は、第１引数に名前を入れ、第２引数にクロージャーを記述します。マクロのクロージャは、`ResponseFactory` 実装または `response` ヘルパからマクロ名を呼び出すときに実行されます。
 
     return response()->caps('foo');
