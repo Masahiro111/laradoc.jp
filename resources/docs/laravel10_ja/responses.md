@@ -254,25 +254,25 @@ Eloquent モデルの「ID」パラメータを、リダイレクト先のルー
 <a name="view-responses"></a>
 ### View レスポンス
 
-If you need control over the response's status and headers but also need to return a [view](/docs/{{version}}/views) as the response's content, you should use the `view` method:
+レスポンスのステータスやヘッダを制御しながら、レスポンスのコンテンツとして [ビュー](/docs/{{version}}/views) を返す必要がある場合は、`view` メソッドを使用します。
 
     return response()
                 ->view('hello', $data, 200)
                 ->header('Content-Type', $type);
 
-Of course, if you do not need to pass a custom HTTP status code or custom headers, you may use the global `view` helper function.
+もちろん、カスタム HTTP ステータスコードやカスタムヘッダを渡す必要がない場合は、グローバル `view` ヘルパ関数を使用できます。
 
 <a name="json-responses"></a>
-### JSON Responses
+### JSON レスポンス
 
-The `json` method will automatically set the `Content-Type` header to `application/json`, as well as convert the given array to JSON using the `json_encode` PHP function:
+`json` メソッドは、自動的に `Content-Type` ヘッダを `application/json` に設定し、`json_encode` PHP 関数を使用して指定された配列を JSON に変換します。
 
     return response()->json([
         'name' => 'Abigail',
         'state' => 'CA',
     ]);
 
-If you would like to create a JSONP response, you may use the `json` method in combination with the `withCallback` method:
+JSONP レスポンスを生成したい場合は、`json` メソッドを `withCallback` メソッドと組み合わせて使用してください。
 
     return response()
                 ->json(['name' => 'Abigail', 'state' => 'CA'])
