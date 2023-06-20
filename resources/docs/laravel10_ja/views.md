@@ -1,16 +1,16 @@
-# Views
+# ビュー
 
-- [Introduction](#introduction)
-    - [Writing Views In React / Vue](#writing-views-in-react-or-vue)
-- [Creating & Rendering Views](#creating-and-rendering-views)
-    - [Nested View Directories](#nested-view-directories)
-    - [Creating The First Available View](#creating-the-first-available-view)
-    - [Determining If A View Exists](#determining-if-a-view-exists)
-- [Passing Data To Views](#passing-data-to-views)
-    - [Sharing Data With All Views](#sharing-data-with-all-views)
-- [View Composers](#view-composers)
-    - [View Creators](#view-creators)
-- [Optimizing Views](#optimizing-views)
+- [はじめに](#introduction)
+    - [React / Vue でのビューの記述](#writing-views-in-react-or-vue)
+- [ビューの作成とレンダリング](#creating-and-rendering-views)
+    - [ネストしたビューディレクトリ](#nested-view-directories)
+    - [最初に利用できるビュー](#creating-the-first-available-view)
+    - [ビューの存在を判定](#determining-if-a-view-exists)
+- [ビューにデータを渡す](#passing-data-to-views)
+    - [すべてのビューでデータを共有](#sharing-data-with-all-views)
+- [ビューコンポーザ](#view-composers)
+    - [ビュークリエイタ](#view-creators)
+- [ビューの最適化](#optimizing-views)
 
 <a name="introduction"></a>
 ## Introduction
