@@ -17,7 +17,7 @@
 - ## 基本的な使い方
     - [ルーティング](/laravel10_ja/routing)
     - [ミドルウェア](/laravel10_ja/middleware)
-    - [CSRF保護](/laravel10_ja/csrf)
+    - [CSRF 保護](/laravel10_ja/csrf)
     - [コントローラ](/laravel10_ja/controllers)
     - [リクエスト](/laravel10_ja/requests)
     - [レスポンス](/laravel10_ja/responses)
