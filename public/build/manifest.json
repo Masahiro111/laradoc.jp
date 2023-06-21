@@ -1,8 +1,4 @@
 {
-  "resources/images/icons/document.svg": {
-    "file": "assets/document.f58c557d.svg",
-    "src": "resources/images/icons/document.svg"
-  },
   "resources/images/icons/react.svg": {
     "file": "assets/react.f2cadfd0.svg",
     "src": "resources/images/icons/react.svg"
@@ -10,6 +6,10 @@
   "resources/images/icons/vue.svg": {
     "file": "assets/vue.606c4449.svg",
     "src": "resources/images/icons/vue.svg"
+  },
+  "resources/images/icons/document.svg": {
+    "file": "assets/document.f58c557d.svg",
+    "src": "resources/images/icons/document.svg"
   },
   "resources/js/app.js": {
     "file": "assets/app.283046a2.js",
