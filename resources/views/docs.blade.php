@@ -35,7 +35,7 @@
                 id="header"
                 class="lg:hidden"
                 @keydown.window.escape="navIsOpen = false"
-                @click.away="navIsOpen = false">
+                @click.outside="navIsOpen = false">
             <div class="relative w-full py-10 mx-auto transition duration-200 bg-white dark:bg-dark-700">
                 <div class="flex items-center justify-between px-8 mx-auto sm:px-16">
                     <a href="/" class="flex items-center">
