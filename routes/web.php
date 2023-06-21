@@ -14,22 +14,38 @@ use Illuminate\Support\Facades\View;
 |
 */
 
-Route::redirect('/installation', '/inertia/installation');
-Route::redirect('/creating-chirps', '/inertia/creating-chirps');
-Route::redirect('/showing-chirps', '/inertia/showing-chirps');
-Route::redirect('/editing-chirps', '/inertia/editing-chirps');
-Route::redirect('/deleting-chirps', '/inertia/deleting-chirps');
-Route::redirect('/notifications-and-events', '/inertia/notifications-and-events');
+// Route::redirect('/installation', '/inertia/installation');
+// Route::redirect('/creating-chirps', '/inertia/creating-chirps');
+// Route::redirect('/showing-chirps', '/inertia/showing-chirps');
+// Route::redirect('/editing-chirps', '/inertia/editing-chirps');
+// Route::redirect('/deleting-chirps', '/inertia/deleting-chirps');
+// Route::redirect('/notifications-and-events', '/inertia/notifications-and-events');
+
+
+Route::redirect('/laravel10_ja', '/laravel10_ja/installation');
+
+Route::get('/', function () {
+
+    return redirect('/laravel10_ja');
+
+    // return view('docs', [
+    //     'page' => 'installation',
+    // ]);
+});
 
 Route::get('/{page?}', function (string $page = 'installation') {
 
     if (View::exists($page)) {
-        return view('docs', ['page' => $page]);
+        return view('docs', [
+            'page' => $page
+        ]);
     }
 
     $fallback = preg_replace('/^(inertia|blade)\//', '', $page);
 
     abort_unless(View::exists($fallback), 404);
 
-    return view('docs', ['page' => $fallback]);
+    return view('docs', [
+        'page' => $fallback
+    ]);
 })->where('page', '[a-z0-9-_\/]+');
