@@ -36,7 +36,7 @@ Web アプリケーションを構築する際には、様々なツールやフ�
 
 私たちは、Laravel を「プログレッシブ」フレームワークと呼びたいと考えています。これは、Laravel があなたと共に成長することを意味します。もしあなたがウェブ開発の第一歩を踏み出したばかりなら、Laravel の膨大なドキュメント、ガイド、[ビデオチュートリアル](https://laracasts.com) のライブラリは、あなたが圧倒されることなくノウハウを学ぶのを助けてくれるでしょう。
 
-上級開発者であれば、Laravel は[依存性注入](/docs/laravel10_ja/container)、[ユニットテスト](/docs/laravel10_ja/testing)、[キュー](/docs/laravel10_ja/queues)、[リアルタイムイベント](/docs/laravel10_ja/broadcasting) など、強固なツールを提供しています。Laravelは、プロフェッショナルな Web アプリケーションを構築するために細かく調整されており、企業の作業負荷を処理する準備ができています。
+上級開発者であれば、Laravel は[依存性注入](/laravel10_ja/container)、[ユニットテスト](/laravel10_ja/testing)、[キュー](/laravel10_ja/queues)、[リアルタイムイベント](/laravel10_ja/broadcasting) など、強固なツールを提供しています。Laravelは、プロフェッショナルな Web アプリケーションを構築するために細かく調整されており、企業の作業負荷を処理する準備ができています。
 
 #### スケーラブルなフレームワーク
 
@@ -83,7 +83,7 @@ Artisan 開発サーバーを起動すると、アプリケーションは Web �
 <a name="laravel-and-docker"></a>
 ## Laravel & Docker
 
-あなたの好みのオペレーティングシステムに関係なく、Laravelをできるだけ簡単に始められるようにしたいと考えています。そのために、ローカルマシンでLaravelプロジェクトを開発し実行するための様々なオプションを提供しています。これらのオプションについては後で説明しますが、Laravelは、[Docker](https://www.docker.com)、[Sail](/docs/{{バージョン}}/sail)を提供したLaravelプロジェクトを実行するための組み込みソリューションを提供します。
+あなたの好みのオペレーティングシステムに関係なく、Laravelをできるだけ簡単に始められるようにしたいと考えています。そのために、ローカルマシンでLaravelプロジェクトを開発し実行するための様々なオプションを提供しています。これらのオプションについては後で説明しますが、Laravelは、[Docker](https://www.docker.com)、[Sail](/laravel10_ja/sail)を提供したLaravelプロジェクトを実行するための組み込みソリューションを提供します。
 
 Dockerは、アプリケーションやサービスを小さく軽量な「コンテナ」で実行するためのツールで、ローカルマシンのインストール済みソフトウェアや設定に干渉しません。つまり、ローカルマシンにWebサーバーやデータベースなどの複雑な開発ツールを設定したり、セットアップしたりする心配がありません。[Docker Desktop](https://www.docker.com/products/docker-desktop) を使えば、すぐに使い始めることができます。
 
@@ -119,8 +119,8 @@ Once the application's Docker containers have been started, you can access the a
 アプリケーションのDockerコンテナが起動したら、`http://localhost` に Web ブラウザでアプリケーションにアクセスできます。
 
 > **Note**  
-> To continue learning more about Laravel Sail, review its [complete documentation](/docs/{{version}}/sail).
-Laravel Sailの詳細については、その[完全なドキュメント](/docs/{{バージョン}}/sail)を参照してください。
+> To continue learning more about Laravel Sail, review its [complete documentation](/laravel10_ja/sail).
+Laravel Sailの詳細については、その[完全なドキュメント](/laravel10_ja/sail)を参照してください。
 
 <a name="getting-started-on-windows"></a>
 ### Windowsで始める
@@ -158,7 +158,7 @@ Once the application's Docker containers have been started, you can access the a
 アプリケーションのDockerコンテナが起動したら、ウェブブラウザでアプリケーションにアクセスできます: http://localhost.
 
 > **Note**  
-> Laravel Sailについてさらに学ぶには、その[完全なドキュメント](/docs/{{バージョン}}/sail)を確認してください。
+> Laravel Sailについてさらに学ぶには、その[完全なドキュメント](/laravel10_ja/sail)を確認してください。
 
 #### WSL2内で開発する
 
@@ -197,8 +197,8 @@ Once the application's Docker containers have been started, you can access the a
 アプリケーションのDockerコンテナが起動したら、ウェブブラウザでアプリケーションにアクセスできます: http://localhost.
 
 > **Note**  
-> To continue learning more about Laravel Sail, review its [complete documentation](/docs/{{version}}/sail).
-Laravel Sailについてさらに詳しく学ぶには、その[完全なドキュメント](/docs/{{バージョン}}/sail)を確認してください。
+> To continue learning more about Laravel Sail, review its [complete documentation](/laravel10_ja/sail).
+Laravel Sailについてさらに詳しく学ぶには、その[完全なドキュメント](/laravel10_ja/sail)を確認してください。
 
 <a name="choosing-your-sail-services"></a>
 ### Choosing Your Sail Services
@@ -214,8 +214,8 @@ curl -s "https://laravel.build/example-app?with=mysql,redis" | bash
 If you do not specify which services you would like configured, a default stack of `mysql`, `redis`, `meilisearch`, `mailpit`, and `selenium` will be configured.
 どのサービスを設定したいかを指定しない場合、`mysql`, `redis`, `meilisearch`, `mailpit`, `selenium` のデフォルトスタックが設定されます。
 
-You may instruct Sail to install a default [Devcontainer](/docs/{{version}}/sail#using-devcontainers) by adding the `devcontainer` parameter to the URL:
-URLに `devcontainer` パラメータを追加することで、デフォルトの [Devcontainer] (/docs/{{version}}/sail#using-devcontainers) をインストールするように Sail に指示することができます：
+You may instruct Sail to install a default [Devcontainer](/laravel10_ja/sail#using-devcontainers) by adding the `devcontainer` parameter to the URL:
+URLに `devcontainer` パラメータを追加することで、デフォルトの [Devcontainer](/laravel10_ja/sail#using-devcontainers) をインストールするように Sail に指示することができます：
 ```shell
 curl -s "https://laravel.build/example-app?with=mysql,redis&devcontainer" | bash
 ```
@@ -237,14 +237,14 @@ Laravel の設定オプションの多くは、アプリケーションがロー
 アプリケーションを使用する各開発者やサーバーは異なる環境構成を必要とする可能性があるため、`.env` ファイルはアプリケーションのソース管理にコミットしないでください。 さらに、侵入者がソース管理リポジトリへのアクセスを取得した場合、機密情報が漏洩してしまうためセキュリティリスクにもなります。
 
 > **Note**  
-> For more information about the `.env` file and environment based configuration, check out the full [configuration documentation](/docs/{{version}}/configuration#environment-configuration).
-.env`ファイルや環境ベースの設定についての詳細は、完全な[設定ドキュメント](/docs/{{バージョン}}/configuration#environment-configuration)を参照してください。
+> For more information about the `.env` file and environment based configuration, check out the full [configuration documentation](/laravel10_ja/configuration#environment-configuration).
+.env`ファイルや環境ベースの設定についての詳細は、完全な [設定ドキュメント](/laravel10_ja/configuration#environment-configuration) を参照してください。
 
 <a name="databases-and-migrations"></a>
 ### データベースとマイグレーション
 
 Now that you have created your Laravel application, you probably want to store some data in a database. By default, your application's `.env` configuration file specifies that Laravel will be interacting with a MySQL database and will access the database at `127.0.0.1`. If you are developing on macOS and need to install MySQL, Postgres, or Redis locally, you may find it convenient to utilize [DBngin](https://dbngin.com/).
-Laravelアプリケーションを作成した今、おそらくいくつかのデータをデータベースに保存したいと思うことでしょう。デフォルトでは、アプリケーションの`.env`設定ファイルは、LaravelがMySQLデータベースと対話し、`127.0.0.1`でデータベースにアクセスすることを指定します。macOSで開発しており、MySQL、Postgres、Redisをローカルにインストールする必要がある場合、[DBngin](https://dbngin.com/)を利用すると便利でしょう。
+Laravelアプリケーションを作成した今、おそらくいくつかのデータをデータベースに保存したいと思うことでしょう。デフォルトでは、アプリケーションの `.env` 設定ファイルは、LaravelがMySQLデータベースと対話し、`127.0.0.1`でデータベースにアクセスすることを指定します。macOSで開発しており、MySQL、Postgres、Redisをローカルにインストールする必要がある場合、[DBngin](https://dbngin.com/) を利用すると便利でしょう。
 
 
 If you do not want to install MySQL or Postgres on your local machine, you can always use a [SQLite](https://www.sqlite.org/index.html) database. SQLite is a small, fast, self-contained database engine. To get started, create a SQLite database by creating an empty SQLite file. Typically, this file will exist within the `database` directory of your Laravel application:
@@ -266,7 +266,7 @@ DB_USERNAME=root # [tl! remove]
 DB_PASSWORD= # [tl! remove]
 ```
 
-Once you have configured your SQLite database, you may run your application's [database migrations](/docs/{{version}}/migrations), which will create your application's database tables:
+Once you have configured your SQLite database, you may run your application's [database migrations](/laravel10_ja/migrations), which will create your application's database tables:
 次に、Laravelの`sqlite`データベースドライバーを使用するために、`.env`設定ファイルを更新します。他のデータベース設定オプションは削除してもかまいません：
 
 ```shell
@@ -281,12 +281,12 @@ Now that you have created your Laravel project, you may be wondering what to lea
 
 <div class="content-list" markdown="1">
 
-- [Request Lifecycle](/docs/{{version}}/lifecycle)
-- [Configuration](/docs/{{version}}/configuration)
-- [Directory Structure](/docs/{{version}}/structure)
-- [Frontend](/docs/{{version}}/frontend)
-- [Service Container](/docs/{{version}}/container)
-- [Facades](/docs/{{version}}/facades)
+- [Request Lifecycle](/laravel10_ja/lifecycle)
+- [Configuration](/laravel10_ja/configuration)
+- [Directory Structure](/laravel10_ja/structure)
+- [Frontend](/laravel10_ja/frontend)
+- [Service Container](/laravel10_ja/container)
+- [Facades](/laravel10_ja/facades)
 
 </div>
 
@@ -295,32 +295,32 @@ Laravelをどのように使いたいかで、次のステップも決まりま�
 
 > **Note**
 > New to Laravel? Check out the [Laravel Bootcamp](https://bootcamp.laravel.com) for a hands-on tour of the framework while we walk you through building your first Laravel application.
-Laravelは初めてですか？Laravel Bootcamp](https://bootcamp.laravel.com)をチェックして、最初のLaravelアプリケーションの構築を通して、フレームワークのハンズオンツアーを行っています。
+Laravelは初めてですか？[Laravel Bootcamp](https://bootcamp.laravel.com) をチェックして、最初のLaravelアプリケーションの構築を通して、フレームワークのハンズオンツアーを行っています。
 
 <a name="laravel-the-fullstack-framework"></a>
 ### Laravel フルスタックフレームワーク
 
-Laravel may serve as a full stack framework. By "full stack" framework we mean that you are going to use Laravel to route requests to your application and render your frontend via [Blade templates](/docs/{{version}}/blade) or a single-page application hybrid technology like [Inertia](https://inertiajs.com). This is the most common way to use the Laravel framework, and, in our opinion, the most productive way to use Laravel.
-Laravelはフルスタックフレームワークとして使用することができます。フルスタックフレームワークとは、Laravelを使用してアプリケーションへのリクエストをルーティングし、[Blade テンプレート](/docs/{{version}}/blade) や [Inertia](https://inertiajs.com) のようなシングルページアプリケーションハイブリッドテクノロジーを使用してフロントエンドをレンダリングする方法を指します。これは、Laravelフレームワークを使用する最も一般的な方法であり、私たちの意見では、Laravel を使用する上で最も生産的な方法です。
+Laravel may serve as a full stack framework. By "full stack" framework we mean that you are going to use Laravel to route requests to your application and render your frontend via [Blade templates](/laravel10_ja/blade) or a single-page application hybrid technology like [Inertia](https://inertiajs.com). This is the most common way to use the Laravel framework, and, in our opinion, the most productive way to use Laravel.
+Laravelはフルスタックフレームワークとして使用することができます。フルスタックフレームワークとは、Laravelを使用してアプリケーションへのリクエストをルーティングし、[Blade テンプレート](/laravel10_ja/blade) や [Inertia](https://inertiajs.com) のようなシングルページアプリケーションハイブリッドテクノロジーを使用してフロントエンドをレンダリングする方法を指します。これは、Laravelフレームワークを使用する最も一般的な方法であり、私たちの意見では、Laravel を使用する上で最も生産的な方法です。
 
-If this is how you plan to use Laravel, you may want to check out our documentation on [frontend development](/docs/{{version}}/frontend), [routing](/docs/{{version}}/routing), [views](/docs/{{version}}/views), or the [Eloquent ORM](/docs/{{version}}/eloquent). In addition, you might be interested in learning about community packages like [Livewire](https://laravel-livewire.com) and [Inertia](https://inertiajs.com). These packages allow you to use Laravel as a full-stack framework while enjoying many of the UI benefits provided by single-page JavaScript applications.
-Laravel をこのように使用する場合、[フロントエンド開発](/docs/{version}/frontend)、[ルーティング](/docs/{version}/routing)、[ビュー](/docs/{version}/views)、[エロージェント ORM](/docs/{version}/eloquent) などに関するドキュメントを参照することをお勧めします。また、[Livewire](https://laravel-livewire.com)や[Inertia](https://inertiajs.com)のようなコミュニティパッケージの学習にも興味を持つかもしれません。これらのパッケージを使用することで、シングルページJavaScriptアプリケーションが提供する多くのUIの利点を享受しながら、Laravelをフルスタックフレームワークとして使用することができます。
+If this is how you plan to use Laravel, you may want to check out our documentation on [frontend development](/laravel10_ja/frontend), [routing](/laravel10_ja/routing), [views](/laravel10_ja/views), or the [Eloquent ORM](/laravel10_ja/eloquent). In addition, you might be interested in learning about community packages like [Livewire](https://laravel-livewire.com) and [Inertia](https://inertiajs.com). These packages allow you to use Laravel as a full-stack framework while enjoying many of the UI benefits provided by single-page JavaScript applications.
+Laravel をこのように使用する場合、[フロントエンド開発](/laravel10_ja//frontend)、[ルーティング](/laravel10_ja//routing)、[ビュー](/laravel10_ja//views)、[エロージェント ORM](/laravel10_ja//eloquent) などに関するドキュメントを参照することをお勧めします。また、[Livewire](https://laravel-livewire.com) や [Inertia](https://inertiajs.com) のようなコミュニティパッケージの学習にも興味を持つかもしれません。これらのパッケージを使用することで、シングルページ JavaScript アプリケーションが提供する多くの UI の利点を享受しながら、Laravel をフルスタックフレームワークとして使用することができます。
 
-If you are using Laravel as a full stack framework, we also strongly encourage you to learn how to compile your application's CSS and JavaScript using [Vite](/docs/{{version}}/vite).
-Laravelをフルスタックフレームワークとして使用する場合、[Vite](/docs/{{version}}/vite)を使用してアプリケーションのCSSとJavaScriptをコンパイルする方法を学ぶことも強くお勧めします。
+If you are using Laravel as a full stack framework, we also strongly encourage you to learn how to compile your application's CSS and JavaScript using [Vite](/laravel10_ja/vite).
+Laravelをフルスタックフレームワークとして使用する場合、[Vite](/laravel10_ja/vite)を使用してアプリケーションのCSSとJavaScriptをコンパイルする方法を学ぶことも強くお勧めします。
 
 > **Note**  
-> If you want to get a head start building your application, check out one of our official [application starter kits](/docs/{{version}}/starter-kits).
-アプリケーションの構築を先取りしたい場合は、公式の[アプリケーションスターターキット](/docs/{{version}}/starter-kits)をチェックしてみてください。
+> If you want to get a head start building your application, check out one of our official [application starter kits](/laravel10_ja/starter-kits).
+アプリケーションの構築を先取りしたい場合は、公式の[アプリケーションスターターキット](/laravel10_ja/starter-kits)をチェックしてみてください。
 
 <a name="laravel-the-api-backend"></a>
 ### Laravel API バックエンド
 
-Laravel may also serve as an API backend to a JavaScript single-page application or mobile application. For example, you might use Laravel as an API backend for your [Next.js](https://nextjs.org) application. In this context, you may use Laravel to provide [authentication](/docs/{{version}}/sanctum) and data storage / retrieval for your application, while also taking advantage of Laravel's powerful services such as queues, emails, notifications, and more.
-Laravelは、JavaScriptのシングルページアプリケーションやモバイルアプリケーションのAPIバックエンドとして機能することもあります。例えば、[Next.js](https://nextjs.org)アプリケーションのAPIバックエンドとしてLaravelを使用する場合があります。この文脈では、Laravelを使用して、アプリケーションの[認証](/docs/{{バージョン}}/sanctum)とデータの保存/検索を提供し、同時にキュー、メール、通知など、Laravelの強力なサービスを利用することもできます。
+Laravel may also serve as an API backend to a JavaScript single-page application or mobile application. For example, you might use Laravel as an API backend for your [Next.js](https://nextjs.org) application. In this context, you may use Laravel to provide [authentication](/laravel10_ja/sanctum) and data storage / retrieval for your application, while also taking advantage of Laravel's powerful services such as queues, emails, notifications, and more.
+Laravelは、JavaScriptのシングルページアプリケーションやモバイルアプリケーションのAPIバックエンドとして機能することもあります。例えば、[Next.js](https://nextjs.org)アプリケーションのAPIバックエンドとしてLaravelを使用する場合があります。この文脈では、Laravelを使用して、アプリケーションの[認証](/laravel10_ja/sanctum)とデータの保存/検索を提供し、同時にキュー、メール、通知など、Laravelの強力なサービスを利用することもできます。
 
-If this is how you plan to use Laravel, you may want to check out our documentation on [routing](/docs/{{version}}/routing), [Laravel Sanctum](/docs/{{version}}/sanctum), and the [Eloquent ORM](/docs/{{version}}/eloquent).
-このようにLaravelを使用する場合、[routing](/docs/{version}/routing)、[Laravel Sanctum](/docs/{{version}/sanctum), [Eloquent ORM](/docs/{version}/eloquent) に関するドキュメントをチェックするとよいでしょう。
+If this is how you plan to use Laravel, you may want to check out our documentation on [routing](/laravel10_ja/routing), [Laravel Sanctum](/laravel10_ja/sanctum), and the [Eloquent ORM](/laravel10_ja/eloquent).
+このようにLaravelを使用する場合、[routing](/laravel10_ja/routing)、[Laravel Sanctum](/laravel10_ja/sanctum), [Eloquent ORM](/laravel10_ja/eloquent) に関するドキュメントをチェックするとよいでしょう。
 
 > **Note**  
-> Laravel のバックエンドと Next.js のフロントエンドのスキャフォールディングを有利に開始する必要がありますか？Laravel Breeze は、[API スタック](/docs/{version}}/starter-kits#breeze-and-next) と [Next.js フロントエンド実装](https://github.com/laravel/breeze-next) を提供しているので、数分で始めることができます。
+> Laravel のバックエンドと Next.js のフロントエンドのスキャフォールディングを有利に開始する必要がありますか？Laravel Breeze は、[API スタック](/laravel10_ja/starter-kits#breeze-and-next) と [Next.js フロントエンド実装](https://github.com/laravel/breeze-next) を提供しているので、数分で始めることができます。

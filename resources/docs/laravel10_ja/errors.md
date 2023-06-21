@@ -33,17 +33,19 @@ All exceptions are handled by the `App\Exceptions\Handler` class. This class con
 
 For example, if you need to report different types of exceptions in different ways, you may use the `reportable` method to register a closure that should be executed when an exception of a given type needs to be reported. Laravel will deduce what type of exception the closure reports by examining the type-hint of the closure:
 
-    use App\Exceptions\InvalidOrderException;
+```php
+use App\Exceptions\InvalidOrderException;
 
-    /**
-     * Register the exception handling callbacks for the application.
-     */
-    public function register(): void
-    {
-        $this->reportable(function (InvalidOrderException $e) {
-            // ...
-        });
-    }
+/**
+    * Register the exception handling callbacks for the application.
+    */
+public function register(): void
+{
+    $this->reportable(function (InvalidOrderException $e) {
+        // ...
+    });
+}
+```
 
 When you register a custom exception reporting callback using the `reportable` method, Laravel will still log the exception using the default logging configuration for the application. If you wish to stop the propagation of the exception to the default logging stack, you may use the `stop` method when defining your reporting callback or return `false` from the callback:
 
