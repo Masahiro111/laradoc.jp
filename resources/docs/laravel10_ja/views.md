@@ -13,11 +13,11 @@
 - [ビューの最適化](#optimizing-views)
 
 <a name="introduction"></a>
-## Introduction
+## はじめに
 
-Of course, it's not practical to return entire HTML documents strings directly from your routes and controllers. Thankfully, views provide a convenient way to place all of our HTML in separate files.
+HTML 文書の文字列全体をルートやコントローラから直接返してしまうのは現実的ではありません。ビューでは、すべての HTML を別々のファイルとして配置できるような便利な方法を提供しています。
 
-Views separate your controller / application logic from your presentation logic and are stored in the `resources/views` directory. When using Laravel, view templates are usually written using the [Blade templating language](/docs/{{version}}/blade). A simple view might look something like this:
+ビューは、コントローラ / アプリケーションロジックをプレゼンテーションロジックから分離し、`resources/views` ディレクトリに保存されます。Laravel を使用する場合、ビューテンプレートは通常 [Blade テンプレート言語](/docs/{{version}}/blade) を使用して記述されます。単純なビューは次のようになります。
 
 ```blade
 <!-- View stored in resources/views/greeting.blade.php -->
