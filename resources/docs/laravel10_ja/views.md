@@ -29,19 +29,19 @@ HTML 文書の文字列全体をルートやコントローラから直接返し
 </html>
 ```
 
-Since this view is stored at `resources/views/greeting.blade.php`, we may return it using the global `view` helper like so:
+このビューは `resources/views/greeting.blade.php` に保存したら、次のようにグローバル `view` ヘルパを使用して結果を返します。
 
     Route::get('/', function () {
         return view('greeting', ['name' => 'James']);
     });
 
 > **Note**  
-> Looking for more information on how to write Blade templates? Check out the full [Blade documentation](/docs/{{version}}/blade) to get started.
+> Blade テンプレートの作成方法に関する詳細情報は [Blade ドキュメント](/docs/{{version}}/blade) を確認してください。
 
 <a name="writing-views-in-react-or-vue"></a>
-### Writing Views In React / Vue
+### React / Vue でのビューの作成
 
-Instead of writing their frontend templates in PHP via Blade, many developers have begun to prefer to write their templates using React or Vue. Laravel makes this painless thanks to [Inertia](https://inertiajs.com/), a library that makes it a cinch to tie your React / Vue frontend to your Laravel backend without the typical complexities of building an SPA.
+多くの開発者は、Blade を介して PHP でフロントエンドのテンプレートを作成する代わりに、React または Vue を使用してテンプレートを作成することを好み始めています。Laravel では、[Inertia](https://inertiajs.com/) のおかげで、これを簡単に行うことができます。これは、SPA の構築によくある複雑な作業を行わずに、React / Vue のフロントエンドを Laravel のバックエンドに簡単に接続できるようにするライブラリです。
 
 Our Breeze and Jetstream [starter kits](/docs/{{version}}/starter-kits) give you a great starting point for your next Laravel application powered by Inertia. In addition, the [Laravel Bootcamp](https://bootcamp.laravel.com) provides a full demonstration of building a Laravel application powered by Inertia, including examples in Vue and React.
 
