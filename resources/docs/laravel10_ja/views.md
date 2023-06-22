@@ -43,50 +43,50 @@ HTML 文書の文字列全体をルートやコントローラから直接返し
 
 多くの開発者は、Blade を介して PHP でフロントエンドのテンプレートを作成する代わりに、React または Vue を使用してテンプレートを作成することを好み始めています。Laravel では、[Inertia](https://inertiajs.com/) のおかげで、これを簡単に行うことができます。これは、SPA の構築によくある複雑な作業を行わずに、React / Vue のフロントエンドを Laravel のバックエンドに簡単に接続できるようにするライブラリです。
 
-Our Breeze and Jetstream [starter kits](/docs/{{version}}/starter-kits) give you a great starting point for your next Laravel application powered by Inertia. In addition, the [Laravel Bootcamp](https://bootcamp.laravel.com) provides a full demonstration of building a Laravel application powered by Inertia, including examples in Vue and React.
+Breeze と Jetstream の [スターターキット](/docs/{{version}}/starter-kits) は、Inertia を利用した次の Laravel アプリケーションの優れた出発点となります。さらに、[Laravel Bootcamp](https://bootcamp.laravel.com) では、Vue や React の例を含む、Inertia を利用した Laravel アプリケーションの構築に関する完全なデモンストレーションが提供されています。
 
 <a name="creating-and-rendering-views"></a>
-## Creating & Rendering Views
+## ビューの作成とレンダリング
 
-You may create a view by placing a file with the `.blade.php` extension in your application's `resources/views` directory. The `.blade.php` extension informs the framework that the file contains a [Blade template](/docs/{{version}}/blade). Blade templates contain HTML as well as Blade directives that allow you to easily echo values, create "if" statements, iterate over data, and more.
+アプリケーションの `resources/views` ディレクトリに `.blade.php` 拡張子を持つファイルを配置することで、ビューを作成できます。`.blade.php` 拡張子は、ファイルに [Blade テンプレート](/docs/{{version}}/blade) が含まれていることをフレームワークに通知します。Blade テンプレートには、HTML と Blade ディレクティブが含まれており、値のエコー、「if」文の作成、データの反復処理などを簡単に行うことができます。
 
-Once you have created a view, you may return it from one of your application's routes or controllers using the global `view` helper:
+ビューを作成したら、グローバル `view` ヘルパを使用して、アプリケーションのルートまたはコントローラからビューを返すことができます。
 
     Route::get('/', function () {
         return view('greeting', ['name' => 'James']);
     });
 
-Views may also be returned using the `View` facade:
+ビューは、`View` ファサードを使用して返すこともできます。
 
     use Illuminate\Support\Facades\View;
 
     return View::make('greeting', ['name' => 'James']);
 
-As you can see, the first argument passed to the `view` helper corresponds to the name of the view file in the `resources/views` directory. The second argument is an array of data that should be made available to the view. In this case, we are passing the `name` variable, which is displayed in the view using [Blade syntax](/docs/{{version}}/blade).
+ご覧のとおり、`view` ヘルパに渡される第１引数は、`resources/views` ディレクトリ内のビューファイルの名前に対応します。第２引数は、ビューで使用できるようにするデータの配列です。上記では、[Blade 構文](/docs/{{version}}/blade) を使用してビューに表示する、`name` 変数を渡しています。
 
 <a name="nested-view-directories"></a>
-### Nested View Directories
+### ネストされたビューのディレクトリ
 
-Views may also be nested within subdirectories of the `resources/views` directory. "Dot" notation may be used to reference nested views. For example, if your view is stored at `resources/views/admin/profile.blade.php`, you may return it from one of your application's routes / controllers like so:
+ビューは、`resources/views` ディレクトリのサブディレクトリ内にネストすることもできます。「ドット」表記は、ネストされたビューを参照するために使用できます。たとえば、ビューが `resources/views/admin/profile.blade.php` に保存されている場合、次のようにアプリケーションのルート / コントローラからビューを返すことができます。
 
     return view('admin.profile', $data);
 
 > **Warning**  
-> View directory names should not contain the `.` character.
+> ビューのディレクトリ名には `.` 文字を含めないでください。
 
 <a name="creating-the-first-available-view"></a>
-### Creating The First Available View
+### 最初に利用できるビュー
 
-Using the `View` facade's `first` method, you may create the first view that exists in a given array of views. This may be useful if your application or package allows views to be customized or overwritten:
+`View` ファサードの`first` メソッドを使用すると、指定されたビューの配列に存在する最初のビューを作成できます。これは、アプリケーションまたはパッケージでビューのカスタマイズまたは上書きが許可されている場合に便利です。
 
     use Illuminate\Support\Facades\View;
 
     return View::first(['custom.admin', 'admin'], $data);
 
 <a name="determining-if-a-view-exists"></a>
-### Determining If A View Exists
+### ビューの存在を判定
 
-If you need to determine if a view exists, you may use the `View` facade. The `exists` method will return `true` if the view exists:
+ビューの存在を確認する必要がある場合、`View` ファサードの `exists` メソッドを使用します。ビューが存在する場合は、`true` を返します。
 
     use Illuminate\Support\Facades\View;
 
