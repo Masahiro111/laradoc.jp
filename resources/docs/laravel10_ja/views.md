@@ -95,24 +95,24 @@ Breeze と Jetstream の [スターターキット](/docs/{{version}}/starter-ki
     }
 
 <a name="passing-data-to-views"></a>
-## Passing Data To Views
+## ビューにデータを渡す
 
-As you saw in the previous examples, you may pass an array of data to views to make that data available to the view:
+前の例で見たように、データの配列をビューに渡して、そのデータをビューで使用できるようにすることができます。
 
     return view('greetings', ['name' => 'Victoria']);
 
-When passing information in this manner, the data should be an array with key / value pairs. After providing data to a view, you can then access each value within your view using the data's keys, such as `<?php echo $name; ?>`.
+この方法で情報を渡す場合、データはキーと値のペアを含む配列である必要があります。ビューにデータを渡した後、`<?php echo $name; ?>` などのデータキーを使用して、ビュー内の各値にアクセスできます。
 
-As an alternative to passing a complete array of data to the `view` helper function, you may use the `with` method to add individual pieces of data to the view. The `with` method returns an instance of the view object so that you can continue chaining methods before returning the view:
+データの完全な配列を `view` ヘルパ関数に渡す代わりに、`with` メソッドを使用して個々のデータをビューに追加することもできます。`with` メソッドはビューオブジェクトのインスタンスを返すため、ビューを返す前にメソッドチェーンを続けることができます。
 
     return view('greeting')
                 ->with('name', 'Victoria')
                 ->with('occupation', 'Astronaut');
 
 <a name="sharing-data-with-all-views"></a>
-### Sharing Data With All Views
+### すべてのビューでデータを共有
 
-Occasionally, you may need to share data with all views that are rendered by your application. You may do so using the `View` facade's `share` method. Typically, you should place calls to the `share` method within a service provider's `boot` method. You are free to add them to the `App\Providers\AppServiceProvider` class or generate a separate service provider to house them:
+アプリケーションでレンダリングされる、すべてのビューとデータを共有したい場合は、`View` ファサードの `share` メソッドを使用します。通常、サービスプロバイダの `boot` メソッド内で `share` メソッドを呼び出します。これらを `App\Providers\AppServiceProvider` クラスに自由に追加するか、またはそれらを収容する別のサービスプロバイダを生成することもできます。
 
     <?php
 
@@ -140,13 +140,13 @@ Occasionally, you may need to share data with all views that are rendered by you
     }
 
 <a name="view-composers"></a>
-## View Composers
+## ビューコンポーザ
 
-View composers are callbacks or class methods that are called when a view is rendered. If you have data that you want to be bound to a view each time that view is rendered, a view composer can help you organize that logic into a single location. View composers may prove particularly useful if the same view is returned by multiple routes or controllers within your application and always needs a particular piece of data.
+ビューコンポーザは、ビューのレンダリング時に呼び出されるコールバック、またはクラスメソッドです。ビューがレンダリングされるたびに、ビューへ結合したいデータがある場合、ビューコンポーザを使用すると、そのロジックを１つの場所にまとめることが可能です。ビューコンポーザは、アプリケーション内の複数のルート、またはコントローラから同じビューが返され、常に特定のデータを必要とする場合に特に便利です。
 
-Typically, view composers will be registered within one of your application's [service providers](/docs/{{version}}/providers). In this example, we'll assume that we have created a new `App\Providers\ViewServiceProvider` to house this logic.
+通常、ビューコンポーザはアプリケーションの [サービスプロバイダ](/docs/{{version}}/providers) に登録します。この例では、このロジックを格納するために新しい `App\Providers\ViewServiceProvider` を作成したと仮定します。
 
-We'll use the `View` facade's `composer` method to register the view composer. Laravel does not include a default directory for class based view composers, so you are free to organize them however you wish. For example, you could create an `app/View/Composers` directory to house all of your application's view composers:
+`View` ファサードの `composer` メソッドを使用して、ビューコンポーザを登録します。Laravel にはクラスベースのビューコンポーザ用のデフォルトディレクトリが含まれていないため、必要に応じて自由に編成できます。たとえば、アプリケーションのすべてのビューコンポーザを格納する `app/View/Composers` ディレクトリを作成できます。
 
     <?php
 
