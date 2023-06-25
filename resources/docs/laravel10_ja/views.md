@@ -187,9 +187,9 @@ Breeze と Jetstream の [スターターキット](/docs/{{version}}/starter-ki
     }
 
 > **Warning**  
-> Remember, if you create a new service provider to contain your view composer registrations, you will need to add the service provider to the `providers` array in the `config/app.php` configuration file.
+> ビューコンポーザの登録するために新しいサービスプロバイダを作成する場合は、そのサービスプロバイダを `config/app.php` 設定ファイルの `providers` 配列に追加する必要があります。
 
-Now that we have registered the composer, the `compose` method of the `App\View\Composers\ProfileComposer` class will be executed each time the `profile` view is being rendered. Let's take a look at an example of the composer class:
+コンポーザーを登録したので、`profile` ビューがレンダリングされるたびに `App\View\Composers\ProfileComposer` クラスの `compose` メソッドが実行されます。コンポーザクラスの例を見てみましょう。
 
     <?php
 
@@ -216,12 +216,12 @@ Now that we have registered the composer, the `compose` method of the `App\View\
         }
     }
 
-As you can see, all view composers are resolved via the [service container](/docs/{{version}}/container), so you may type-hint any dependencies you need within a composer's constructor.
+ご覧のとおり、すべてのビューコンポーザは [サービスコンテナ](/docs/{{version}}/container) を介して依存性解決されるため、コンポーザのコンストラクタ内で必要な依存関係をタイプヒントで指定できます。
 
 <a name="attaching-a-composer-to-multiple-views"></a>
-#### Attaching A Composer To Multiple Views
+#### 複数のビューへのコンポーザ適用
 
-You may attach a view composer to multiple views at once by passing an array of views as the first argument to the `composer` method:
+ビューコンポーザを複数のビューに一度に適応したい場合、`composer` メソッドの第１引数にビューの配列を渡します。
 
     use App\Views\Composers\MultiComposer;
     use Illuminate\Support\Facades\View;
@@ -231,7 +231,7 @@ You may attach a view composer to multiple views at once by passing an array of 
         MultiComposer::class
     );
 
-The `composer` method also accepts the `*` character as a wildcard, allowing you to attach a composer to all views:
+すべてのビューにコンポーザを適応する場合、`composer` メソッドにワイルドカードとして `*` 文字を使用することができます。
 
     use Illuminate\Support\Facades;
     use Illuminate\View\View;
@@ -241,9 +241,9 @@ The `composer` method also accepts the `*` character as a wildcard, allowing you
     });
 
 <a name="view-creators"></a>
-### View Creators
+### ビュークリエイタ
 
-View "creators" are very similar to view composers; however, they are executed immediately after the view is instantiated instead of waiting until the view is about to render. To register a view creator, use the `creator` method:
+ビューの「クリエイタ」はビューのコンポーザと非常によく似ています。ビュークリエイタは、ビューがレンダリングされる直前まで待機するのではなく、ビューがインスタンス化された直後に実行されます。ビュービュークリエイタを登録するには、`creator` メソッドを使用します。
 
     use App\View\Creators\ProfileCreator;
     use Illuminate\Support\Facades\View;
@@ -251,17 +251,17 @@ View "creators" are very similar to view composers; however, they are executed i
     View::creator('profile', ProfileCreator::class);
 
 <a name="optimizing-views"></a>
-## Optimizing Views
+## ビューの最適化
 
-By default, Blade template views are compiled on demand. When a request is executed that renders a view, Laravel will determine if a compiled version of the view exists. If the file exists, Laravel will then determine if the uncompiled view has been modified more recently than the compiled view. If the compiled view either does not exist, or the uncompiled view has been modified, Laravel will recompile the view.
+デフォルトでは、Blade テンプレートビューはオンデマンドでコンパイルされます。ビューをレンダリングするリクエストが実行されると、Laravel はビューのコンパイル済みバージョンが存在するかどうかを判断します。ファイルが存在する場合、Laravel は、コンパイルされていないビューがコンパイルされたビューよりも最近に変更されたかどうかを判断します。コンパイル済みビューが存在しない、もしくは、未コンパイルのビューが変更されている場合、Laravel はビューを再コンパイルします。
 
-Compiling views during the request may have a small negative impact on performance, so Laravel provides the `view:cache` Artisan command to precompile all of the views utilized by your application. For increased performance, you may wish to run this command as part of your deployment process:
+リクエスト中にビューをコンパイルすると、パフォーマンスにわずかな悪影響を及ぼす可能性があるため、Laravel では、アプリケーションで使用されるすべてのビューをプリコンパイルするための `view:cache` Artisan コマンドが提供されています。パフォーマンスを向上させるために、展開プロセスの一部として次のコマンドを実行するとよいでしょう。
 
 ```shell
 php artisan view:cache
 ```
 
-You may use the `view:clear` command to clear the view cache:
+ビューキャッシュを削除するには、`view:clear` コマンドを使用してください。
 
 ```shell
 php artisan view:clear
