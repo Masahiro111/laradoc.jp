@@ -8,24 +8,31 @@
         <title>{{ isset($title) ? $title . ' - ' : null }}Laradoc.jp</title>
 
         <!-- Primary Meta Tags -->
-        <meta name="title" content="Laravel Bootcamp - Learn the PHP Framework for Web Artisans">
-        <meta name="description" content="Together let's walk through building and deploying a modern Laravel application from scratch.">
+        <meta name="title" content="Laradoc.jp - Laravel の非公式日本語訳サイト">
+        <meta name="description" content="Laravel の公式ドキュメントを基に日本語訳をしたサイト">
 
         <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://laradoc.jp/">
+        <meta property="og:title" content="Laradoc.jp - Laravel の非公式日本語訳サイト">
+        <meta property="og:description" content="Laravel の公式ドキュメントを基に日本語訳をしたサイト">
+        <meta property="og:image" content="https://bootcamp.laravel.com/img/og-image.jpg">
+        {{--
         <meta property="og:type" content="website">
         <meta property="og:url" content="https://bootcamp.laravel.com/">
         <meta property="og:title" content="Laravel Bootcamp - Learn the PHP Framework for Web Artisans">
         <meta property="og:description" content="Together let's walk through building and deploying a modern Laravel application from scratch.">
-        <meta property="og:image" content="https://bootcamp.laravel.com/img/og-image.jpg">
+        <meta property="og:image" content="https://bootcamp.laravel.com/img/og-image.jpg"> --}}
 
         <!-- Twitter -->
         <meta property="twitter:card" content="summary_large_image">
-        <meta property="twitter:url" content="https://bootcamp.laravel.com/">
-        <meta property="twitter:title" content="Laravel - Learn the PHP Framework for Web Artisans">
-        <meta property="twitter:description" content="Together let's walk through building and deploying a modern Laravel application from scratch.">
+        <meta property="twitter:url" content="https://laradoc.jp/">
+        <meta property="twitter:title" content="Laradoc.jp - Laravel の非公式日本語訳サイト">
+        <meta property="twitter:description" content="Laravel の公式ドキュメントを基に日本語訳をしたサイト">
         <meta property="twitter:image" content="https://bootcamp.laravel.com/img/og-image.jpg">
 
         <!-- Favicon -->
+        {{--
         <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
@@ -35,7 +42,7 @@
         <meta name="msapplication-TileColor" content="#ff2d20">
         <meta name="msapplication-config" content="/img/favicon/browserconfig.xml">
         <meta name="theme-color" content="#ffffff">
-        <meta name="color-scheme" content="light">
+        <meta name="color-scheme" content="light"> --}}
 
         <!-- Fonts -->
         <link rel="stylesheet" href="https://use.typekit.net/ins2wgm.css">
