@@ -15,7 +15,7 @@
                 <div class="px-4 overflow-x-hidden overflow-y-auto lg:overflow-hidden lg:px-8 xl:px-16">
                     <nav id="indexed-nav" class="hidden lg:block lg:mt-4">
                         <div class="docs_sidebar" style="font-family: 'Noto Sans JP', sans-serif;">
-                            @include('laravel10_ja/documentation')
+                            @include('laravel10/ja/documentation')
                         </div>
                     </nav>
                 </div>
@@ -91,7 +91,7 @@
                      x-transition:leave-start="opacity-100 scale-100"
                      x-transition:leave-end="opacity-0 -translate-y-8 scale-75">
                     <div class="relative p-8 bg-white docs_sidebar dark:bg-dark-600">
-                        @include('laravel10_ja/documentation')
+                        @include('laravel10/ja/documentation')
                     </div>
                 </nav>
             </div>

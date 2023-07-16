@@ -22,11 +22,11 @@ use Illuminate\Support\Facades\View;
 // Route::redirect('/notifications-and-events', '/inertia/notifications-and-events');
 
 
-Route::redirect('/laravel10_ja', '/laravel10_ja/installation');
+Route::redirect('/laravel10', '/laravel10/ja/installation');
 
 Route::get('/', function () {
 
-    return redirect('/laravel10_ja');
+    return redirect('/laravel10');
 
     // return view('docs', [
     //     'page' => 'installation',
