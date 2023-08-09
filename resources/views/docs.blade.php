@@ -39,8 +39,7 @@
             <div class="relative w-full py-10 mx-auto transition duration-200 bg-white dark:bg-dark-700">
                 <div class="flex items-center justify-between px-8 mx-auto sm:px-16">
                     <a href="/" class="flex items-center">
-                        <img class="" src="/img/logomark.min.svg" alt="Laravel">
-                        <span class="hidden ml-5 text-3xl font-medium text-red-500 sm:block">Bootcamp</span>
+                        <span class="text-3xl font-medium text-red-500 sm:block">Laradoc.jp</span>
                     </a>
                     <div class="flex items-center justify-end flex-1">
                         <button id="header__sun" onclick="toSystemMode()" title="Switch to system theme" class="relative w-10 h-10 text-gray-500 focus:outline-none focus:shadow-outline">
