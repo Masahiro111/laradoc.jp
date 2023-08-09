@@ -147,59 +147,65 @@
                             </div>
                             <script>
                                 // Set the active navigation state...
-                                    Array.from(document.querySelectorAll('#header a, #sidebar a')).forEach(link => {
-                                        if (link.hostname === location.hostname
-                                            && (link.pathname === location.pathname || (link.pathname === '/introduction' && location.pathname === '/'))
-                                        ) {
-                                            link.classList.add('active')
-                                            if (link.parentNode.tagName === 'LI') {
-                                                link.parentNode.parentNode.parentNode.classList.add('sub--on')
-                                            }
+                                // 
+                                // この部分では、ページのナビゲーションメニューやサイドバーのリンクに対して、
+                                // アクティブな状態を設定します。アクティブな状態とは、現在表示しているページに
+                                // 対応するリンクを視覚的に強調することを指します。
+                                Array.from(document.querySelectorAll('#header a, #sidebar a')).forEach(link => {
+                                    if (link.hostname === location.hostname
+                                        && (link.pathname === location.pathname || (link.pathname === '/introduction' && location.pathname === '/'))
+                                    ) {
+                                        link.classList.add('active')
+                                        if (link.parentNode.tagName === 'LI') {
+                                            link.parentNode.parentNode.parentNode.classList.add('sub--on')
                                         }
-                                    })
+                                    }
+                                })
 
-                                    // Make the navigation headings expandable...
-                                    Array.from(document.querySelectorAll('.docs_sidebar h2')).forEach(el => {
-                                        if (el.children.length > 1) {
-                                            return
-                                        }
-
-                                        el.addEventListener('click', (e) => {
-                                            const active = el.parentNode.classList.contains('sub--on');
-
-                                            [...document.querySelectorAll('.docs_sidebar ul li')].forEach(el => el.classList.remove('sub--on'));
-
-                                            if (! active) {
-                                                el.parentNode.classList.add('sub--on');
-                                            }
-                                        })
-                                    })
-
-                                    // Highlight the active section in the table of contents...
-                                    function setActiveTableOfContents () {
-                                        const links = Array.from(document.querySelectorAll('.table-of-contents a'))
-                                        const lastVisible = links
-                                            .slice()
-                                            .reverse()
-                                            .find(link => {
-                                                const el = document.querySelector(link.hash)
-
-                                                return el.getBoundingClientRect().top <= 56;
-                                            }) ?? links[0]
-
-                                        links.forEach(link => {
-                                            if (link === lastVisible) {
-                                                link.classList.add('active')
-                                            } else {
-                                                link.classList.remove('active')
-                                            }
-                                        })
+                                // Make the navigation headings expandable...
+                                // 
+                                // ページのナビゲーションメニューの見出し（<h2>要素）をクリックすることで、
+                                // その見出しに対応するサブメニューが展開・折りたたみ可能になるようにします。
+                                Array.from(document.querySelectorAll('.docs_sidebar h2')).forEach(el => {
+                                    if (el.children.length > 1) {
+                                        return
                                     }
 
-                                    setActiveTableOfContents()
-                                    window.addEventListener('scroll', setActiveTableOfContents, { passive: true })
+                                    el.addEventListener('click', (e) => {
+                                        const active = el.parentNode.classList.contains('sub--on');
+
+                                        [...document.querySelectorAll('.docs_sidebar ul li')].forEach(el => el.classList.remove('sub--on'));
+
+                                        if (! active) {
+                                            el.parentNode.classList.add('sub--on');
+                                        }
+                                    })
+                                })
+
+                                // Highlight the active section in the table of contents...
+                                function setActiveTableOfContents () {
+                                    const links = Array.from(document.querySelectorAll('.table-of-contents a'))
+                                    const lastVisible = links
+                                        .slice()
+                                        .reverse()
+                                        .find(link => {
+                                            const el = document.querySelector(link.hash)
+
+                                            return el.getBoundingClientRect().top <= 56;
+                                        }) ?? links[0]
+
+                                    links.forEach(link => {
+                                        if (link === lastVisible) {
+                                            link.classList.add('active')
+                                        } else {
+                                            link.classList.remove('active')
+                                        }
+                                    })
+                                }
+
+                                setActiveTableOfContents()
+                                window.addEventListener('scroll', setActiveTableOfContents, { passive: true })
                             </script>
-                            {{-- <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CKYILK3E&placement=laravelcom" id="_carbonads_js"></script> --}}
                         </x-accessibility.main-content-wrapper>
                     </section>
                 </section>
@@ -216,7 +222,6 @@
             </div>
             <div class="mt-6 sm:mt-12">
                 <p class="max-w-sm text-xs text-gray-700 sm:text-sm dark:text-gray-500">
-                    {{-- Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in most web projects. --}}
                     Laravel は、表現力豊かで洗練された構文を備えた Web アプリケーション フレームワークです。 開発が真に充実したものになるためには、楽しく創造的な経験でなければならないと考えています。 Laravel は、ほとんどの Web プロジェクトで使用される一般的なタスクを緩和することで、開発の苦痛を取り除こうとします。
                 </p>
                 <ul class="flex items-center mt-6 space-x-3">
