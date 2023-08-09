@@ -99,6 +99,23 @@
         <section class="flex-1 dark:bg-dark-700">
             <span class="hidden dark:hidden fixed -bottom-[350px] ml-[300px] bg-radial-gradient opacity-[.15] pointer-events-none lg:inline-flex w-[800px] h-[600px]"></span>
             <div class="px-8 sm:px-16 lg:px-24">
+
+                <div class="w-full lg:w-40 lg:pl-12">
+                    <div>
+                        <label class="text-xs tracking-widest text-gray-600 uppercase dark:text-gray-500" for="version-switcher">Version</label>
+                        <div x-data="" class="relative w-full p-0 transition-all duration-500 bg-white focus-within:border-gray-600 dark:bg-gray-800">
+                            <select
+                                    class="flex-1 w-full px-0 py-1 tracking-wide placeholder-gray-900 bg-white appearance-none focus:outline-none dark:bg-dark-700 dark:text-gray-400 dark:placeholder-gray-500"
+                                    @change="window.location = $event.target.value">
+                                <option value="" class="bg-gray-100" disabled>Laravel</option>
+                                <option value="/laravel10/ja/installation">10.x</option>
+                                <option value="" class="bg-gray-100" disabled>Livewire</option>
+                                <option value="/livewire3/ja/installation">3.x</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="flex flex-col items-end max-w-screen-lg transition-colors dark:border-gray-700 lg:mt-8 lg:flex-row-reverse">
                     <div class="fixed items-center justify-center hidden top-8 lg:flex">
                         <button id="header__sun" onclick="toSystemMode()" title="Switch to system theme" class="relative w-10 h-10 text-gray-500 focus:outline-none focus:shadow-outline">
