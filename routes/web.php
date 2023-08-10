@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\View;
 
 
 Route::redirect('/laravel10', '/laravel10/ja/installation');
+Route::redirect('/livewire3', '/livewire3/ja/quickstart');
 
 Route::get('/', function () {
 
@@ -33,11 +34,16 @@ Route::get('/', function () {
     // ]);
 });
 
-Route::get('/{page?}', function (string $page = 'installation') {
+Route::get('/{page}/{lang}/{section}', function (string $page = 'installation', string $lang = 'ja', string $section = '') {
 
-    if (View::exists($page)) {
+    // dd($page . '/' .  $lang . '/' . $section);
+
+    if (View::exists($page . '/' .  $lang . '/' . $section)) {
         return view('docs', [
-            'page' => $page
+            'page' => $page,
+            'lang' => $lang,
+            'section' => $section,
+            'view_pass' => $page . '/' .  $lang . '/' . $section,
         ]);
     }
 
