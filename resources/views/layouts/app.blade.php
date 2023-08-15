@@ -16,7 +16,8 @@
         <meta property="og:url" content="https://laradoc.jp/">
         <meta property="og:title" content="Laradoc.jp - Laravel の非公式日本語訳サイト">
         <meta property="og:description" content="Laravel の公式ドキュメントを基に日本語訳をしたサイト">
-        <meta property="og:image" content="https://bootcamp.laravel.com/img/og-image.jpg">
+        {{--
+        <meta property="og:image" content="https://bootcamp.laravel.com/img/og-image.jpg"> --}}
         {{--
         <meta property="og:type" content="website">
         <meta property="og:url" content="https://bootcamp.laravel.com/">

@@ -15,12 +15,12 @@
                 <div class="px-4 overflow-x-hidden overflow-y-auto lg:overflow-hidden lg:px-8 xl:px-16">
                     <nav id="indexed-nav" class="hidden lg:block lg:mt-4">
                         <div class="docs_sidebar" style="font-family: 'Noto Sans JP', sans-serif;">
-                            @include('laravel10/ja/documentation')
+                            @include($page . '.' . $lang . '.' . 'documentation')
                         </div>
                     </nav>
                 </div>
                 <div class="flex flex-col justify-end flex-grow">
-                    @if ($page !== 'introduction')
+                    @if ($section !== 'introduction')
                     <div class="hidden pl-16 mb-12 2xl:block">
                         <x-cube delay="0" class="ml-8" />
                         <x-cube delay="2000" class="mt-6 ml-32" />
@@ -90,7 +90,7 @@
                      x-transition:leave-start="opacity-100 scale-100"
                      x-transition:leave-end="opacity-0 -translate-y-8 scale-75">
                     <div class="relative p-8 bg-white docs_sidebar dark:bg-dark-600">
-                        @include('laravel10/ja/documentation')
+                        @include($page . '.' . $lang . '.' . 'documentation')
                     </div>
                 </nav>
             </div>
@@ -143,7 +143,7 @@
                         <x-accessibility.main-content-wrapper>
 
                             <div class="relative prose dark:prose-invert">
-                                @include($page)
+                                @include($view_pass)
                             </div>
                             <script>
                                 // Set the active navigation state...
@@ -216,8 +216,8 @@
     <footer class="relative pt-12 mt-12 bg-gradient-to-b from-gray-50 to-white dark:from-dark-800 dark:to-dark-700">
         <div class="w-full px-8 mx-auto max-w-screen-2xl">
             <div>
-                <a href="https://laravel.com" class="inline-flex">
-                    <img class="h-14" src="/img/logo.min.svg" alt="Laravel" loading="lazy">
+                <a href="/" class="flex items-center px-4 py-8 lg:px-8 xl:px-16">
+                    <span class="hidden text-3xl font-medium text-red-500 lg:block">Laradoc.jp</span>
                 </a>
             </div>
             <div class="mt-6 sm:mt-12">
